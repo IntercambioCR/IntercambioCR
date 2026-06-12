@@ -35,10 +35,6 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (process.env.NODE_ENV === "production" && isDebugPath(pathname)) {
-    return NextResponse.json({ error: "Ruta no disponible." }, { status: 404 });
-  }
-
   let response = NextResponse.next({
     request
   });
@@ -109,15 +105,7 @@ function isAdminPath(pathname: string) {
   ].some((path) => pathname === path || pathname.startsWith(`${path}/`));
 }
 
-function isDebugPath(pathname: string) {
-  return pathname.startsWith("/debug-auth") || pathname.startsWith("/api/debug-auth") || pathname.startsWith("/api/dev");
-}
-
 function getPathRateLimit(pathname: string) {
-  if (pathname.startsWith("/api/dev") || pathname.startsWith("/api/debug-auth")) {
-    return { name: "debug-api", limit: 20, windowMs: 60_000 };
-  }
-
   if (pathname.startsWith("/auth")) {
     return { name: "auth-page", limit: 60, windowMs: 60_000 };
   }
