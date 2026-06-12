@@ -1,0 +1,88 @@
+{
+  "name": "Intercambio CR",
+  "short_name": "Intercambio CR",
+  "description": "Comunidad costarricense para intercambiar artículos, aceptar créditos y conseguir lo que necesitas.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#0b6fbe",
+  "categories": ["shopping", "lifestyle", "utilities"],
+  "lang": "es-CR",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/maskable-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Explorar artículos",
+      "short_name": "Explorar",
+      "description": "Ver artículos disponibles para intercambiar o conseguir con créditos.",
+      "url": "/explorar",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Publicar artículo",
+      "short_name": "Publicar",
+      "description": "Recibir ofertas en créditos o propuestas de intercambio.",
+      "url": "/publicar",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Billetera",
+      "short_name": "Créditos",
+      "description": "Revisar saldo y movimientos de créditos.",
+      "url": "/billetera",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/mobile.svg",
+      "sizes": "390x844",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshots/desktop.svg",
+      "sizes": "1440x900",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 190" role="img" aria-labelledby="title desc">
+  <title id="title">Intercambio CR</title>
+  <desc id="desc">Logo de Intercambio CR con flechas azul y verde.</desc>
+  <rect width="760" height="190" rx="38" fill="#ffffff"/>
+  <g transform="translate(34 32)">
+    <rect x="0" y="0" width="126" height="126" rx="30" fill="#eff8ff"/>
+    <path d="M31 47h52L70 34l13-13 36 36-36 36-13-13 13-13H31z" fill="#16865a"/>
+    <path d="M95 79H43l13 13-13 13L7 69l36-36 13 13-13 13h52z" fill="#0b6fbe"/>
+  </g>
+  <g fill="#172033" font-family="Inter, Segoe UI, Arial, sans-serif">
+    <text x="190" y="87" font-size="54" font-weight="800">Intercambio</text>
+    <text x="190" y="136" font-size="48" font-weight="800" fill="#0b6fbe">CR</text>
+  </g>
+  <path d="M257 137h118" stroke="#16865a" stroke-width="8" stroke-linecap="round"/>
+</svg>

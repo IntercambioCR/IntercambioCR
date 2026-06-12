@@ -1,0 +1,102 @@
+import { CheckCircle2, XCircle } from "lucide-react";
+import { AppShell } from "@/components/app-shell";
+import { SubmitButton } from "@/components/submit-button";
+import { updateListingOfferStatus } from "@/lib/actions/marketplace";
+import { getOffers } from "@/lib/data/offers";
+
+const statusLabels: Record<string, string> = {
+  submitted: "Pendiente",
+  accepted: "Aceptada",
+  rejected: "Rechazada",
+  cancelled: "Cancelada"
+};
+
+export default async function OffersPage({
+  searchParams
+}: {
+  searchParams: Promise<{ ok?: string; error?: string }>;
+}) {
+  const { ok, error } = await searchParams;
+  const offers = await getOffers();
+
+  return (
+    <AppShell>
+      <section className="mx-auto max-w-6xl px-4 py-6 pb-28 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-ink">Ofertas</h1>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+            Revisa ofertas recibidas y enviadas. Aceptar una oferta confirma intención,
+            pero las partes aún deben coordinar y verificar el artículo antes de finalizar.
+          </p>
+        </div>
+
+        {ok ? (
+          <div className="mb-5 rounded-lg border border-leaf-100 bg-leaf-50 p-4 text-sm font-semibold text-leaf-900">
+            Oferta actualizada correctamente.
+          </div>
+        ) : null}
+        {error ? (
+          <div className="mb-5 rounded-lg border border-red-100 bg-red-50 p-4 text-sm font-semibold text-red-700">
+            No se pudo actualizar la oferta: {error}
+          </div>
+        ) : null}
+
+        <div className="space-y-4">
+          {offers.length > 0 ? (
+            offers.map((offer) => (
+              <div key={offer.id} className="min-w-0 rounded-lg border border-slate-200 bg-white p-5">
+                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold uppercase text-ocean-700">
+                      {offer.direction === "received" ? "Recibida" : "Enviada"} / {offer.type}
+                    </p>
+                    <h2 className="mt-1 break-words text-lg font-bold text-ink">{offer.listingTitle}</h2>
+                    <p className="mt-1 text-sm text-slate-600">{offer.otherPerson}</p>
+                    <div className="mt-3 space-y-1 text-sm text-slate-600">
+                      {offer.credits > 0 ? <p>{offer.credits} créditos</p> : null}
+                      {offer.itemDescription ? <p>Artículo ofrecido: {offer.itemDescription}</p> : null}
+                      {offer.message ? <p>Mensaje: {offer.message}</p> : null}
+                    </div>
+                    <p className="mt-3 text-xs text-slate-500">{offer.createdAt}</p>
+                  </div>
+                  <div className="w-full md:w-44 md:shrink-0">
+                    <p className="rounded-lg bg-slate-50 px-3 py-2 text-center text-sm font-bold text-slate-700">
+                      {statusLabels[offer.status] ?? offer.status}
+                    </p>
+                    {offer.direction === "received" && offer.status === "submitted" ? (
+                      <div className="mt-3 grid gap-2">
+                        <form action={updateListingOfferStatus}>
+                          <input type="hidden" name="offer_id" value={offer.id} />
+                          <input type="hidden" name="status" value="accepted" />
+                          <SubmitButton className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-leaf-600 text-sm font-bold text-white disabled:cursor-wait disabled:opacity-70">
+                            <CheckCircle2 className="h-4 w-4" />
+                            Aceptar
+                          </SubmitButton>
+                        </form>
+                        <form action={updateListingOfferStatus}>
+                          <input type="hidden" name="offer_id" value={offer.id} />
+                          <input type="hidden" name="status" value="rejected" />
+                          <SubmitButton className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-red-100 bg-white text-sm font-bold text-red-600 disabled:cursor-wait disabled:opacity-70">
+                            <XCircle className="h-4 w-4" />
+                            Rechazar
+                          </SubmitButton>
+                        </form>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="rounded-lg border border-slate-200 bg-white p-6 text-center">
+              <p className="font-bold text-ink">Todavía no tienes ofertas.</p>
+              <p className="mt-2 text-sm text-slate-600">
+                Cuando hagas o recibas una oferta por una publicación, aparecerá aquí.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+    </AppShell>
+  );
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Intercambio CR">
+  <rect width="512" height="512" rx="108" fill="#ffffff"/>
+  <rect x="56" y="56" width="400" height="400" rx="92" fill="#eff8ff"/>
+  <path d="M132 199h167l-43-43 42-42 115 115-115 115-42-42 43-43H132z" fill="#16865a"/>
+  <path d="M380 313H213l43 43-42 42L99 283l115-115 42 42-43 43h167z" fill="#0b6fbe"/>
+</svg>

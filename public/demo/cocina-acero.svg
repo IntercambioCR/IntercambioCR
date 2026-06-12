@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 675" role="img" aria-label="Set de cocina en acero inoxidable">
+  <rect width="900" height="675" fill="#effaf3"/>
+  <rect x="90" y="80" width="720" height="515" rx="32" fill="#ffffff"/>
+  <circle cx="330" cy="350" r="135" fill="#d8e2e8"/>
+  <circle cx="330" cy="350" r="88" fill="#ffffff"/>
+  <rect x="472" y="214" width="170" height="245" rx="34" fill="#0b6fbe"/>
+  <rect x="520" y="170" width="74" height="80" rx="26" fill="#193246"/>
+  <path d="M642 315h100c28 0 50 22 50 50s-22 50-50 50h-100" fill="none" stroke="#25a55f" stroke-width="34" stroke-linecap="round"/>
+  <path d="M205 520h490" stroke="#193246" stroke-width="22" stroke-linecap="round"/>
+</svg>

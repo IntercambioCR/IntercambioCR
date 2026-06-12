@@ -1,0 +1,2426 @@
+   ▲ Next.js 15.5.19
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.171:3000
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 1878ms
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 2.9s (168 modules)
+ ○ Compiling / ...
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (243kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled / in 11.4s (741 modules)
+ GET / 200 in 12104ms
+ GET / 200 in 143ms
+ ○ Compiling /explorar ...
+ ✓ Compiled /explorar in 4.6s (776 modules)
+ GET /explorar 200 in 12153ms
+ ○ Compiling /entregar ...
+ ✓ Compiled /entregar in 4.5s (794 modules)
+Cannot specify a encType or method for a form that specifies a function as the action. React provides those automatically. They will get overridden.
+ GET /entregar 200 in 4770ms
+ ○ Compiling /publicar ...
+ ✓ Compiled /publicar in 720ms (798 modules)
+ GET /publicar 200 in 978ms
+ ○ Compiling /billetera ...
+ ✓ Compiled /billetera in 869ms (809 modules)
+ GET /billetera 200 in 1067ms
+ ○ Compiling /ayuda ...
+ ✓ Compiled /ayuda in 645ms (811 modules)
+ GET /ayuda 200 in 801ms
+ ○ Compiling /notificaciones ...
+ ✓ Compiled /notificaciones in 859ms (814 modules)
+ GET /notificaciones 200 in 1009ms
+ ○ Compiling /perfil ...
+ ✓ Compiled /perfil in 716ms (822 modules)
+ GET /perfil 200 in 942ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 1618ms (833 modules)
+ GET /admin 200 in 2393ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+ GET / 200 in 982ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 14.7s (1116 modules)
+ GET /manifest.webmanifest 200 in 20143ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 20928ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 20776ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 20925ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 20769ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 20924ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 20765ms
+ GET / 200 in 9865ms
+ GET / 200 in 241ms
+ GET /manifest.webmanifest 200 in 60ms
+ ○ Compiling /explorar ...
+ ✓ Compiled /explorar in 594ms (717 modules)
+ ○ Compiling /entregar ...
+ ✓ Compiled /entregar in 1245ms (747 modules)
+ GET /entregar 200 in 7762ms
+ GET /entregar 200 in 183ms
+ GET /manifest.webmanifest 200 in 105ms
+ GET /explorar 200 in 17706ms
+ GET /explorar 200 in 14460ms
+ ○ Compiling /auth ...
+ ✓ Compiled /auth in 6.4s (1038 modules)
+ GET /auth 200 in 7280ms
+ POST /entregar 303 in 7465ms
+ ○ Compiling /manifest.webmanifest ...
+ ✓ Compiled /manifest.webmanifest in 5.4s (641 modules)
+ GET /manifest.webmanifest 200 in 5768ms
+[TypeError: fetch failed] {
+  [cause]: [AggregateError: ] { code: 'EACCES' }
+}
+ ⨯ Error: fetch failed
+    at signInWithEmail (lib\auth\actions.ts:22:11)
+  20 |
+  21 |   if (error) {
+> 22 |     throw new Error(error.message);
+     |           ^
+  23 |   }
+  24 |
+  25 |   redirect("/auth/revisar-correo"); {
+  digest: '3066124669'
+}
+ POST /auth 500 in 1148ms
+ GET /entregar 200 in 693ms
+ ○ Compiling /billetera ...
+ ✓ Compiled /billetera in 1729ms (649 modules)
+ GET /billetera 200 in 2288ms
+ GET /manifest.webmanifest 200 in 96ms
+ GET /billetera 200 in 210ms
+ GET /manifest.webmanifest 200 in 55ms
+ GET /entregar 200 in 236ms
+ GET /manifest.webmanifest 200 in 58ms
+ ○ Compiling /explorar ...
+ ✓ Compiled /explorar in 5.7s (669 modules)
+ GET / 200 in 1236ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+ ○ Compiling /_error ...
+ GET /manifest.webmanifest 200 in 462ms
+ GET /explorar 200 in 13625ms
+ ✓ Compiled /_error in 8.2s (1183 modules)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 8808ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 8767ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 8798ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 8762ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 8790ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 8761ms
+ GET /explorar 200 in 7752ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+ GET /manifest.webmanifest 200 in 122ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 518ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 463ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 519ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 468ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 516ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 461ms
+ GET /explorar 200 in 7250ms
+ GET /manifest.webmanifest 200 in 36ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 351ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 331ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 349ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 327ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 346ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 326ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 278ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 264ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 326ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 306ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 330ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 300ms
+ GET /entregar 200 in 182ms
+ GET /manifest.webmanifest 200 in 57ms
+ GET /billetera 200 in 147ms
+ GET /manifest.webmanifest 200 in 50ms
+ GET /billetera 200 in 151ms
+ GET /manifest.webmanifest 200 in 63ms
+ GET /billetera 200 in 131ms
+ GET /manifest.webmanifest 200 in 47ms
+ ○ Compiling /notificaciones ...
+ ✓ Compiled /notificaciones in 1508ms (767 modules)
+ GET /notificaciones 200 in 2016ms
+ GET /manifest.webmanifest 200 in 83ms
+ ○ Compiling /perfil ...
+ ✓ Compiled /perfil in 1202ms (774 modules)
+ GET /perfil 200 in 1595ms
+ GET /manifest.webmanifest 200 in 52ms
+ GET /notificaciones 200 in 124ms
+ GET /manifest.webmanifest 200 in 50ms
+ GET /perfil 200 in 271ms
+ GET /billetera 200 in 280ms
+ GET /manifest.webmanifest 200 in 41ms
+ GET /perfil 200 in 159ms
+ GET /manifest.webmanifest 200 in 43ms
+ GET /notificaciones 200 in 102ms
+ GET /manifest.webmanifest 200 in 41ms
+ GET /billetera 200 in 104ms
+ GET /manifest.webmanifest 200 in 33ms
+ GET / 200 in 192ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+ GET /manifest.webmanifest 200 in 40ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 507ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 465ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 505ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 461ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 503ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 459ms
+ ○ Compiling /articulos/[id] ...
+ ✓ Compiled /articulos/[id] in 3.5s (1200 modules)
+ ✓ Compiled in 3.8s (434 modules)
+ GET /articulos/22222222-2222-4222-8222-222222222222 200 in 14878ms
+ GET /articulos/22222222-2222-4222-8222-222222222222 200 in 7214ms
+ GET /articulos/22222222-2222-4222-8222-222222222222 200 in 7216ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+ GET /manifest.webmanifest 200 in 68ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=1920&q=75 500 in 463ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=1920&q=75 500 in 440ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556911220-bff31c812dba%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=1920&q=75 500 in 461ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556911220-bff31c812dba%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=1920&q=75 500 in 435ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556912173-3bb406ef7e77%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=1920&q=75 500 in 459ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556912173-3bb406ef7e77%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=1920&q=75 500 in 432ms
+ GET / 200 in 192ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 199.232.94.208:443
+      at <unknown> (Error: connect EACCES 199.232.94.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.94.208',
+    port: 443
+  }
+}
+ GET /manifest.webmanifest 200 in 42ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 349ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 321ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 352ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 317ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 349ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 315ms
+ ✓ Compiled in 737ms (433 modules)
+ ✓ Compiled in 725ms (433 modules)
+ GET / 200 in 912ms
+ GET / 200 in 263ms
+ GET /manifest.webmanifest 200 in 57ms
+ ✓ Compiled in 329ms (433 modules)
+ GET / 200 in 57ms
+ GET /manifest.webmanifest 200 in 45ms
+ ✓ Compiled in 8.6s (1264 modules)
+ GET / 200 in 8483ms
+ GET / 200 in 64ms
+ GET /manifest.webmanifest 200 in 63ms
+ ✓ Compiled in 4.1s (1264 modules)
+ GET / 200 in 3891ms
+ GET / 200 in 59ms
+ GET /manifest.webmanifest 200 in 54ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ GET /manifest.webmanifest 200 in 269ms
+ ○ Compiling /_error ...
+ GET / 200 in 1776ms
+ ✓ Compiled /_error in 6.5s (1178 modules)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7255ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7179ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7217ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7157ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7174ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7149ms
+ ✓ Compiled in 525ms (434 modules)
+ ✓ Compiled in 3.1s (1346 modules)
+ GET /explorar?categoria=Oficina 200 in 7680ms
+ GET /explorar?categoria=Oficina 200 in 7804ms
+ GET /explorar?categoria=Cocina 200 in 9388ms
+ GET /explorar?categoria=Beb%C3%A9s 200 in 7226ms
+ GET /explorar?categoria=Beb%C3%A9s 200 in 7207ms
+ GET /explorar?categoria=Herramientas 200 in 7193ms
+ GET /explorar?categoria=Herramientas 200 in 7245ms
+ GET /explorar?categoria=Electr%C3%B3nica 200 in 7169ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ GET /manifest.webmanifest 200 in 89ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 442ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 409ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 439ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 405ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 436ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 404ms
+ ✓ Compiled in 4s (1194 modules)
+ GET / 200 in 4350ms
+ GET / 200 in 343ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ GET /manifest.webmanifest 200 in 104ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 576ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 530ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 570ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 526ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 563ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 523ms
+ ✓ Compiled in 1634ms (1194 modules)
+ GET / 200 in 408ms
+ GET /manifest.webmanifest 200 in 93ms
+ ✓ Compiled in 4.8s (1098 modules)
+ GET / 200 in 1448ms
+ GET /manifest.webmanifest 200 in 255ms
+ ✓ Compiled in 1783ms (1098 modules)
+ GET / 200 in 512ms
+ GET /manifest.webmanifest 200 in 75ms
+ ✓ Compiled in 2.2s (1098 modules)
+ GET / 200 in 505ms
+ GET /manifest.webmanifest 200 in 58ms
+ ✓ Compiled in 923ms (1098 modules)
+ GET / 200 in 152ms
+ GET /manifest.webmanifest 200 in 61ms
+ ✓ Compiled in 1472ms (1098 modules)
+ GET / 200 in 334ms
+ GET /manifest.webmanifest 200 in 75ms
+ ✓ Compiled in 524ms (433 modules)
+ GET / 200 in 248ms
+ GET /manifest.webmanifest 200 in 33ms
+ ✓ Compiled in 463ms (433 modules)
+ GET / 200 in 204ms
+ GET /manifest.webmanifest 200 in 32ms
+ ✓ Compiled in 485ms (433 modules)
+ GET / 200 in 290ms
+ GET /manifest.webmanifest 200 in 51ms
+ ✓ Compiled in 393ms (433 modules)
+ GET / 200 in 186ms
+ GET /manifest.webmanifest 200 in 36ms
+ ✓ Compiled in 447ms (433 modules)
+ GET / 200 in 202ms
+ GET /manifest.webmanifest 200 in 49ms
+ ✓ Compiled in 327ms (433 modules)
+ GET / 200 in 93ms
+ GET /manifest.webmanifest 200 in 34ms
+ ✓ Compiled in 362ms (433 modules)
+ GET / 200 in 116ms
+ GET /manifest.webmanifest 200 in 33ms
+ ✓ Compiled in 845ms (1098 modules)
+ GET / 200 in 187ms
+ GET /manifest.webmanifest 200 in 52ms
+ ✓ Compiled in 1509ms (1098 modules)
+ GET / 200 in 186ms
+ GET /manifest.webmanifest 200 in 42ms
+ ✓ Compiled in 793ms (1098 modules)
+ GET / 200 in 236ms
+ GET /manifest.webmanifest 200 in 66ms
+ ✓ Compiled in 536ms (433 modules)
+ GET / 200 in 105ms
+ GET /manifest.webmanifest 200 in 46ms
+ ✓ Compiled in 281ms (433 modules)
+ GET / 200 in 134ms
+ GET /manifest.webmanifest 200 in 59ms
+ ✓ Compiled in 269ms (433 modules)
+ GET / 200 in 131ms
+ GET /manifest.webmanifest 200 in 46ms
+ ✓ Compiled in 1497ms (1098 modules)
+ GET / 200 in 166ms
+ GET /manifest.webmanifest 200 in 22ms
+ ✓ Compiled in 340ms (433 modules)
+ GET / 200 in 101ms
+ GET /manifest.webmanifest 200 in 22ms
+ ✓ Compiled in 243ms (433 modules)
+ GET / 200 in 470ms
+ ✓ Compiled in 6.9s (1252 modules)
+ GET / 200 in 6685ms
+ GET / 200 in 65ms
+ GET /manifest.webmanifest 200 in 25ms
+ ✓ Compiled in 1026ms (1098 modules)
+ GET / 200 in 140ms
+ GET /manifest.webmanifest 200 in 39ms
+ GET / 200 in 176ms
+ GET /manifest.webmanifest 200 in 39ms
+ ✓ Compiled in 775ms (433 modules)
+ GET /explorar 200 in 7222ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ ○ Compiling /_error ...
+ GET /manifest.webmanifest 200 in 586ms
+ GET /explorar 200 in 7351ms
+ ✓ Compiled /_error in 6.4s (1180 modules)
+ GET /manifest.webmanifest 200 in 5173ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7697ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7666ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7694ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7663ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7692ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 7661ms
+ ✓ Compiled in 1497ms (1194 modules)
+ GET /explorar 200 in 7573ms
+ GET /manifest.webmanifest 200 in 66ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 406ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 388ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 404ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 385ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 413ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 394ms
+ ✓ Compiled in 584ms (434 modules)
+ ○ Compiling /publicar ...
+ ✓ Compiled /publicar in 1885ms (769 modules)
+ GET /publicar 200 in 2429ms
+ GET /publicar 200 in 160ms
+ GET /manifest.webmanifest 200 in 53ms
+ GET /explorar 200 in 7296ms
+ ✓ Compiled in 578ms (434 modules)
+ GET /publicar 200 in 157ms
+ GET /manifest.webmanifest 200 in 50ms
+ ✓ Compiled in 4.5s (1371 modules)
+ GET /publicar 200 in 369ms
+ GET /manifest.webmanifest 200 in 54ms
+ ✓ Compiled in 8.1s (1256 modules)
+ GET /publicar 200 in 8143ms
+ GET /publicar 200 in 170ms
+ GET /manifest.webmanifest 200 in 145ms
+ ✓ Compiled in 3s (1088 modules)
+ GET /publicar 200 in 486ms
+ GET /manifest.webmanifest 200 in 91ms
+ ✓ Compiled in 659ms (433 modules)
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\routes-manifest.json',
+  page: '/publicar'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 6.1s (1149 modules)
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\routes-manifest.json',
+  page: '/publicar'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\routes-manifest.json'
+}
+ GET /publicar 500 in 19446ms
+ GET /publicar 500 in 195ms
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\publicar\page.js:2:17550)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\publicar\page.js:2:17619) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/publicar'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\publicar\page.js:2:17550)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\publicar\page.js:2:17619) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/publicar'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\routes-manifest.json'
+}
+ GET /publicar 500 in 575ms
+ GET /publicar 500 in 132ms
+ ✓ Compiled in 561ms (434 modules)
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\next-font-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\next-font-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\next-font-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\next-font-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\next-font-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\next-font-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\next-font-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\next-font-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\routes-manifest.json'
+}
+ GET / 500 in 327ms
+ GET / 500 in 106ms
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:2:7668)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:2:7737) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:2:7668)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:2:7737) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\prerender-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\prerender-manifest.json'
+}
+ GET / 500 in 411ms
+ GET / 500 in 111ms
+ ○ Compiling /explorar ...
+ ✓ Compiled /explorar in 6.1s (748 modules)
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js:423:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js:426:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/explorar'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js:423:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js:426:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/explorar'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /explorar 500 in 6583ms
+ GET /explorar 500 in 65ms
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:379:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:382:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:379:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:382:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET / 500 in 275ms
+ GET / 500 in 85ms
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:379:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:382:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js:423:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js:426:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/explorar'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:379:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\page.js:382:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js:423:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js:426:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/explorar'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET / 500 in 197ms
+ GET / 500 in 90ms
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /explorar 500 in 214ms
+ GET /explorar 500 in 61ms
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\publicar\page.js:401:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\publicar\page.js:404:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/publicar'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\publicar\page.js:401:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\publicar\page.js:404:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/publicar'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\explorar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /publicar 500 in 130ms
+ GET /publicar 500 in 50ms
+ ○ Compiling /entregar ...
+ ✓ Compiled /entregar in 706ms (751 modules)
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\entregar\page.js:401:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\entregar\page.js:404:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/entregar'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\entregar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\entregar\page.js:401:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\entregar\page.js:404:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/entregar'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\entregar\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /entregar 500 in 830ms
+ GET /entregar 500 in 28ms
+ ✓ Compiled /billetera in 428ms (759 modules)
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\billetera\page.js:368:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\billetera\page.js:371:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/billetera'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\billetera\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\billetera\page.js:368:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\billetera\page.js:371:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/billetera'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\billetera\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /billetera 500 in 552ms
+ GET /billetera 500 in 42ms
+ ○ Compiling /mensajes ...
+ ✓ Compiled /mensajes in 721ms (1183 modules)
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\mensajes\page.js:357:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\mensajes\page.js:360:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/mensajes'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\mensajes\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\mensajes\page.js:357:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\mensajes\page.js:360:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/mensajes'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\mensajes\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /mensajes 500 in 951ms
+ GET /mensajes 500 in 29ms
+ ○ Compiling /ofertas ...
+ ✓ Compiled /ofertas in 967ms (1188 modules)
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ofertas\page.js:401:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ofertas\page.js:404:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/ofertas'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ofertas\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ofertas\page.js:401:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ofertas\page.js:404:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/ofertas'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ofertas\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /ofertas 500 in 1085ms
+ GET /ofertas 500 in 32ms
+ ○ Compiling /seguridad ...
+ ✓ Compiled /seguridad in 866ms (1192 modules)
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\seguridad\page.js:390:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\seguridad\page.js:393:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/seguridad'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\seguridad\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\seguridad\page.js:390:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\seguridad\page.js:393:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/seguridad'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\seguridad\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /seguridad 500 in 1007ms
+ GET /seguridad 500 in 44ms
+ ○ Compiling /terminos ...
+ ✓ Compiled /terminos in 890ms (1196 modules)
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\terminos\page.js:346:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\terminos\page.js:349:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/terminos'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\terminos\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\terminos\page.js:346:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\terminos\page.js:349:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/terminos'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\terminos\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /terminos 500 in 1023ms
+ GET /terminos 500 in 47ms
+ ○ Compiling /privacidad ...
+ ✓ Compiled /privacidad in 851ms (1199 modules)
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\privacidad\page.js:346:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\privacidad\page.js:349:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/privacidad'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\privacidad\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\privacidad\page.js:346:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\privacidad\page.js:349:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/privacidad'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\privacidad\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /privacidad 500 in 971ms
+ GET /privacidad 500 in 32ms
+ ○ Compiling /legal ...
+ ✓ Compiled /legal in 887ms (1202 modules)
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\legal\page.js:346:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\legal\page.js:349:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/legal'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\legal\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\legal\page.js:346:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\legal\page.js:349:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/legal'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\legal\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /legal 500 in 1047ms
+ GET /legal 500 in 53ms
+ ○ Compiling /ayuda ...
+ ✓ Compiled /ayuda in 544ms (784 modules)
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ayuda\page.js:346:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ayuda\page.js:349:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/ayuda'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ayuda\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ayuda\page.js:346:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ayuda\page.js:349:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/ayuda'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ayuda\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /ayuda 500 in 719ms
+ GET /ayuda 500 in 52ms
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\perfil\page.js:346:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\perfil\page.js:349:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/perfil'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ayuda\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\perfil\page.js:346:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\perfil\page.js:349:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/perfil'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\ayuda\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /perfil 500 in 112ms
+ GET /perfil 500 in 33ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 653ms (793 modules)
+ ⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\admin\page.js:401:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\admin\page.js:404:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/admin'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\admin\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+Error: ENOENT: no such file or directory, open 'C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\vendor-chunks\@swc.js'
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\admin\page.js:401:47)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\admin\page.js:404:3) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Gustavo\\Documents\\Codex\\2026-06-07\\analiza-esta-idea-como-un-product\\.next\\server\\vendor-chunks\\@swc.js',
+  page: '/admin'
+}
+ ⨯ Error: Cannot find module './611.js'
+Require stack:
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\webpack-runtime.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\app\admin\page.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\require.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\load-components.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\utils.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\options.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\swc\index.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\parse-module.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\build\analysis\get-page-static-info.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:325)
+    at Object.<anonymous> (C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\.next\server\pages\_document.js:1:371) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /admin 500 in 826ms
+ GET /admin 500 in 44ms
+
+EXIT code=null signal=SIGTERM
+   ▲ Next.js 15.5.19
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.171:3000
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 1874ms
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 2.7s (168 modules)
+ ○ Compiling / ...
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (243kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled / in 19.7s (776 modules)
+ GET / 200 in 22497ms
+ GET /explorar?categoria=Electr%C3%B3nica 200 in 8605ms
+ GET /explorar 200 in 27296ms
+ ○ Compiling /publicar ...
+ GET /explorar?categoria=Electr%C3%B3nica 200 in 3979ms
+ ✓ Compiled /publicar in 4.8s (795 modules)
+Cannot specify a encType or method for a form that specifies a function as the action. React provides those automatically. They will get overridden.
+ GET /publicar 200 in 5824ms
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  digest: '4147355493'
+}
+ ○ Compiling /entregar ...
+ ✓ Compiled /entregar in 2.5s (798 modules)
+ GET /entregar 200 in 3431ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ ○ Compiling /manifest.webmanifest ...
+ GET / 200 in 1095ms
+ ✓ Compiled /ofertas in 16.7s (1185 modules)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 17410ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 17291ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 17341ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 17284ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 17331ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 17278ms
+ ○ Compiling /mensajes ...
+ ✓ Compiled /mensajes in 2.7s (1193 modules)
+ GET /manifest.webmanifest 200 in 20647ms
+ GET /billetera 200 in 21087ms
+ GET /ofertas 200 in 15886ms
+ GET /mensajes 200 in 5763ms
+ GET /mensajes 200 in 437ms
+ GET /ofertas 200 in 796ms
+ GET / 200 in 4319ms
+ GET /ofertas 200 in 184ms
+ ○ Compiling /seguridad ...
+ ✓ Compiled /seguridad in 2.7s (1197 modules)
+ GET /seguridad 200 in 3588ms
+ ○ Compiling /terminos ...
+ ✓ Compiled /terminos in 1344ms (1201 modules)
+ GET /terminos 200 in 1869ms
+ GET /explorar 200 in 8847ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ GET /manifest.webmanifest 200 in 58ms
+ GET /explorar 200 in 7402ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 510ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 480ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 504ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 478ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 501ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 477ms
+ GET /explorar 200 in 7519ms
+ ○ Compiling /privacidad ...
+ ✓ Compiled /privacidad in 2.1s (1204 modules)
+ GET /privacidad 200 in 2684ms
+ ○ Compiling /legal ...
+ ✓ Compiled /legal in 1590ms (1207 modules)
+ GET /legal 200 in 2229ms
+ ○ Compiling /ayuda ...
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ ✓ Compiled /ayuda in 3.5s (1209 modules)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 3417ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 3074ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 3096ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 3061ms
+ GET /ayuda 200 in 4347ms
+ ○ Compiling /perfil ...
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ ✓ Compiled /perfil in 4.7s (1214 modules)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 3671ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 3607ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 3667ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 3604ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 3665ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 3601ms
+ GET /perfil 200 in 5513ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 2.8s (1224 modules)
+ GET /admin 200 in 3312ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 363ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 340ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 359ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 336ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 351ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 300ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 359ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 295ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 347ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1578303512597-81e6cc155b3e%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 292ms
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 146.75.126.208:443
+      at <unknown> (Error: connect EACCES 146.75.126.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '146.75.126.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 317ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1580480055273-228ff5388ef8%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 299ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 315ms
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 294ms
+ GET /explorar 200 in 7362ms
+ GET /privacidad 200 in 164ms
+ GET /manifest.webmanifest 200 in 94ms
+ GET /terminos 200 in 171ms
+ GET /manifest.webmanifest 200 in 38ms
+ GET /seguridad 200 in 179ms
+ GET /manifest.webmanifest 200 in 67ms
+ GET /mensajes 200 in 171ms
+ GET /manifest.webmanifest 200 in 44ms
+ ✓ Compiled in 3.2s (1197 modules)
+ GET /mensajes 200 in 598ms
+ GET /manifest.webmanifest 200 in 79ms
+ ○ Compiling /ofertas ...
+ ✓ Compiled /ofertas in 1134ms (769 modules)
+ GET /ofertas 200 in 1640ms
+ GET /manifest.webmanifest 200 in 46ms
+ ✓ Compiled in 4.6s (1082 modules)
+ GET /ofertas 200 in 1355ms
+ GET /manifest.webmanifest 200 in 160ms
+ ✓ Compiled in 4.8s (1046 modules)
+ GET /ofertas 200 in 493ms
+ GET /manifest.webmanifest 200 in 69ms
+ ✓ Compiled in 843ms (432 modules)
+ GET /ofertas 200 in 209ms
+ GET /manifest.webmanifest 200 in 69ms
+ ○ Compiling /entregar ...
+ ✓ Compiled /entregar in 1737ms (622 modules)
+ GET /entregar 200 in 2294ms
+ GET /entregar 200 in 175ms
+ GET /manifest.webmanifest 200 in 51ms
+ ○ Compiling /explorar ...
+ ✓ Compiled /explorar in 5.4s (653 modules)
+ ⨯ Error: Could not find the module "C:\Users\Gustavo\Documents\Codex\2026-06-07\analiza-esta-idea-como-un-product\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '1870019952'
+}
+ GET /explorar 200 in 14402ms
+
+EXIT code=null signal=SIGTERM
+   ▲ Next.js 15.5.19
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.171:3000
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 1614ms
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 3.6s (168 modules)
+ ○ Compiling / ...
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (243kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled / in 15.8s (776 modules)
+ GET / 200 in 17310ms
+ GET /explorar 200 in 24549ms
+ ○ Compiling /publicar ...
+ ✓ Compiled /publicar in 4.3s (795 modules)
+Cannot specify a encType or method for a form that specifies a function as the action. React provides those automatically. They will get overridden.
+ GET /publicar 200 in 5106ms
+ ○ Compiling /entregar ...
+ ✓ Compiled /entregar in 1810ms (798 modules)
+ GET /entregar 200 in 2555ms
+ ○ Compiling /billetera ...
+ ✓ Compiled /billetera in 1411ms (809 modules)
+ GET /billetera 200 in 1907ms
+ ○ Compiling /mensajes ...
+ ✓ Compiled /mensajes in 1194ms (817 modules)
+ GET /mensajes 200 in 1640ms
+ ○ Compiling /ofertas ...
+ ✓ Compiled /ofertas in 1463ms (824 modules)
+ GET /ofertas 200 in 2006ms
+ ○ Compiling /seguridad ...
+ ✓ Compiled /seguridad in 1268ms (828 modules)
+ GET /seguridad 200 in 1802ms
+ ○ Compiling /terminos ...
+ ✓ Compiled /terminos in 1488ms (832 modules)
+ GET /terminos 200 in 2015ms
+ ○ Compiling /privacidad ...
+ ✓ Compiled /privacidad in 1880ms (835 modules)
+ GET /privacidad 200 in 2417ms
+ ○ Compiling /legal ...
+ ✓ Compiled /legal in 1189ms (838 modules)
+ GET /legal 200 in 1639ms
+ ○ Compiling /ayuda ...
+ ✓ Compiled /ayuda in 1211ms (840 modules)
+ GET /ayuda 200 in 1708ms
+ ○ Compiling /perfil ...
+ ✓ Compiled /perfil in 1618ms (845 modules)
+ GET /perfil 200 in 2043ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 3.5s (855 modules)
+ GET /admin 200 in 3960ms
+ GET / 200 in 1159ms
+ ○ Compiling /manifest.webmanifest ...
+ ✓ Compiled /manifest.webmanifest in 5.3s (769 modules)
+ GET /manifest.webmanifest 200 in 5674ms

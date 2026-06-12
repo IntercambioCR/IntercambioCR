@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 675" role="img" aria-label="Nintendo Switch con controles">
+  <rect width="900" height="675" fill="#eef6ff"/>
+  <rect x="90" y="80" width="720" height="515" rx="32" fill="#ffffff"/>
+  <rect x="225" y="230" width="450" height="220" rx="44" fill="#193246"/>
+  <rect x="330" y="255" width="240" height="170" rx="18" fill="#e9f5fb"/>
+  <rect x="175" y="245" width="120" height="190" rx="48" fill="#0b6fbe"/>
+  <rect x="605" y="245" width="120" height="190" rx="48" fill="#25a55f"/>
+  <circle cx="235" cy="315" r="20" fill="#ffffff"/>
+  <circle cx="665" cy="300" r="14" fill="#ffffff"/>
+  <circle cx="690" cy="330" r="14" fill="#ffffff"/>
+  <circle cx="640" cy="330" r="14" fill="#ffffff"/>
+  <circle cx="665" cy="360" r="14" fill="#ffffff"/>
+</svg>

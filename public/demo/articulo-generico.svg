@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 675" role="img" aria-label="Artículo de intercambio">
+  <rect width="900" height="675" fill="#f4f7fb"/>
+  <rect x="90" y="80" width="720" height="515" rx="32" fill="#ffffff"/>
+  <path d="M300 245h300l55 85v180H245V330l55-85Z" fill="#0b6fbe"/>
+  <path d="M300 245h300l-60 85H360l-60-85Z" fill="#25a55f"/>
+  <path d="M330 420h240" stroke="#ffffff" stroke-width="24" stroke-linecap="round"/>
+  <path d="M360 475h180" stroke="#ffffff" stroke-width="18" stroke-linecap="round"/>
+</svg>
