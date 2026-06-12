@@ -11,7 +11,7 @@
     "dev:fresh": "npm.cmd run clean && npm.cmd run dev",
     "dev:win": "node scripts/dev-windows.mjs",
     "build": "next build",
-    "start": "next start -H 0.0.0.0 -p $PORT",
+    "start": "next start -H 0.0.0.0 -p ${PORT:-3000}",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
