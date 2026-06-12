@@ -1,6 +1,14 @@
 const isProduction = process.env.NODE_ENV === "production";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseOrigin = supabaseUrl ? new URL(supabaseUrl).origin : "https://*.supabase.co";
+let supabaseOrigin = "https://*.supabase.co";
+
+if (supabaseUrl) {
+  try {
+    supabaseOrigin = new URL(supabaseUrl).origin;
+  } catch {
+    console.warn("NEXT_PUBLIC_SUPABASE_URL no es una URL valida. Se usara *.supabase.co para CSP.");
+  }
+}
 
 const securityHeaders = [
   {

@@ -23,7 +23,7 @@ echo === Intento de arranque 3000 === >> "%LOG%"
 echo Si esta ventana queda en Ready, abre http://localhost:3000 y NO cierres la ventana.
 echo Si se cierra o falla, se abrira el diagnostico.
 echo.
-call npm.cmd run start -- --hostname localhost -p 3000 >> "%LOG%" 2>&1
+call npm.cmd run start >> "%LOG%" 2>&1
 echo. >> "%LOG%"
 echo === Puertos despues === >> "%LOG%"
 netstat -ano | findstr ":3000 :3010" >> "%LOG%" 2>&1

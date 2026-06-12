@@ -14,7 +14,7 @@ if errorlevel 1 (
   exit /b 1
 )
 start "" cmd.exe /c "timeout /t 5 >nul && start http://localhost:3000"
-call npm.cmd run start -- --hostname localhost -p 3000
+call npm.cmd run start
 echo.
 echo El servidor se cerro. Si ves un error arriba, enviamelo.
 pause

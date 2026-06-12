@@ -8,6 +8,8 @@ import type { ListingSummary } from "@/lib/data/listings";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 
+export const dynamic = "force-dynamic";
+
 const fallbackImage = "/demo/hero-intercambio-real.png";
 
 async function getHomeListings(): Promise<ListingSummary[]> {
@@ -15,39 +17,44 @@ async function getHomeListings(): Promise<ListingSummary[]> {
     return [];
   }
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("listings")
-    .select("id,title,category,condition,location,credit_price,description,listing_images(storage_path,sort_order)")
-    .eq("status", "available")
-    .order("created_at", { ascending: false })
-    .limit(24);
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("listings")
+      .select("id,title,category,condition,location,credit_price,description,listing_images(storage_path,sort_order)")
+      .eq("status", "available")
+      .order("created_at", { ascending: false })
+      .limit(24);
 
-  if (error || !data) {
+    if (error || !data) {
+      return [];
+    }
+
+    return data.map((listing): ListingSummary => {
+      const imagePaths =
+        listing.listing_images
+          ?.sort((a: { sort_order: number }, b: { sort_order: number }) => a.sort_order - b.sort_order)
+          .map((item: { storage_path: string }) => item.storage_path) ?? [];
+      const images = imagePaths.map(
+        (path) => supabase.storage.from("listing-images").getPublicUrl(path).data.publicUrl
+      );
+
+      return {
+        id: listing.id,
+        title: listing.title,
+        category: listing.category,
+        condition: listing.condition,
+        location: listing.location,
+        credits: listing.credit_price,
+        image: images[0] ?? fallbackImage,
+        images: images.length > 0 ? images : [fallbackImage],
+        description: listing.description
+      };
+    });
+  } catch (error) {
+    console.error("No se pudieron cargar las publicaciones del inicio.", error);
     return [];
   }
-
-  return data.map((listing): ListingSummary => {
-    const imagePaths =
-      listing.listing_images
-        ?.sort((a: { sort_order: number }, b: { sort_order: number }) => a.sort_order - b.sort_order)
-        .map((item: { storage_path: string }) => item.storage_path) ?? [];
-    const images = imagePaths.map(
-      (path) => supabase.storage.from("listing-images").getPublicUrl(path).data.publicUrl
-    );
-
-    return {
-      id: listing.id,
-      title: listing.title,
-      category: listing.category,
-      condition: listing.condition,
-      location: listing.location,
-      credits: listing.credit_price,
-      image: images[0] ?? fallbackImage,
-      images: images.length > 0 ? images : [fallbackImage],
-      description: listing.description
-    };
-  });
 }
 
 const steps = [
