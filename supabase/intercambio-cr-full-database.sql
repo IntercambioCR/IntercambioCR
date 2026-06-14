@@ -1,5 +1,5 @@
 -- Intercambio CR - esquema completo para Supabase SQL Editor
--- Proyecto esperado: mbgioclczfosydguprnq
+-- Proyecto esperado: Intercambio CR
 -- Ejecutar en Supabase > SQL Editor sobre el proyecto correcto.
 -- Este script crea tipos, tablas, indices, funciones, trigger de auth y politicas RLS.
 

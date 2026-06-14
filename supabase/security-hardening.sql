@@ -1,5 +1,5 @@
 -- Intercambio CR - refuerzo de seguridad posterior al esquema base
--- Ejecutar en Supabase SQL Editor sobre el proyecto mbgioclczfosydguprnq.
+-- Ejecutar en Supabase SQL Editor sobre el proyecto correcto de Intercambio CR.
 -- Este script es idempotente en lo posible y no reemplaza el esquema completo.
 
 create extension if not exists "pgcrypto";

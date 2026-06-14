@@ -1,5 +1,5 @@
 -- Intercambio CR - prueba de perfil administrador
--- Ejecutar en Supabase SQL Editor sobre el proyecto correcto: mbgioclczfosydguprnq
+-- Ejecutar en Supabase SQL Editor sobre el proyecto correcto de Intercambio CR.
 -- Correo admin: step1115.sp@gmail.com
 
 -- Asegura que exista la funcion is_admin(user_id) usada para verificar esta prueba.

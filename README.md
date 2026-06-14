@@ -67,9 +67,9 @@ npm run dev
 Crea un archivo `.env.local` usando `.env.example`:
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=https://mbgioclczfosydguprnq.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=pegar_publishable_key_del_proyecto_mbgioclczfosydguprnq
-SUPABASE_SERVICE_ROLE_KEY=pegar_secret_key_del_proyecto_mbgioclczfosydguprnq
+NEXT_PUBLIC_SUPABASE_URL=https://tu-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=pegar_publishable_key
+SUPABASE_SERVICE_ROLE_KEY=pegar_secret_key_solo_en_backend
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
