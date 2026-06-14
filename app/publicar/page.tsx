@@ -1,8 +1,29 @@
 import { Camera, Info } from "lucide-react";
+import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import { categories, conditions } from "@/lib/constants";
 import { publishListing } from "@/lib/actions/credits";
 import { SubmitButton } from "@/components/submit-button";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { createClient } from "@/lib/supabase/server";
+
+async function getPublishUser() {
+  if (!isSupabaseConfigured()) {
+    return null;
+  }
+
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    return user;
+  } catch (error) {
+    console.error("No se pudo verificar la sesión para publicar.", error);
+    return null;
+  }
+}
 
 export default async function PublishPage({
   searchParams
@@ -10,6 +31,11 @@ export default async function PublishPage({
   searchParams: Promise<{ ok?: string; error?: string }>;
 }) {
   const { ok, error } = await searchParams;
+  const user = await getPublishUser();
+
+  if (!user) {
+    redirect("/auth?next=/publicar&error=Inicia%20sesi%C3%B3n%20para%20publicar%20un%20art%C3%ADculo.");
+  }
 
   return (
     <AppShell>

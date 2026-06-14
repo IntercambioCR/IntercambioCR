@@ -9,6 +9,7 @@ type AuthFormsProps = {
   configError: string | null;
   initialError?: string;
   initialOk?: string;
+  nextPath?: string;
 };
 
 function formatAuthError(error: unknown) {
@@ -39,7 +40,15 @@ function formatAuthError(error: unknown) {
   return "No pudimos completar la acción. Intenta de nuevo.";
 }
 
-export function AuthForms({ configError, initialError, initialOk }: AuthFormsProps) {
+function getSafeNextPath(nextPath?: string) {
+  if (!nextPath || !nextPath.startsWith("/") || nextPath.startsWith("//")) {
+    return "/perfil";
+  }
+
+  return nextPath;
+}
+
+export function AuthForms({ configError, initialError, initialOk, nextPath }: AuthFormsProps) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const [error, setError] = useState(initialError ?? "");
@@ -47,6 +56,7 @@ export function AuthForms({ configError, initialError, initialOk }: AuthFormsPro
   const [loading, setLoading] = useState<string | null>(null);
   const siteUrl = typeof window === "undefined" ? "http://localhost:3000" : window.location.origin;
   const disabled = Boolean(configError || loading);
+  const redirectTo = getSafeNextPath(nextPath);
 
   function resetFeedback() {
     setError("");
@@ -110,7 +120,7 @@ export function AuthForms({ configError, initialError, initialOk }: AuthFormsPro
 
       if (data.session) {
         await saveLegalAcceptance(data.user?.id);
-        router.push("/perfil?ok=cuenta-creada");
+        router.push(redirectTo === "/perfil" ? "/perfil?ok=cuenta-creada" : redirectTo);
         router.refresh();
         return;
       }
@@ -126,7 +136,7 @@ export function AuthForms({ configError, initialError, initialOk }: AuthFormsPro
       }
 
       await saveLegalAcceptance(signInData.user?.id ?? data.user?.id);
-      router.push("/perfil?ok=cuenta-creada");
+      router.push(redirectTo === "/perfil" ? "/perfil?ok=cuenta-creada" : redirectTo);
       router.refresh();
     } catch (authError) {
       setError(formatAuthError(authError));
@@ -154,7 +164,7 @@ export function AuthForms({ configError, initialError, initialOk }: AuthFormsPro
         throw signInError;
       }
 
-      router.push("/perfil");
+      router.push(redirectTo);
       router.refresh();
     } catch (authError) {
       setError(formatAuthError(authError));

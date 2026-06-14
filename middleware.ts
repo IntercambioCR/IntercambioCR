@@ -70,6 +70,14 @@ export async function middleware(request: NextRequest) {
       data: { user }
     } = await supabase.auth.getUser();
 
+    if (isProtectedPath(pathname) && !user) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/auth";
+      url.searchParams.set("next", pathname);
+      url.searchParams.set("error", protectedPathMessage(pathname));
+      return NextResponse.redirect(url);
+    }
+
     if (isAdminPath(pathname)) {
       if (!user) {
         const url = request.nextUrl.clone();
@@ -114,6 +122,18 @@ function isAdminPath(pathname: string) {
     "/usuarios",
     "/creditos-admin"
   ].some((path) => pathname === path || pathname.startsWith(`${path}/`));
+}
+
+function isProtectedPath(pathname: string) {
+  return pathname === "/publicar" || pathname.startsWith("/publicar/");
+}
+
+function protectedPathMessage(pathname: string) {
+  if (pathname === "/publicar" || pathname.startsWith("/publicar/")) {
+    return "Inicia sesión para publicar un artículo.";
+  }
+
+  return "Inicia sesión para continuar.";
 }
 
 function getPathRateLimit(pathname: string) {

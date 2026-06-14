@@ -115,7 +115,7 @@ export async function submitPlatformIntake(formData: FormData) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/auth");
+    redirect("/auth?next=/publicar&error=Inicia%20sesi%C3%B3n%20para%20publicar%20un%20art%C3%ADculo.");
   }
   enforceRateLimit("/entregar", `intake-submit:${user.id}`, 5, 60_000);
 
@@ -183,14 +183,21 @@ export async function submitPlatformIntake(formData: FormData) {
 
 export async function publishListing(formData: FormData) {
   const supabase = await createClient();
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
+  let userId: string | null = null;
 
-  if (!user) {
-    redirect("/auth");
+  try {
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+    userId = user?.id ?? null;
+  } catch {
+    userId = null;
   }
-  enforceRateLimit("/publicar", `listing-publish:${user.id}`, 8, 60_000);
+
+  if (!userId) {
+    redirect("/auth?next=/publicar&error=Inicia%20sesi%C3%B3n%20para%20publicar%20un%20art%C3%ADculo.");
+  }
+  enforceRateLimit("/publicar", `listing-publish:${userId}`, 8, 60_000);
 
   const creditPrice = getPositiveInteger(formData, "credit_price");
 
@@ -202,7 +209,7 @@ export async function publishListing(formData: FormData) {
   }
 
   const payload = {
-    seller_id: user.id,
+    seller_id: userId,
     title: formText(formData, "title", 120),
     category: formText(formData, "category", 80),
     condition: formText(formData, "condition", 80),
@@ -242,14 +249,14 @@ export async function publishListing(formData: FormData) {
     const paths = await uploadImages({
       supabase,
       bucket: "listing-images",
-      ownerId: user.id,
+      ownerId: userId,
       entityId: data.id,
       files
     });
 
     console.info("[Intercambio CR publishListing images insert]", {
       table: "listing_images",
-      authUserId: user.id,
+      authUserId: userId,
       listingId: data.id,
       paths,
       firstFolders: paths.map((path) => path.split("/")[0])
@@ -266,7 +273,7 @@ export async function publishListing(formData: FormData) {
     if (imageError) {
       console.error("[Intercambio CR publishListing images insert error]", {
         table: "listing_images",
-        authUserId: user.id,
+        authUserId: userId,
         listingId: data.id,
         paths,
         error: imageError.message
