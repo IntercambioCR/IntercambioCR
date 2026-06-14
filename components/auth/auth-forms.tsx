@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useMemo, useState, type FormEvent } from "react";
-import { Apple, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/browser";
 
@@ -10,11 +9,6 @@ type AuthFormsProps = {
   configError: string | null;
   initialError?: string;
   initialOk?: string;
-  supabaseInfo: {
-    url: string;
-    projectRef: string;
-    anonKeyHint: string;
-  };
 };
 
 function formatAuthError(error: unknown) {
@@ -28,7 +22,7 @@ function formatAuthError(error: unknown) {
       message.includes("eacces") ||
       message.includes("enotfound")
     ) {
-      return "No se pudo conectar con Supabase. Revisa la conexión, la URL del proyecto y que Supabase esté activo.";
+      return "No pudimos conectarnos en este momento. Intenta de nuevo más tarde.";
     }
 
     if (message.includes("invalid login credentials")) {
@@ -36,16 +30,16 @@ function formatAuthError(error: unknown) {
     }
 
     if (message.includes("email not confirmed")) {
-      return "Tu correo aún no está confirmado. Para pruebas locales, Confirm email debe estar en OFF en Supabase.";
+      return "Tu correo aún no está confirmado.";
     }
 
-    return error.message;
+    return "No pudimos completar la acción. Revisa los datos e intenta de nuevo.";
   }
 
-  return "No se pudo completar la acción. Intenta de nuevo.";
+  return "No pudimos completar la acción. Intenta de nuevo.";
 }
 
-export function AuthForms({ configError, initialError, initialOk, supabaseInfo }: AuthFormsProps) {
+export function AuthForms({ configError, initialError, initialOk }: AuthFormsProps) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const [error, setError] = useState(initialError ?? "");
@@ -169,37 +163,6 @@ export function AuthForms({ configError, initialError, initialOk, supabaseInfo }
     }
   }
 
-  async function signInWithMagicLink(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    resetFeedback();
-    setLoading("magic-link");
-
-    try {
-      if (configError) {
-        throw new Error(configError);
-      }
-
-      const formData = new FormData(event.currentTarget);
-      const email = String(formData.get("email") ?? "").trim();
-      const { error: magicError } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: `${siteUrl}/auth/callback`
-        }
-      });
-
-      if (magicError) {
-        throw magicError;
-      }
-
-      router.push("/auth/revisar-correo?tipo=enlace");
-    } catch (authError) {
-      setError(formatAuthError(authError));
-    } finally {
-      setLoading(null);
-    }
-  }
-
   async function recoverPassword(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     resetFeedback();
@@ -228,31 +191,6 @@ export function AuthForms({ configError, initialError, initialOk, supabaseInfo }
     }
   }
 
-  async function signInWithProvider(provider: "google" | "apple") {
-    resetFeedback();
-    setLoading(provider);
-
-    try {
-      if (configError) {
-        throw new Error(configError);
-      }
-
-      const { error: providerError } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${siteUrl}/auth/callback`
-        }
-      });
-
-      if (providerError) {
-        throw providerError;
-      }
-    } catch (authError) {
-      setError(formatAuthError(authError));
-      setLoading(null);
-    }
-  }
-
   return (
     <div className="grid gap-5 lg:grid-cols-2">
       <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
@@ -263,7 +201,7 @@ export function AuthForms({ configError, initialError, initialOk, supabaseInfo }
 
         {configError ? (
           <div className="mt-4 rounded-lg border border-red-100 bg-red-50 p-3 text-sm font-semibold text-red-700">
-            {configError}
+            El inicio de sesión no está disponible temporalmente.
           </div>
         ) : null}
         {error ? (
@@ -276,13 +214,6 @@ export function AuthForms({ configError, initialError, initialOk, supabaseInfo }
             {ok}
           </div>
         ) : null}
-
-        <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs leading-5 text-slate-600">
-          <p className="font-bold text-ink">Conexión Supabase</p>
-          <p>Proyecto: {supabaseInfo.projectRef}</p>
-          <p className="break-all">URL: {supabaseInfo.url}</p>
-          <p>Clave pública: {supabaseInfo.anonKeyHint}</p>
-        </div>
 
         <div className="mt-5 grid gap-3">
           <form onSubmit={signIn} className="grid gap-3">
@@ -310,30 +241,6 @@ export function AuthForms({ configError, initialError, initialOk, supabaseInfo }
             </button>
           </form>
 
-          <div className="flex items-center gap-3 text-xs font-semibold uppercase text-slate-400">
-            <span className="h-px flex-1 bg-slate-200" />
-            Opcional
-            <span className="h-px flex-1 bg-slate-200" />
-          </div>
-
-          <form onSubmit={signInWithMagicLink} className="grid gap-3">
-            <input
-              name="email"
-              required
-              type="email"
-              className="h-12 rounded-lg border border-slate-200 px-3 text-sm"
-              placeholder="correo@ejemplo.com"
-            />
-            <button
-              type="submit"
-              disabled={disabled}
-              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white text-sm font-bold text-ink hover:bg-slate-50 disabled:cursor-wait disabled:opacity-70"
-            >
-              <Mail className="h-4 w-4" />
-              {loading === "magic-link" ? "Enviando enlace..." : "Continuar con enlace por correo"}
-            </button>
-          </form>
-
           <form onSubmit={recoverPassword} className="grid gap-3 rounded-lg bg-slate-50 p-3">
             <p className="text-sm font-semibold text-ink">Recuperar contraseña</p>
             <input
@@ -351,31 +258,13 @@ export function AuthForms({ configError, initialError, initialOk, supabaseInfo }
               {loading === "recovery" ? "Enviando..." : "Enviar enlace de recuperación"}
             </button>
           </form>
-
-          <button
-            type="button"
-            disabled={disabled}
-            onClick={() => signInWithProvider("google")}
-            className="focus-ring h-12 w-full rounded-lg border border-slate-200 bg-white text-sm font-bold text-ink hover:bg-slate-50 disabled:cursor-wait disabled:opacity-70"
-          >
-            {loading === "google" ? "Conectando..." : "Continuar con Google"}
-          </button>
-          <button
-            type="button"
-            disabled={disabled}
-            onClick={() => signInWithProvider("apple")}
-            className="focus-ring inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-ink text-sm font-bold text-white hover:bg-slate-800 disabled:cursor-wait disabled:opacity-70"
-          >
-            <Apple className="h-4 w-4" />
-            {loading === "apple" ? "Conectando..." : "Continuar con Apple"}
-          </button>
         </div>
       </div>
 
       <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
         <h2 className="text-2xl font-bold text-ink">Crear cuenta</h2>
         <p className="mt-2 text-sm leading-6 text-slate-600">
-          Todas las cuentas nuevas quedan con rol <strong>user</strong>. El rol admin solo se asigna manualmente en Supabase.
+          Crea tu perfil para publicar artículos, recibir ofertas y participar en la comunidad.
         </p>
         <form onSubmit={createAccount} className="mt-5 grid gap-3">
           <input

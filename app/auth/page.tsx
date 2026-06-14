@@ -1,6 +1,6 @@
 import { AppShell } from "@/components/app-shell";
 import { AuthForms } from "@/components/auth/auth-forms";
-import { getSupabaseConfigError, getSupabasePublicInfo } from "@/lib/supabase/config";
+import { getSupabaseConfigError } from "@/lib/supabase/config";
 
 export default async function AuthPage({
   searchParams
@@ -16,7 +16,6 @@ export default async function AuthPage({
           configError={getSupabaseConfigError()}
           initialError={error}
           initialOk={ok}
-          supabaseInfo={getSupabasePublicInfo()}
         />
       </section>
     </AppShell>
