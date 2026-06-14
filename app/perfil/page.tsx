@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Calendar, Camera, MapPin, MessageCircle, Settings, Star, Tag, UserRound, WalletCards } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
-import { signOut, updateAvatar, updateProfile } from "@/lib/auth/actions";
+import { signOut, updateAccountPassword, updateAvatar, updateProfile } from "@/lib/auth/actions";
 import { getConversations } from "@/lib/data/messages";
 import { getMyListings } from "@/lib/data/my-listings";
 import { getOffers } from "@/lib/data/offers";
@@ -26,7 +26,7 @@ async function safeLoad<T>(loader: () => Promise<T>, fallback: T) {
   try {
     return await loader();
   } catch (error) {
-    console.error("[Intercambio CR perfil] No se pudo cargar una seccion del perfil", error);
+    console.error("[Intercambio CR perfil] No se pudo cargar una sección del perfil", error);
     return fallback;
   }
 }
@@ -115,7 +115,7 @@ export default async function ProfilePage({
               {!profile ? (
                 <Link
                   href="/auth"
-                className="mt-5 inline-flex min-h-11 items-center rounded-lg bg-ocean-600 px-5 text-sm font-bold text-white"
+                  className="mt-5 inline-flex min-h-11 items-center rounded-lg bg-ocean-600 px-5 text-sm font-bold text-white"
                 >
                   Entrar o crear cuenta
                 </Link>
@@ -135,14 +135,14 @@ export default async function ProfilePage({
                 ? "Cuenta creada correctamente."
                 : ok === "avatar"
                   ? "Foto de perfil actualizada correctamente."
-                : ok === "contrasena"
-                  ? "Contraseña actualizada correctamente."
-                  : "Cambios guardados correctamente."}
+                  : ok === "contrasena"
+                    ? "Contraseña actualizada correctamente."
+                    : "Cambios guardados correctamente."}
             </div>
           ) : null}
           {error ? (
             <div className="mt-5 rounded-lg border border-red-100 bg-red-50 p-3 text-sm font-semibold text-red-700">
-              No se pudo actualizar el perfil: {error}
+              {error}
             </div>
           ) : null}
 
@@ -196,32 +196,64 @@ export default async function ProfilePage({
                 </div>
               </section>
 
-              <form id="configuracion" action={updateProfile} className="rounded-lg border border-slate-200 p-4">
-                <h2 className="font-bold text-ink">Configuración básica</h2>
-                <div className="mt-4 grid gap-3">
-                  <input
-                    name="full_name"
-                    defaultValue={profile.full_name ?? ""}
-                    className="h-12 rounded-lg border border-slate-200 px-3 text-sm"
-                    placeholder="Nombre visible"
-                  />
-                  <input
-                    name="location"
-                    defaultValue={profile.location ?? ""}
-                    className="h-12 rounded-lg border border-slate-200 px-3 text-sm"
-                    placeholder="Ubicación, por ejemplo Escazú"
-                  />
-                  <textarea
-                    name="bio"
-                    defaultValue={profile.bio ?? ""}
-                    className="min-h-24 rounded-lg border border-slate-200 p-3 text-sm"
-                    placeholder="Cuéntale a la comunidad qué sueles intercambiar."
-                  />
-                  <button className="min-h-12 rounded-lg bg-ocean-600 text-sm font-bold text-white hover:bg-ocean-500">
-                    Guardar perfil
-                  </button>
-                </div>
-              </form>
+              <div id="configuracion" className="grid gap-5">
+                <form action={updateProfile} className="rounded-lg border border-slate-200 p-4">
+                  <h2 className="font-bold text-ink">Configuración básica</h2>
+                  <div className="mt-4 grid gap-3">
+                    <input
+                      name="full_name"
+                      defaultValue={profile.full_name ?? ""}
+                      className="h-12 rounded-lg border border-slate-200 px-3 text-sm"
+                      placeholder="Nombre visible"
+                    />
+                    <input
+                      name="location"
+                      defaultValue={profile.location ?? ""}
+                      className="h-12 rounded-lg border border-slate-200 px-3 text-sm"
+                      placeholder="Ubicación, por ejemplo Escazú"
+                    />
+                    <textarea
+                      name="bio"
+                      defaultValue={profile.bio ?? ""}
+                      className="min-h-24 rounded-lg border border-slate-200 p-3 text-sm"
+                      placeholder="Cuéntale a la comunidad qué sueles intercambiar."
+                    />
+                    <button className="min-h-12 rounded-lg bg-ocean-600 text-sm font-bold text-white hover:bg-ocean-500">
+                      Guardar perfil
+                    </button>
+                  </div>
+                </form>
+
+                <form action={updateAccountPassword} className="rounded-lg border border-slate-200 p-4">
+                  <h2 className="font-bold text-ink">Cambiar contraseña</h2>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">
+                    Usa una contraseña nueva de al menos 8 caracteres.
+                  </p>
+                  <div className="mt-4 grid gap-3">
+                    <input
+                      name="password"
+                      required
+                      minLength={8}
+                      type="password"
+                      autoComplete="new-password"
+                      className="h-12 rounded-lg border border-slate-200 px-3 text-sm"
+                      placeholder="Contraseña nueva"
+                    />
+                    <input
+                      name="confirm_password"
+                      required
+                      minLength={8}
+                      type="password"
+                      autoComplete="new-password"
+                      className="h-12 rounded-lg border border-slate-200 px-3 text-sm"
+                      placeholder="Confirmar contraseña nueva"
+                    />
+                    <button className="min-h-12 rounded-lg bg-leaf-600 text-sm font-bold text-white hover:bg-leaf-500">
+                      Actualizar contraseña
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           ) : null}
         </div>

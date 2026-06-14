@@ -14,6 +14,36 @@ function redirectAuthError(message: string): never {
   redirect(`/auth?error=${encodeURIComponent(message)}`);
 }
 
+function redirectProfileError(message: string): never {
+  redirect(`/perfil?error=${encodeURIComponent(message)}`);
+}
+
+function friendlyProfileError(error: unknown) {
+  if (error instanceof Error) {
+    const message = error.message.toLowerCase();
+
+    if (
+      message.includes("bucket not found") ||
+      message.includes("storage") ||
+      message.includes("object not found")
+    ) {
+      return "No fue posible subir la foto. Inténtalo nuevamente.";
+    }
+
+    if (
+      message.includes("fetch failed") ||
+      message.includes("failed to fetch") ||
+      message.includes("networkerror") ||
+      message.includes("eacces") ||
+      message.includes("enotfound")
+    ) {
+      return "No pudimos conectarnos en este momento. Inténtalo nuevamente.";
+    }
+  }
+
+  return "No se pudo actualizar el perfil. Inténtalo nuevamente.";
+}
+
 function readableAuthError(error: unknown) {
   if (error instanceof Error) {
     if (
@@ -270,7 +300,7 @@ export async function updateProfile(formData: FormData) {
   );
 
   if (error) {
-    redirect(`/perfil?error=${encodeURIComponent(error.message)}`);
+    redirectProfileError("No se pudo guardar el perfil. Inténtalo nuevamente.");
   }
 
   revalidatePath("/perfil");
@@ -290,18 +320,18 @@ export async function updateAvatar(formData: FormData) {
   const file = formData.get("avatar");
 
   if (!(file instanceof File) || file.size === 0) {
-    redirect("/perfil?error=Selecciona%20una%20imagen%20para%20tu%20perfil.");
+    redirectProfileError("Selecciona una imagen para tu perfil.");
   }
 
   const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
   const maxBytes = 3 * 1024 * 1024;
 
   if (!allowedTypes.includes(file.type)) {
-    redirect("/perfil?error=Solo%20se%20permiten%20imagenes%20JPG%2C%20PNG%20o%20WebP.");
+    redirectProfileError("Solo se permiten imágenes JPG, PNG o WebP.");
   }
 
   if (file.size > maxBytes) {
-    redirect("/perfil?error=La%20foto%20de%20perfil%20debe%20pesar%203%20MB%20o%20menos.");
+    redirectProfileError("La foto de perfil debe pesar 3 MB o menos.");
   }
 
   const extensionByType: Record<string, string> = {
@@ -320,7 +350,7 @@ export async function updateAvatar(formData: FormData) {
   );
 
   if (uploadError) {
-    redirect(`/perfil?error=${encodeURIComponent(uploadError.message)}`);
+    redirectProfileError(friendlyProfileError(uploadError));
   }
 
   const {
@@ -333,11 +363,42 @@ export async function updateAvatar(formData: FormData) {
 
   if (profileError) {
     await supabase.storage.from("avatars").remove([path]);
-    redirect(`/perfil?error=${encodeURIComponent(profileError.message)}`);
+    redirectProfileError("No se pudo actualizar la foto en tu perfil. Inténtalo nuevamente.");
   }
 
   revalidatePath("/perfil");
   redirect("/perfil?ok=avatar");
+}
+
+export async function updateAccountPassword(formData: FormData) {
+  const password = getString(formData, "password");
+  const confirmPassword = getString(formData, "confirm_password");
+
+  if (password.length < 8) {
+    redirectProfileError("La contraseña debe tener al menos 8 caracteres.");
+  }
+
+  if (password !== confirmPassword) {
+    redirectProfileError("Las contraseñas no coinciden.");
+  }
+
+  const supabase = await getAuthClient();
+  const {
+    data: { user }
+  } = await runAuthRequest(() => supabase.auth.getUser());
+
+  if (!user) {
+    redirect("/auth?redirect=/perfil&error=Inicia%20sesi%C3%B3n%20para%20cambiar%20tu%20contrase%C3%B1a.");
+  }
+
+  const { error } = await runAuthRequest(() => supabase.auth.updateUser({ password }));
+
+  if (error) {
+    redirectProfileError("No se pudo actualizar la contraseña. Inténtalo de nuevo.");
+  }
+
+  revalidatePath("/perfil");
+  redirect("/perfil?ok=contrasena");
 }
 
 export async function updatePassword(formData: FormData) {

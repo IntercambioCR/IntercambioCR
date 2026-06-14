@@ -120,9 +120,9 @@ export default async function PublishPage({
           <div className="mt-4 flex gap-2 rounded-lg bg-ocean-50 p-3 text-sm text-ocean-900">
             <Info className="mt-0.5 h-4 w-4 shrink-0" />
             <div>
-              <p className="font-semibold">Entrega e inspecciÃ³n presencial para recibir credis directos:</p>
+              <p className="font-semibold">Entrega e inspección presencial para recibir credis directos:</p>
               <ul className="mt-1 list-disc pl-5">
-                <li>EscazÃº Centro</li>
+                <li>Escazú Centro</li>
                 <li>Alajuela Centro</li>
               </ul>
             </div>
