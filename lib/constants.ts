@@ -34,7 +34,7 @@ export const listingStatuses = [
 
 export const trustRules = [
   "Puedes aceptar créditos, aceptar otro artículo o elegir la mejor oferta recibida.",
-  "Intercambio CR emite créditos solo cuando recibe e inspecciona artículos en Escazú.",
+  "Intercambio CR emite créditos solo cuando recibe e inspecciona artículos en Escazú Centro o Alajuela Centro.",
   "Los créditos entre usuarios solo se mueven mediante ofertas asociadas a publicaciones.",
   "Cada oferta requiere aprobación de ambas partes, con créditos retenidos hasta confirmar.",
   "Los créditos son saldo interno no redimible por efectivo y no equivalen a colones.",

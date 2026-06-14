@@ -3,7 +3,7 @@ import { AppShell } from "@/components/app-shell";
 
 const terms = [
   "Intercambio entre usuarios: Intercambio CR facilita publicaciones, mensajes, ofertas y reportes, pero no garantiza que un acuerdo entre usuarios se complete.",
-  "Entrega a Intercambio CR: la plataforma puede aceptar o rechazar artículos después de inspección física y solo emite créditos si el artículo es aprobado.",
+  "Entrega a Intercambio CR: la plataforma puede aceptar o rechazar artículos después de inspección física en Escazú Centro o Alajuela Centro y solo emite créditos si el artículo es aprobado.",
   "Créditos: son saldo interno, no son dinero, no equivalen a colones y no se retiran en efectivo.",
   "Seguridad: cada usuario debe verificar el artículo, coordinar en lugares seguros y reportar comportamientos sospechosos.",
   "Moderación: Intercambio CR puede remover publicaciones, bloquear usuarios, congelar ofertas o revisar movimientos cuando detecte fraude, abuso o error operativo."

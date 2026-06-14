@@ -5,9 +5,9 @@ import { getSupabaseConfigError } from "@/lib/supabase/config";
 export default async function AuthPage({
   searchParams
 }: {
-  searchParams: Promise<{ error?: string; ok?: string; next?: string }>;
+  searchParams: Promise<{ error?: string; ok?: string; next?: string; redirect?: string }>;
 }) {
-  const { error, ok, next } = await searchParams;
+  const { error, ok, next, redirect } = await searchParams;
 
   return (
     <AppShell>
@@ -16,7 +16,7 @@ export default async function AuthPage({
           configError={getSupabaseConfigError()}
           initialError={error}
           initialOk={ok}
-          nextPath={next}
+          nextPath={redirect ?? next}
         />
       </section>
     </AppShell>

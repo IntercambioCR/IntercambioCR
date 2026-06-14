@@ -94,7 +94,7 @@ select
   'Artículo de prueba creado desde SQL para validar aprobación y emisión de credis en el panel administrador.',
   'Prueba interna. Puede aprobarse con 25 credis y luego emitirse.',
   'submitted'::intake_status,
-  'Escazú'
+  'Escazú Centro o Alajuela Centro'
 from auth.users u
 where lower(u.email) = 'step1115.sp@gmail.com'
   and not exists (

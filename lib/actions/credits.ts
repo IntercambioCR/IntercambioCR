@@ -110,17 +110,24 @@ async function uploadImages({
 
 export async function submitPlatformIntake(formData: FormData) {
   const supabase = await createClient();
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
+  let userId: string | null = null;
 
-  if (!user) {
-    redirect("/auth?next=/publicar&error=Inicia%20sesi%C3%B3n%20para%20publicar%20un%20art%C3%ADculo.");
+  try {
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+    userId = user?.id ?? null;
+  } catch {
+    userId = null;
   }
-  enforceRateLimit("/entregar", `intake-submit:${user.id}`, 5, 60_000);
+
+  if (!userId) {
+    redirect("/auth?redirect=/entregar&error=Inicia%20sesi%C3%B3n%20para%20entregar%20un%20art%C3%ADculo.");
+  }
+  enforceRateLimit("/entregar", `intake-submit:${userId}`, 5, 60_000);
 
   const payload = {
-    user_id: user.id,
+    user_id: userId,
     title: formText(formData, "title", 120),
     category: formText(formData, "category", 80),
     condition: formText(formData, "condition", 80),
@@ -159,7 +166,7 @@ export async function submitPlatformIntake(formData: FormData) {
     const paths = await uploadImages({
       supabase,
       bucket: "intake-images",
-      ownerId: user.id,
+      ownerId: userId,
       entityId: data.id,
       files
     });
@@ -195,7 +202,7 @@ export async function publishListing(formData: FormData) {
   }
 
   if (!userId) {
-    redirect("/auth?next=/publicar&error=Inicia%20sesi%C3%B3n%20para%20publicar%20un%20art%C3%ADculo.");
+    redirect("/auth?redirect=/publicar&error=Inicia%20sesi%C3%B3n%20para%20publicar%20un%20art%C3%ADculo.");
   }
   enforceRateLimit("/publicar", `listing-publish:${userId}`, 8, 60_000);
 

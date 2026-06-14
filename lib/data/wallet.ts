@@ -22,7 +22,7 @@ export async function getWalletData(): Promise<WalletData> {
     ],
     movements: [
       {
-        label: "Entrega aprobada en Escazú",
+        label: "Entrega aprobada en Escazú Centro o Alajuela Centro",
         date: "Hoy",
         amount: "+420 créditos",
         tone: "text-leaf-600",

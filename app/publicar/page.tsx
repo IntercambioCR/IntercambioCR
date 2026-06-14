@@ -34,7 +34,7 @@ export default async function PublishPage({
   const user = await getPublishUser();
 
   if (!user) {
-    redirect("/auth?next=/publicar&error=Inicia%20sesi%C3%B3n%20para%20publicar%20un%20art%C3%ADculo.");
+    redirect("/auth?redirect=/publicar&error=Inicia%20sesi%C3%B3n%20para%20publicar%20un%20art%C3%ADculo.");
   }
 
   return (
@@ -116,6 +116,16 @@ export default async function PublishPage({
           <div className="mt-4 flex gap-2 rounded-lg bg-leaf-50 p-3 text-sm text-leaf-900">
             <Info className="mt-0.5 h-4 w-4 shrink-0" />
             <p>No se podrá cambiar el valor ni las fotos después de aceptar una oferta.</p>
+          </div>
+          <div className="mt-4 flex gap-2 rounded-lg bg-ocean-50 p-3 text-sm text-ocean-900">
+            <Info className="mt-0.5 h-4 w-4 shrink-0" />
+            <div>
+              <p className="font-semibold">Entrega e inspecciÃ³n presencial para recibir credis directos:</p>
+              <ul className="mt-1 list-disc pl-5">
+                <li>EscazÃº Centro</li>
+                <li>Alajuela Centro</li>
+              </ul>
+            </div>
           </div>
           <SubmitButton
             pendingLabel="Publicando artículo..."

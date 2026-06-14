@@ -216,7 +216,7 @@ export async function getAdminIntake(id: string) {
       offered_credits: null as number | null,
       status: "submitted",
       inspection_notes: null as string | null,
-      dropoff_location: "Escazú",
+      dropoff_location: "Escazú Centro o Alajuela Centro",
       userName: "Usuario",
       created: "Sin fecha",
       images: [] as string[]
@@ -240,7 +240,7 @@ export async function getAdminIntake(id: string) {
       offered_credits: null as number | null,
       status: "unknown",
       inspection_notes: null as string | null,
-      dropoff_location: "Escazú",
+      dropoff_location: "Escazú Centro o Alajuela Centro",
       userName: "Usuario",
       created: "Sin fecha",
       images: [] as string[]

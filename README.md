@@ -44,7 +44,7 @@ La guía manual completa está en `docs/pwa-setup.md`.
 1. El usuario sube fotos y especificaciones.
 2. La comunidad puede ofrecer créditos u otros artículos.
 3. La persona dueña del artículo elige la mejor oferta.
-4. Si Intercambio CR recibe el artículo en Escazú, lo inspecciona antes de emitir créditos.
+4. Si Intercambio CR recibe el artículo en Escazú Centro o Alajuela Centro, lo inspecciona antes de emitir créditos.
 5. Si se aprueba, los créditos quedan registrados en la billetera del usuario.
 
 ### Intercambiar entre usuarios

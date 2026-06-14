@@ -1,8 +1,29 @@
 import { Camera, FileCheck2, MapPin, ShieldCheck } from "lucide-react";
+import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import { categories, conditions, forbiddenItems } from "@/lib/constants";
 import { submitPlatformIntake } from "@/lib/actions/credits";
 import { SubmitButton } from "@/components/submit-button";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { createClient } from "@/lib/supabase/server";
+
+async function getIntakeUser() {
+  if (!isSupabaseConfigured()) {
+    return null;
+  }
+
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    return user;
+  } catch (error) {
+    console.error("No se pudo verificar la sesión para entregar.", error);
+    return null;
+  }
+}
 
 export default async function IntakePage({
   searchParams
@@ -10,6 +31,11 @@ export default async function IntakePage({
   searchParams: Promise<{ ok?: string; error?: string }>;
 }) {
   const { ok, error } = await searchParams;
+  const user = await getIntakeUser();
+
+  if (!user) {
+    redirect("/auth?redirect=/entregar&error=Inicia%20sesi%C3%B3n%20para%20entregar%20un%20art%C3%ADculo.");
+  }
 
   return (
     <AppShell>
@@ -101,9 +127,14 @@ export default async function IntakePage({
                 <MapPin className="h-5 w-5 text-leaf-600" />
                 <div>
                   <h2 className="font-bold text-ink">Entrega e inspección</h2>
-                  <p className="mt-1 text-sm leading-6 text-slate-600">
-                    Punto inicial: Escazú. Los créditos se emiten solo después de aprobación administrativa.
-                  </p>
+                  <div className="mt-1 text-sm leading-6 text-slate-600">
+                    <p>Entrega e inspección presencial:</p>
+                    <ul className="mt-1 list-disc pl-5">
+                      <li>Escazú Centro</li>
+                      <li>Alajuela Centro</li>
+                    </ul>
+                    <p className="mt-2">Los créditos se emiten solo después de aprobación administrativa.</p>
+                  </div>
                 </div>
               </div>
             </div>

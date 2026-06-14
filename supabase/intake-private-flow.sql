@@ -194,7 +194,7 @@ begin
     p_intake_id,
     'platform_issue',
     intake_row.offered_credits,
-    'Credis emitidos por artículo recibido y aprobado en Escazú',
+    'Credis emitidos por artículo recibido y aprobado en Escazú Centro o Alajuela Centro',
     auth.uid()
   );
 

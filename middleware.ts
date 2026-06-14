@@ -73,7 +73,7 @@ export async function middleware(request: NextRequest) {
     if (isProtectedPath(pathname) && !user) {
       const url = request.nextUrl.clone();
       url.pathname = "/auth";
-      url.searchParams.set("next", pathname);
+      url.searchParams.set("redirect", pathname);
       url.searchParams.set("error", protectedPathMessage(pathname));
       return NextResponse.redirect(url);
     }
@@ -97,6 +97,14 @@ export async function middleware(request: NextRequest) {
     }
   } catch (error) {
     console.error("Middleware Supabase falló.", error);
+
+    if (isProtectedPath(pathname)) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/auth";
+      url.searchParams.set("redirect", pathname);
+      url.searchParams.set("error", protectedPathMessage(pathname));
+      return NextResponse.redirect(url);
+    }
 
     if (isAdminPath(pathname)) {
       const url = request.nextUrl.clone();
@@ -125,12 +133,21 @@ function isAdminPath(pathname: string) {
 }
 
 function isProtectedPath(pathname: string) {
-  return pathname === "/publicar" || pathname.startsWith("/publicar/");
+  return (
+    pathname === "/publicar" ||
+    pathname.startsWith("/publicar/") ||
+    pathname === "/entregar" ||
+    pathname.startsWith("/entregar/")
+  );
 }
 
 function protectedPathMessage(pathname: string) {
   if (pathname === "/publicar" || pathname.startsWith("/publicar/")) {
     return "Inicia sesión para publicar un artículo.";
+  }
+
+  if (pathname === "/entregar" || pathname.startsWith("/entregar/")) {
+    return "Inicia sesión para entregar un artículo.";
   }
 
   return "Inicia sesión para continuar.";

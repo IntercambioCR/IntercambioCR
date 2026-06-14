@@ -80,7 +80,7 @@ create table platform_intakes (
   requested_notes text,
   offered_credits integer check (offered_credits > 0),
   status intake_status not null default 'submitted',
-  dropoff_location text not null default 'Escazú',
+  dropoff_location text not null default 'Escazú Centro o Alajuela Centro',
   inspection_notes text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -716,7 +716,7 @@ begin
     p_intake_id,
     'platform_issue',
     intake_row.offered_credits,
-    'Créditos emitidos por artículo recibido y aprobado en Escazú'
+    'Créditos emitidos por artículo recibido y aprobado en Escazú Centro o Alajuela Centro'
   );
 end;
 $$;

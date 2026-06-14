@@ -96,7 +96,7 @@ export default async function HomePage() {
           </p>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
             Si prefieres recibir créditos directamente de Intercambio CR, recibimos artículos
-            en nuestros puntos de Escazú y Alajuela Centro.
+            en nuestros puntos de Escazú Centro y Alajuela Centro.
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -167,7 +167,7 @@ export default async function HomePage() {
           <h2 className="text-xl font-bold text-ink">¿Prefieres recibir créditos de inmediato?</h2>
           <p className="mt-2 max-w-4xl text-sm leading-6 text-slate-700">
             Intercambio CR también puede recibir ciertos artículos y asignarte créditos para usar
-            dentro de la plataforma. Actualmente contamos con puntos de recepción en Escazú y
+            dentro de la plataforma. Actualmente contamos con puntos de recepción en Escazú Centro y
             Alajuela Centro.
           </p>
           <p className="mt-2 max-w-4xl text-sm leading-6 text-slate-600">

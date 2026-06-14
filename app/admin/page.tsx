@@ -368,7 +368,7 @@ export default async function AdminPage({
           <form action={adminIssueIntakeCredits} className="rounded-lg border border-slate-200 bg-white p-5">
             <h2 className="font-bold text-ink">Emitir credis por entrega aprobada</h2>
             <p className="mt-1 text-sm text-slate-500">
-              Solo después de recibir y aprobar físicamente el artículo en Escazú.
+              Solo después de recibir y aprobar físicamente el artículo en Escazú Centro o Alajuela Centro.
             </p>
             <div className="mt-4 grid gap-3">
               <input

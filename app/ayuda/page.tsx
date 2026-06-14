@@ -15,7 +15,7 @@ const faqs = [
   ],
   [
     "¿Cómo obtengo créditos?",
-    "Puedes obtener créditos cuando Intercambio CR recibe e inspecciona un artículo en Escazú, o cuando otra persona acepta una oferta con créditos por una publicación tuya."
+    "Puedes obtener créditos cuando Intercambio CR recibe e inspecciona un artículo en Escazú Centro o Alajuela Centro, o cuando otra persona acepta una oferta con créditos por una publicación tuya."
   ],
   [
     "¿Puedo intercambiar sin créditos?",
