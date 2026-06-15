@@ -3,7 +3,7 @@ values
   ('listing-images', 'listing-images', true, 8388608, array['image/jpeg', 'image/png', 'image/webp']),
   ('intake-images', 'intake-images', false, 8388608, array['image/jpeg', 'image/png', 'image/webp']),
   ('chat-images', 'chat-images', false, 8388608, array['image/jpeg', 'image/png', 'image/webp']),
-  ('avatars', 'avatars', true, 3145728, array['image/jpeg', 'image/png', 'image/webp'])
+  ('Avatars', 'Avatars', true, 3145728, array['image/jpeg', 'image/png', 'image/webp'])
 on conflict (id) do nothing;
 
 create policy "Public listing images are readable"
@@ -59,20 +59,20 @@ create policy "Admins manage intake images"
     and public.is_admin()
   );
 
-create policy "Public avatars are readable"
+create policy "Public Avatars are readable"
   on storage.objects for select
-  using (bucket_id = 'avatars');
+  using (bucket_id = 'Avatars');
 
-create policy "Users upload own avatars"
+create policy "Users upload own Avatars"
   on storage.objects for insert
   with check (
-    bucket_id = 'avatars'
+    bucket_id = 'Avatars'
     and auth.uid()::text = (storage.foldername(name))[1]
   );
 
-create policy "Users update own avatars"
+create policy "Users update own Avatars"
   on storage.objects for update
   using (
-    bucket_id = 'avatars'
+    bucket_id = 'Avatars'
     and auth.uid()::text = (storage.foldername(name))[1]
   );

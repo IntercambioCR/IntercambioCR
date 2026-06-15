@@ -1,25 +1,8 @@
--- Intercambio CR - publicaciones flexibles y avatares
+-- Intercambio CR - politicas de Supabase Storage para foto de perfil
 -- Ejecutar en Supabase SQL Editor.
+-- Bucket usado por la app: Avatars
+-- Ruta usada por la app: {auth.uid()}/avatar-{timestamp}.jpg|png|webp
 
--- 1) Publicaciones: créditos opcionales y campo "qué busca a cambio".
-alter table public.listings
-  add column if not exists looking_for text;
-
-alter table public.listings
-  alter column credit_price drop not null;
-
-alter table public.listings
-  drop constraint if exists listings_credit_price_check;
-
-alter table public.listings
-  add constraint listings_credit_price_check
-  check (credit_price is null or credit_price > 0);
-
-create index if not exists listings_available_created_idx
-  on public.listings (status, created_at desc)
-  where status = 'available';
-
--- 2) Storage: bucket público de avatares.
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (
   'Avatars',
@@ -34,15 +17,32 @@ set
   file_size_limit = excluded.file_size_limit,
   allowed_mime_types = excluded.allowed_mime_types;
 
-drop policy if exists "Public Avatars are readable" on storage.objects;
-create policy "Public Avatars are readable"
+drop policy if exists "Public read Avatars" on storage.objects;
+drop policy if exists "Authenticated read Avatars" on storage.objects;
+drop policy if exists "Users insert own Avatars" on storage.objects;
+drop policy if exists "Users update own Avatars" on storage.objects;
+drop policy if exists "Users delete own Avatars" on storage.objects;
+
+-- Lectura publica para que las fotos de perfil se puedan mostrar con getPublicUrl().
+create policy "Public read Avatars"
 on storage.objects
 for select
 to public
-using (bucket_id = 'Avatars');
+using (
+  bucket_id = 'Avatars'
+);
 
-drop policy if exists "Users upload own Avatars" on storage.objects;
-create policy "Users upload own Avatars"
+-- Lectura explicita para usuarios autenticados.
+create policy "Authenticated read Avatars"
+on storage.objects
+for select
+to authenticated
+using (
+  bucket_id = 'Avatars'
+);
+
+-- Usuarios autenticados solo pueden subir dentro de su propia carpeta.
+create policy "Users insert own Avatars"
 on storage.objects
 for insert
 to authenticated
@@ -51,7 +51,7 @@ with check (
   and auth.uid()::text = (storage.foldername(name))[1]
 );
 
-drop policy if exists "Users update own Avatars" on storage.objects;
+-- Usuarios autenticados solo pueden actualizar sus propios archivos.
 create policy "Users update own Avatars"
 on storage.objects
 for update
@@ -65,7 +65,8 @@ with check (
   and auth.uid()::text = (storage.foldername(name))[1]
 );
 
-drop policy if exists "Users delete own Avatars" on storage.objects;
+-- La app no elimina avatares normalmente, pero esta politica permite limpiar
+-- archivos propios si luego agregamos reemplazo/borrado de foto.
 create policy "Users delete own Avatars"
 on storage.objects
 for delete
@@ -75,7 +76,7 @@ using (
   and auth.uid()::text = (storage.foldername(name))[1]
 );
 
--- 3) Perfil: permitir que el usuario guarde su avatar_url sin abrir el rol.
+-- Permite guardar la URL publica despues del upload.
 alter table public.profiles enable row level security;
 
 drop policy if exists "Users update own profile" on public.profiles;

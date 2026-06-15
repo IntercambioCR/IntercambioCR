@@ -382,7 +382,7 @@ export async function updateAvatar(formData: FormData) {
   };
   const extension = extensionByType[file.type] ?? "jpg";
   const path = `${user.id}/avatar-${Date.now()}.${extension}`;
-  const bucket = "avatars";
+  const bucket = "Avatars";
 
   const { error: uploadError } = await runAuthRequest(() =>
     supabase.storage.from(bucket).upload(path, file, {
@@ -393,6 +393,7 @@ export async function updateAvatar(formData: FormData) {
   );
 
   if (uploadError) {
+    console.error("Avatar upload error:", uploadError);
     const details = getSupabaseErrorDetails(uploadError);
     console.error("[Intercambio CR updateAvatar upload error]", {
       table: "storage.objects",
@@ -410,6 +411,16 @@ export async function updateAvatar(formData: FormData) {
     redirectProfileError(friendlyProfileError(uploadError));
   }
 
+  console.info("[Intercambio CR updateAvatar upload success]", {
+    table: "storage.objects",
+    bucket,
+    path,
+    firstFolder: path.split("/")[0],
+    userId: user.id,
+    fileType: file.type,
+    fileSize: file.size
+  });
+
   const {
     data: { publicUrl }
   } = supabase.storage.from(bucket).getPublicUrl(path);
@@ -419,6 +430,7 @@ export async function updateAvatar(formData: FormData) {
   );
 
   if (profileError) {
+    console.error("Avatar profile update error:", profileError);
     const details = getSupabaseErrorDetails(profileError);
     console.error("[Intercambio CR updateAvatar profile error]", {
       table: "profiles",
@@ -434,6 +446,14 @@ export async function updateAvatar(formData: FormData) {
     await supabase.storage.from(bucket).remove([path]);
     redirectProfileError("No se pudo actualizar la foto en tu perfil. Inténtalo nuevamente.");
   }
+
+  console.info("[Intercambio CR updateAvatar profile success]", {
+    table: "profiles",
+    bucket,
+    path,
+    userId: user.id,
+    publicUrl
+  });
 
   revalidatePath("/perfil");
   redirect("/perfil?ok=avatar");
