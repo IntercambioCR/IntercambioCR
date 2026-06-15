@@ -1,12 +1,12 @@
 -- Intercambio CR - politicas de Supabase Storage para foto de perfil
 -- Ejecutar en Supabase SQL Editor.
--- Bucket usado por la app: Avatars
+-- Bucket usado por la app: avatars
 -- Ruta usada por la app: {auth.uid()}/avatar-{timestamp}.jpg|png|webp
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (
-  'Avatars',
-  'Avatars',
+  'avatars',
+  'avatars',
   true,
   3145728,
   array['image/jpeg', 'image/png', 'image/webp']
@@ -17,62 +17,62 @@ set
   file_size_limit = excluded.file_size_limit,
   allowed_mime_types = excluded.allowed_mime_types;
 
-drop policy if exists "Public read Avatars" on storage.objects;
-drop policy if exists "Authenticated read Avatars" on storage.objects;
-drop policy if exists "Users insert own Avatars" on storage.objects;
-drop policy if exists "Users update own Avatars" on storage.objects;
-drop policy if exists "Users delete own Avatars" on storage.objects;
+drop policy if exists "Public read avatars" on storage.objects;
+drop policy if exists "Authenticated read avatars" on storage.objects;
+drop policy if exists "Users insert own avatars" on storage.objects;
+drop policy if exists "Users update own avatars" on storage.objects;
+drop policy if exists "Users delete own avatars" on storage.objects;
 
 -- Lectura publica para que las fotos de perfil se puedan mostrar con getPublicUrl().
-create policy "Public read Avatars"
+create policy "Public read avatars"
 on storage.objects
 for select
 to public
 using (
-  bucket_id = 'Avatars'
+  bucket_id = 'avatars'
 );
 
 -- Lectura explicita para usuarios autenticados.
-create policy "Authenticated read Avatars"
+create policy "Authenticated read avatars"
 on storage.objects
 for select
 to authenticated
 using (
-  bucket_id = 'Avatars'
+  bucket_id = 'avatars'
 );
 
 -- Usuarios autenticados solo pueden subir dentro de su propia carpeta.
-create policy "Users insert own Avatars"
+create policy "Users insert own avatars"
 on storage.objects
 for insert
 to authenticated
 with check (
-  bucket_id = 'Avatars'
+  bucket_id = 'avatars'
   and auth.uid()::text = (storage.foldername(name))[1]
 );
 
 -- Usuarios autenticados solo pueden actualizar sus propios archivos.
-create policy "Users update own Avatars"
+create policy "Users update own avatars"
 on storage.objects
 for update
 to authenticated
 using (
-  bucket_id = 'Avatars'
+  bucket_id = 'avatars'
   and auth.uid()::text = (storage.foldername(name))[1]
 )
 with check (
-  bucket_id = 'Avatars'
+  bucket_id = 'avatars'
   and auth.uid()::text = (storage.foldername(name))[1]
 );
 
 -- La app no elimina avatares normalmente, pero esta politica permite limpiar
 -- archivos propios si luego agregamos reemplazo/borrado de foto.
-create policy "Users delete own Avatars"
+create policy "Users delete own avatars"
 on storage.objects
 for delete
 to authenticated
 using (
-  bucket_id = 'Avatars'
+  bucket_id = 'avatars'
   and auth.uid()::text = (storage.foldername(name))[1]
 );
 

@@ -382,7 +382,7 @@ export async function updateAvatar(formData: FormData) {
   };
   const extension = extensionByType[file.type] ?? "jpg";
   const path = `${user.id}/avatar-${Date.now()}.${extension}`;
-  const bucket = "Avatars";
+  const bucket = "avatars";
 
   const { error: uploadError } = await runAuthRequest(() =>
     supabase.storage.from(bucket).upload(path, file, {

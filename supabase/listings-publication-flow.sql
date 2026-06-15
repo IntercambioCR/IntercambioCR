@@ -1,6 +1,17 @@
 -- Intercambio CR - flujo publico de publicaciones
 -- Ejecutar en Supabase SQL Editor.
 
+-- Diagnostico rapido:
+-- select column_name, data_type, is_nullable
+-- from information_schema.columns
+-- where table_schema = 'public' and table_name = 'listings'
+-- order by ordinal_position;
+--
+-- select status::text, count(*)
+-- from public.listings
+-- group by status::text
+-- order by status::text;
+
 -- 1) Campo opcional para indicar que busca la persona a cambio.
 alter table public.listings
   add column if not exists looking_for text null;
