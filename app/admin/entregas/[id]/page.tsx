@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, CalendarDays, ShieldCheck, User } from "lucide-react";
+import { ArrowLeft, CalendarDays, FileCheck2, User } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import {
   adminIssueIntakeCredits,
@@ -48,7 +48,7 @@ export default async function AdminIntakeReviewPage({
         <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
           <div className="min-w-0 rounded-lg border border-slate-200 bg-white p-5">
             <div className="mb-3 inline-flex items-center gap-2 rounded-lg bg-ocean-50 px-3 py-2 text-xs font-bold text-ocean-700">
-              <ShieldCheck className="h-4 w-4" />
+              <FileCheck2 className="h-4 w-4" />
               Solicitud privada de entrega
             </div>
             <h1 className="break-words text-3xl font-bold text-ink">{intake.title}</h1>

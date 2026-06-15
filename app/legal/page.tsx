@@ -1,4 +1,4 @@
-import { ShieldCheck } from "lucide-react";
+import { FileText } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 
 const sections = [
@@ -34,7 +34,7 @@ export default function LegalPage() {
       <section className="mx-auto max-w-4xl px-4 py-6 pb-24 sm:px-6 lg:px-8">
         <div className="mb-6">
           <div className="mb-3 inline-flex items-center gap-2 rounded-lg bg-ocean-50 px-3 py-2 text-xs font-bold text-ocean-700">
-            <ShieldCheck className="h-4 w-4" />
+            <FileText className="h-4 w-4" />
             Base legal-operativa
           </div>
           <h1 className="text-3xl font-bold text-ink">Términos y privacidad</h1>

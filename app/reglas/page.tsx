@@ -1,4 +1,4 @@
-import { CheckCircle2, ShieldCheck } from "lucide-react";
+import { CheckCircle2, ListChecks } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { forbiddenItems, trustRules } from "@/lib/constants";
 
@@ -16,7 +16,7 @@ export default function ExchangeRulesPage() {
       <section className="mx-auto max-w-5xl px-4 py-6 pb-24 sm:px-6 lg:px-8">
         <div className="mb-6">
           <div className="mb-3 inline-flex items-center gap-2 rounded-lg bg-leaf-50 px-3 py-2 text-xs font-bold text-leaf-700">
-            <ShieldCheck className="h-4 w-4" />
+            <ListChecks className="h-4 w-4" />
             Reglas de intercambio
           </div>
           <h1 className="text-3xl font-bold text-ink">Reglas de intercambio</h1>
@@ -43,7 +43,7 @@ export default function ExchangeRulesPage() {
             <div className="mt-4 space-y-3">
               {trustRules.map((rule) => (
                 <div key={rule} className="flex gap-2 rounded-lg bg-ocean-50 p-3">
-                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-ocean-600" />
+                  <ListChecks className="mt-0.5 h-4 w-4 shrink-0 text-ocean-600" />
                   <p className="text-sm leading-6 text-slate-600">{rule}</p>
                 </div>
               ))}

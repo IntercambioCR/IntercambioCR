@@ -1,4 +1,4 @@
-import { AlertTriangle, ShieldCheck } from "lucide-react";
+import { AlertTriangle, Info } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { SubmitButton } from "@/components/submit-button";
 import { submitListingReport } from "@/lib/actions/marketplace";
@@ -23,7 +23,7 @@ export default async function SafetyPage({
       <section className="mx-auto max-w-5xl px-4 py-6 pb-24 sm:px-6 lg:px-8">
         <div className="mb-6">
           <div className="mb-3 inline-flex items-center gap-2 rounded-lg bg-leaf-50 px-3 py-2 text-xs font-bold text-leaf-700">
-            <ShieldCheck className="h-4 w-4" />
+            <Info className="h-4 w-4" />
             Seguridad
           </div>
           <h1 className="text-3xl font-bold text-ink">Intercambia con cuidado</h1>
@@ -50,7 +50,7 @@ export default async function SafetyPage({
             <div className="mt-4 space-y-3">
               {safetyRules.map((rule) => (
                 <div key={rule} className="flex gap-2 rounded-lg bg-slate-50 p-3">
-                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-leaf-600" />
+                  <Info className="mt-0.5 h-4 w-4 shrink-0 text-leaf-600" />
                   <p className="text-sm leading-6 text-slate-600">{rule}</p>
                 </div>
               ))}

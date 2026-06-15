@@ -140,6 +140,10 @@ export function ExploreClient({ listings }: ExploreClientProps) {
               <ListingCard key={listing.id} listing={listing} />
             ))}
           </div>
+        ) : listings.length === 0 ? (
+          <div className="rounded-lg border border-slate-200 bg-white p-8 text-center">
+            <p className="font-bold text-ink">Aún no hay publicaciones disponibles.</p>
+          </div>
         ) : (
           <div className="rounded-lg border border-slate-200 bg-white p-8 text-center">
             <p className="font-bold text-ink">No encontramos artículos con esos filtros.</p>

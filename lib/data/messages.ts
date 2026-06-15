@@ -21,15 +21,6 @@ export type ConversationDetail = {
   }>;
 };
 
-const demoConversations: ConversationSummary[] = [
-  {
-    id: "demo",
-    listingTitle: "Silla ergonómica de oficina",
-    otherPerson: "Usuario de ejemplo",
-    updatedAt: "Hoy"
-  }
-];
-
 type ConversationRow = {
   id: string;
   updated_at: string;
@@ -50,7 +41,7 @@ type MessageRow = {
 
 export async function getConversations(): Promise<ConversationSummary[]> {
   if (!isSupabaseConfigured()) {
-    return demoConversations;
+    return [];
   }
 
   const supabase = await createClient();
@@ -90,27 +81,7 @@ export async function getConversations(): Promise<ConversationSummary[]> {
 
 export async function getConversation(id: string): Promise<ConversationDetail | null> {
   if (!isSupabaseConfigured() || id === "demo") {
-    return {
-      id: "demo",
-      listingTitle: "Silla ergonómica de oficina",
-      otherPerson: "Usuario de ejemplo",
-      messages: [
-        {
-          id: "1",
-          body: "Hola, ¿todavía está disponible?",
-          senderName: "Usuario de ejemplo",
-          isOwn: false,
-          createdAt: "Hoy"
-        },
-        {
-          id: "2",
-          body: "Sí, puedes hacer una oferta o pasar a verla en un punto seguro.",
-          senderName: "Tú",
-          isOwn: true,
-          createdAt: "Hoy"
-        }
-      ]
-    };
+    return null;
   }
 
   const supabase = await createClient();

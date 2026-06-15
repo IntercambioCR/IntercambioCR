@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { CheckCircle2, Flag, MessageCircle, ShieldCheck } from "lucide-react";
+import { notFound } from "next/navigation";
+import { CheckCircle2, Flag, MessageCircle, Tag } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { SubmitButton } from "@/components/submit-button";
 import { createListingOffer, startConversation } from "@/lib/actions/marketplace";
@@ -16,6 +17,10 @@ export default async function ListingDetailPage({
   const { id } = await params;
   const { ok, error } = await searchParams;
   const listing = await getListing(id);
+  if (!listing) {
+    notFound();
+  }
+
   const images = listing.images?.length ? listing.images : [listing.image];
 
   return (
@@ -51,7 +56,7 @@ export default async function ListingDetailPage({
 
         <aside className="h-fit min-w-0 rounded-lg border border-slate-200 bg-white p-5">
           <div className="mb-3 inline-flex items-center gap-2 rounded-lg bg-leaf-50 px-3 py-2 text-xs font-bold text-leaf-700">
-            <ShieldCheck className="h-4 w-4" />
+            <Tag className="h-4 w-4" />
             Publicación de la comunidad
           </div>
           <h1 className="break-words text-2xl font-bold text-ink">{listing.title}</h1>

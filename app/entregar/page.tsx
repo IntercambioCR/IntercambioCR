@@ -1,4 +1,4 @@
-import { Camera, FileCheck2, MapPin, ShieldCheck } from "lucide-react";
+import { Ban, Camera, FileCheck2, MapPin } from "lucide-react";
 import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import { categories, conditions, forbiddenItems } from "@/lib/constants";
@@ -140,7 +140,7 @@ export default async function IntakePage({
             </div>
             <div className="rounded-lg border border-slate-200 bg-white p-4">
               <div className="mb-3 flex gap-2">
-                <ShieldCheck className="h-5 w-5 text-ocean-600" />
+                <Ban className="h-5 w-5 text-ocean-600" />
                 <h2 className="font-bold text-ink">No aceptamos</h2>
               </div>
               <ul className="space-y-2 text-sm text-slate-600">
