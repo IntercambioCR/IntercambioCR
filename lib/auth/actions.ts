@@ -19,6 +19,27 @@ function redirectProfileError(message: string): never {
 }
 
 function friendlyProfileError(error: unknown) {
+  const rawMessage =
+    error instanceof Error
+      ? error.message
+      : typeof error === "object" && error !== null && "message" in error
+        ? String((error as { message?: unknown }).message)
+        : "";
+
+  if (rawMessage) {
+    const message = rawMessage.toLowerCase();
+
+    if (
+      message.includes("bucket not found") ||
+      message.includes("storage") ||
+      message.includes("object not found") ||
+      message.includes("row-level security") ||
+      message.includes("violates row-level security")
+    ) {
+      return "No fue posible subir la foto. Inténtalo nuevamente.";
+    }
+  }
+
   if (error instanceof Error) {
     const message = error.message.toLowerCase();
 
@@ -341,28 +362,47 @@ export async function updateAvatar(formData: FormData) {
   };
   const extension = extensionByType[file.type] ?? "jpg";
   const path = `${user.id}/avatar-${Date.now()}.${extension}`;
+  const bucket = "avatars";
 
   const { error: uploadError } = await runAuthRequest(() =>
-    supabase.storage.from("avatars").upload(path, file, {
+    supabase.storage.from(bucket).upload(path, file, {
       cacheControl: "3600",
       upsert: false
     })
   );
 
   if (uploadError) {
+    console.error("[Intercambio CR updateAvatar upload error]", {
+      table: "storage.objects",
+      bucket,
+      path,
+      firstFolder: path.split("/")[0],
+      userId: user.id,
+      fileType: file.type,
+      fileSize: file.size,
+      message: "message" in uploadError ? uploadError.message : String(uploadError)
+    });
     redirectProfileError(friendlyProfileError(uploadError));
   }
 
   const {
     data: { publicUrl }
-  } = supabase.storage.from("avatars").getPublicUrl(path);
+  } = supabase.storage.from(bucket).getPublicUrl(path);
 
   const { error: profileError } = await runAuthRequest(() =>
     supabase.from("profiles").update({ avatar_url: publicUrl }).eq("id", user.id)
   );
 
   if (profileError) {
-    await supabase.storage.from("avatars").remove([path]);
+    console.error("[Intercambio CR updateAvatar profile error]", {
+      table: "profiles",
+      bucket,
+      path,
+      userId: user.id,
+      publicUrl,
+      message: "message" in profileError ? profileError.message : String(profileError)
+    });
+    await supabase.storage.from(bucket).remove([path]);
     redirectProfileError("No se pudo actualizar la foto en tu perfil. Inténtalo nuevamente.");
   }
 

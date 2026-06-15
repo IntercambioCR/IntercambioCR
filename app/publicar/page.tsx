@@ -64,17 +64,17 @@ export default async function PublishPage({
               <input name="title" required className="mt-2 h-12 w-full rounded-lg border border-slate-200 px-3" />
             </label>
             <label className="text-sm font-medium text-slate-700">
-              Valor sugerido en créditos
+              Valor sugerido en créditos (opcional)
               <input
                 name="credit_price"
-                required
                 inputMode="numeric"
                 pattern="[0-9]*"
                 className="mt-2 h-12 w-full rounded-lg border border-slate-200 px-3"
                 placeholder="Ej. 250"
               />
               <span className="mt-1 block text-xs text-slate-500">
-                Escribe un número entero desde 1 crédito. No uses puntos ni decimales.
+                Puedes dejarlo vacío si prefieres recibir ofertas de intercambio. Si lo usas,
+                escribe un número entero desde 1 crédito.
               </span>
             </label>
             <label className="text-sm font-medium text-slate-700">
@@ -102,6 +102,14 @@ export default async function PublishPage({
             Descripción
             <textarea name="description" required className="mt-2 min-h-28 w-full rounded-lg border border-slate-200 p-3" />
           </label>
+          <label className="mt-4 block text-sm font-medium text-slate-700">
+            ¿Buscas algo a cambio?
+            <textarea
+              name="looking_for"
+              className="mt-2 min-h-24 w-full rounded-lg border border-slate-200 p-3"
+              placeholder="Ej. ropa de bebé, electrodomésticos pequeños, artículos de cocina, servicios, o estoy abierta/o a ofertas"
+            />
+          </label>
           <div className="mt-4 rounded-lg border border-dashed border-slate-300 bg-slate-50 p-5 text-center">
             <Camera className="mx-auto h-8 w-8 text-ocean-600" />
             <p className="mt-2 text-sm font-semibold text-ink">Subir fotos</p>
@@ -116,16 +124,6 @@ export default async function PublishPage({
           <div className="mt-4 flex gap-2 rounded-lg bg-leaf-50 p-3 text-sm text-leaf-900">
             <Info className="mt-0.5 h-4 w-4 shrink-0" />
             <p>No se podrá cambiar el valor ni las fotos después de aceptar una oferta.</p>
-          </div>
-          <div className="mt-4 flex gap-2 rounded-lg bg-ocean-50 p-3 text-sm text-ocean-900">
-            <Info className="mt-0.5 h-4 w-4 shrink-0" />
-            <div>
-              <p className="font-semibold">Entrega e inspección presencial para recibir credis directos:</p>
-              <ul className="mt-1 list-disc pl-5">
-                <li>Escazú Centro</li>
-                <li>Alajuela Centro</li>
-              </ul>
-            </div>
           </div>
           <SubmitButton
             pendingLabel="Publicando artículo..."

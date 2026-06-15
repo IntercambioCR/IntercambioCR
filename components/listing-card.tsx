@@ -10,7 +10,8 @@ type ListingCardProps = {
     category: string;
     condition: string;
     location: string;
-    credits: number;
+    credits: number | null;
+    looking_for?: string | null;
     image: string;
   };
 };
@@ -43,10 +44,13 @@ export function ListingCard({ listing }: ListingCardProps) {
           <p className="mt-1 truncate text-xs text-slate-500">
             {listing.category} / {listing.condition}
           </p>
+          <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600">
+            {listing.looking_for ? `Busca: ${listing.looking_for}` : "Abierto a ofertas"}
+          </p>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="min-w-0 text-base font-bold text-ocean-600 sm:text-lg">
-            {formatCredits(listing.credits)} créditos
+            {listing.credits ? `${formatCredits(listing.credits)} créditos` : "Abierto a ofertas"}
           </span>
           <span className="inline-flex min-w-0 max-w-full items-center gap-1 text-xs text-slate-500">
             <MapPin className="h-3.5 w-3.5 shrink-0" />

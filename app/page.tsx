@@ -21,7 +21,7 @@ async function getHomeListings(): Promise<ListingSummary[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("listings")
-      .select("id,title,category,condition,location,credit_price,description,listing_images(storage_path,sort_order)")
+      .select("id,title,category,condition,location,credit_price,looking_for,description,listing_images(storage_path,sort_order)")
       .eq("status", "available")
       .order("created_at", { ascending: false })
       .limit(24);
@@ -46,6 +46,7 @@ async function getHomeListings(): Promise<ListingSummary[]> {
         condition: listing.condition,
         location: listing.location,
         credits: listing.credit_price,
+        looking_for: listing.looking_for,
         image: images[0] ?? fallbackImage,
         images: images.length > 0 ? images : [fallbackImage],
         description: listing.description

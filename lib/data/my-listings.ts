@@ -6,7 +6,8 @@ export type MyListing = {
   title: string;
   category: string;
   status: string;
-  credits: number;
+  credits: number | null;
+  looking_for: string | null;
 };
 
 export async function getMyListings(): Promise<MyListing[]> {
@@ -25,7 +26,7 @@ export async function getMyListings(): Promise<MyListing[]> {
 
   const { data, error } = await supabase
     .from("listings")
-    .select("id,title,category,status,credit_price")
+    .select("id,title,category,status,credit_price,looking_for")
     .eq("seller_id", user.id)
     .order("created_at", { ascending: false });
 
@@ -38,6 +39,7 @@ export async function getMyListings(): Promise<MyListing[]> {
     title: listing.title,
     category: listing.category,
     status: listing.status,
-    credits: listing.credit_price
+    credits: listing.credit_price,
+    looking_for: listing.looking_for
   }));
 }

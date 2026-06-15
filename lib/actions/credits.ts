@@ -33,6 +33,19 @@ function getPositiveInteger(formData: FormData, key: string) {
   return positiveInteger(formData, key);
 }
 
+function getOptionalPositiveInteger(formData: FormData, key: string) {
+  const raw = formText(formData, key, 20);
+  if (!raw) {
+    return null;
+  }
+
+  if (!/^[1-9]\d*$/.test(raw)) {
+    return 0;
+  }
+
+  return Number(raw);
+}
+
 function getSignedInteger(formData: FormData, key: string) {
   return signedInteger(formData, key);
 }
@@ -206,12 +219,13 @@ export async function publishListing(formData: FormData) {
   }
   enforceRateLimit("/publicar", `listing-publish:${userId}`, 8, 60_000);
 
-  const creditPrice = getPositiveInteger(formData, "credit_price");
+  const creditPrice = getOptionalPositiveInteger(formData, "credit_price");
+  const lookingFor = formText(formData, "looking_for", 500);
 
-  if (creditPrice < 1) {
+  if (creditPrice === 0) {
     redirectWithError(
       "/publicar",
-      "Ingresa un monto válido en créditos. Debe ser un número entero mayor o igual a 1."
+      "Ingresa un monto válido en créditos. Debe ser un número entero mayor o igual a 1, o déjalo vacío."
     );
   }
 
@@ -222,7 +236,8 @@ export async function publishListing(formData: FormData) {
     condition: formText(formData, "condition", 80),
     credit_price: creditPrice,
     location: formText(formData, "location", 120),
-    description: formText(formData, "description", 2000)
+    description: formText(formData, "description", 2000),
+    looking_for: lookingFor || null
   };
 
   try {
@@ -296,6 +311,65 @@ export async function publishListing(formData: FormData) {
 
   revalidatePath("/explorar");
   redirect("/publicar?ok=publicacion");
+}
+
+export async function removeOwnListing(formData: FormData) {
+  const supabase = await createClient();
+  const listingId = getString(formData, "listing_id");
+
+  try {
+    validateUuid(listingId, "Publicación");
+  } catch (error) {
+    redirectWithError("/mis-publicaciones", error instanceof Error ? error.message : "Publicación inválida.");
+  }
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/auth?redirect=/mis-publicaciones&error=Inicia%20sesi%C3%B3n%20para%20eliminar%20tu%20publicaci%C3%B3n.");
+  }
+
+  enforceRateLimit("/mis-publicaciones", `listing-remove:${user.id}`, 20, 60_000);
+
+  const { data: listing, error: listingError } = await supabase
+    .from("listings")
+    .select("id,seller_id,status")
+    .eq("id", listingId)
+    .single();
+
+  if (listingError || !listing) {
+    redirectWithError("/mis-publicaciones", "No se encontró la publicación.");
+  }
+
+  const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+  const isOwner = listing.seller_id === user.id;
+  const isAdmin = profile?.role === "admin";
+
+  if (!isOwner && !isAdmin) {
+    redirectWithError("/mis-publicaciones", "No tienes permiso para eliminar esta publicación.");
+  }
+
+  const { error } = await supabase
+    .from("listings")
+    .update({ status: "removed", updated_at: new Date().toISOString() })
+    .eq("id", listingId);
+
+  if (error) {
+    console.error("[Intercambio CR removeOwnListing]", {
+      table: "listings",
+      userId: user.id,
+      listingId,
+      message: error.message
+    });
+    redirectWithError("/mis-publicaciones", "No se pudo eliminar la publicación. Inténtalo nuevamente.");
+  }
+
+  revalidatePath("/");
+  revalidatePath("/explorar");
+  revalidatePath("/mis-publicaciones");
+  redirect("/mis-publicaciones?ok=eliminada");
 }
 
 export async function createPurchaseRequest(formData: FormData) {

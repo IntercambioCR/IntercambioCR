@@ -8,7 +8,8 @@ export type ListingSummary = {
   category: string;
   condition: string;
   location: string;
-  credits: number;
+  credits: number | null;
+  looking_for?: string | null;
   image: string;
   images?: string[];
   description?: string;
@@ -26,7 +27,7 @@ export async function getListings() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("listings")
-    .select("id,title,category,condition,location,credit_price,description,listing_images(storage_path,sort_order)")
+    .select("id,title,category,condition,location,credit_price,looking_for,description,listing_images(storage_path,sort_order)")
     .eq("status", "available")
     .order("created_at", { ascending: false })
     .limit(24);
@@ -53,6 +54,7 @@ export async function getListings() {
       condition: listing.condition,
       location: listing.location,
       credits: listing.credit_price,
+      looking_for: listing.looking_for,
       image,
       images: images.length > 0 ? images : [fallbackImage],
       description: listing.description
@@ -60,20 +62,22 @@ export async function getListings() {
   });
 }
 
-export async function getListing(id: string) {
+export async function getListing(id: string): Promise<ListingSummary> {
   if (!isSupabaseConfigured()) {
-    return demoListings.find((item) => item.id === id) ?? demoListings[0];
+    const listing = demoListings.find((item) => item.id === id) ?? demoListings[0];
+    return { ...listing, looking_for: null };
   }
 
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("listings")
-    .select("id,title,category,condition,location,credit_price,description,seller_id,listing_images(storage_path,sort_order)")
+    .select("id,title,category,condition,location,credit_price,looking_for,description,seller_id,listing_images(storage_path,sort_order)")
     .eq("id", id)
     .single();
 
   if (error || !data) {
-    return demoListings.find((item) => item.id === id) ?? demoListings[0];
+    const listing = demoListings.find((item) => item.id === id) ?? demoListings[0];
+    return { ...listing, looking_for: null };
   }
 
   const imagePaths = data.listing_images
@@ -92,6 +96,7 @@ export async function getListing(id: string) {
     condition: data.condition,
     location: data.location,
     credits: data.credit_price,
+    looking_for: data.looking_for,
     image: images[0] ?? fallbackImage,
     images: images.length > 0 ? images : [fallbackImage],
     description: data.description,

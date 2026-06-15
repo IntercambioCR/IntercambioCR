@@ -40,8 +40,8 @@ export function ExploreClient({ listings }: ExploreClientProps) {
       if (category && listing.category !== category) return false;
       if (condition && listing.condition !== condition) return false;
       if (normalizedLocation && !normalize(listing.location).includes(normalizedLocation)) return false;
-      if (minCredits && Number.isFinite(min) && listing.credits < min) return false;
-      if (maxCredits && Number.isFinite(max) && listing.credits > max) return false;
+      if (minCredits && Number.isFinite(min) && (listing.credits === null || listing.credits < min)) return false;
+      if (maxCredits && Number.isFinite(max) && (listing.credits === null || listing.credits > max)) return false;
 
       return true;
     });

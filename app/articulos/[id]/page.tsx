@@ -59,8 +59,14 @@ export default async function ListingDetailPage({
             {listing.category} / {listing.condition} / {listing.location}
           </p>
           <p className="mt-4 text-3xl font-bold text-ocean-600">
-            {formatCredits(listing.credits)} créditos
+            {listing.credits ? `${formatCredits(listing.credits)} créditos` : "Abierto a ofertas"}
           </p>
+          <div className="mt-4 rounded-lg border border-slate-200 bg-white p-4">
+            <h2 className="text-sm font-bold text-ink">¿Qué busca a cambio?</h2>
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              {listing.looking_for || "La persona está abierta a recibir ofertas en artículos, servicios o créditos."}
+            </p>
+          </div>
           <div className="mt-5 space-y-3 rounded-lg bg-slate-50 p-4">
             {[
               "Puedes ofrecer créditos o proponer otro artículo como intercambio.",
@@ -112,7 +118,7 @@ export default async function ListingDetailPage({
                 required
                 inputMode="numeric"
                 pattern="[0-9]*"
-                defaultValue={listing.credits}
+                defaultValue={listing.credits ?? undefined}
                 className="mt-3 h-12 w-full rounded-lg border border-ocean-100 bg-white px-3 text-sm"
                 placeholder="Créditos ofrecidos"
               />
