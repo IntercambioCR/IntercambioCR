@@ -384,13 +384,28 @@ export async function updateAvatar(formData: FormData) {
   const path = `${user.id}/avatar-${Date.now()}.${extension}`;
   const bucket = "avatars";
 
-  const { error: uploadError } = await runAuthRequest(() =>
-    supabase.storage.from(bucket).upload(path, file, {
+  console.info("[Intercambio CR updateAvatar upload start]", {
+    table: "storage.objects",
+    bucket,
+    path,
+    firstFolder: path.split("/")[0],
+    userId: user.id,
+    fileName: file.name,
+    fileType: file.type,
+    fileSize: file.size
+  });
+
+  let uploadError: unknown = null;
+  try {
+    const result = await supabase.storage.from(bucket).upload(path, file, {
       cacheControl: "3600",
       contentType: file.type,
       upsert: false
-    })
-  );
+    });
+    uploadError = result.error;
+  } catch (error) {
+    uploadError = error;
+  }
 
   if (uploadError) {
     console.error("Avatar upload error:", uploadError);
@@ -425,9 +440,13 @@ export async function updateAvatar(formData: FormData) {
     data: { publicUrl }
   } = supabase.storage.from(bucket).getPublicUrl(path);
 
-  const { error: profileError } = await runAuthRequest(() =>
-    supabase.from("profiles").update({ avatar_url: publicUrl }).eq("id", user.id)
-  );
+  let profileError: unknown = null;
+  try {
+    const result = await supabase.from("profiles").update({ avatar_url: publicUrl }).eq("id", user.id);
+    profileError = result.error;
+  } catch (error) {
+    profileError = error;
+  }
 
   if (profileError) {
     console.error("Avatar profile update error:", profileError);

@@ -15,9 +15,6 @@ export type ListingSummary = {
   seller_id?: string;
 };
 
-const fallbackImage =
-  "/demo/hero-intercambio-real.png";
-
 type ListingRow = {
   id: string;
   title: string;
@@ -25,70 +22,54 @@ type ListingRow = {
   condition: string;
   location: string;
   credit_price: number | null;
-  looking_for: string | null;
   description: string;
   seller_id?: string;
-  listing_images?: Array<{ storage_path: string; sort_order: number }> | null;
 };
 
+type ListingImageRow = {
+  listing_id: string;
+  storage_path: string;
+  sort_order: number | null;
+};
+
+const fallbackImage = "/demo/hero-intercambio-real.png";
+
 const publicListingSelect =
-  "id,title,category,condition,location,credit_price,looking_for,description,listing_images(storage_path,sort_order)";
-const publicListingSelectWithoutLookingFor =
-  "id,title,category,condition,location,credit_price,description,listing_images(storage_path,sort_order)";
+  "id,title,category,condition,location,credit_price,description,seller_id";
 
-function isMissingLookingForError(error: unknown) {
-  return (
-    typeof error === "object" &&
-    error !== null &&
-    "message" in error &&
-    String((error as { message?: unknown }).message).toLowerCase().includes("looking_for")
-  );
-}
-
-async function fetchPublicListings(supabase: Awaited<ReturnType<typeof createClient>>, limit = 24) {
-  const { data: available, error: availableError } = await supabase
-    .from("listings")
-    .select(publicListingSelect)
-    .eq("status", "available")
-    .order("created_at", { ascending: false })
-    .limit(limit);
-
-  if (availableError && isMissingLookingForError(availableError)) {
-    const { data: fallback, error: fallbackError } = await supabase
-      .from("listings")
-      .select(publicListingSelectWithoutLookingFor)
-      .eq("status", "available")
-      .order("created_at", { ascending: false })
-      .limit(limit);
-
-    if (fallbackError) {
-      console.error("[Intercambio CR fetch available listings fallback]", fallbackError);
-      return [];
-    }
-
-    return ((fallback ?? []) as ListingRow[]).map((listing) => ({ ...listing, looking_for: null }));
-  }
-
-  if (availableError) {
-    console.error("[Intercambio CR fetch available listings]", availableError);
-    return [];
-  }
-
-  return (available ?? []) as ListingRow[];
-}
-
-function mapListingSummary(
+async function getPublicListingImages(
   supabase: Awaited<ReturnType<typeof createClient>>,
-  listing: ListingRow
-): ListingSummary {
-  const imagePaths = listing.listing_images
-    ?.sort((a, b) => a.sort_order - b.sort_order)
-    .map((item) => item.storage_path) ?? [];
-  const images = imagePaths.map(
-    (path) => supabase.storage.from("listing-images").getPublicUrl(path).data.publicUrl
-  );
-  const image = images[0] ?? fallbackImage;
+  listingIds: string[]
+) {
+  if (listingIds.length === 0) {
+    return new Map<string, string[]>();
+  }
 
+  const { data, error } = await supabase
+    .from("listing_images")
+    .select("listing_id,storage_path,sort_order")
+    .in("listing_id", listingIds)
+    .order("sort_order", { ascending: true });
+
+  if (error || !data) {
+    console.error("[Intercambio CR listing images query]", {
+      listingIds,
+      message: error?.message,
+      details: error
+    });
+    return new Map<string, string[]>();
+  }
+
+  const grouped = new Map<string, string[]>();
+  for (const image of data as ListingImageRow[]) {
+    const publicUrl = supabase.storage.from("listing-images").getPublicUrl(image.storage_path).data.publicUrl;
+    grouped.set(image.listing_id, [...(grouped.get(image.listing_id) ?? []), publicUrl]);
+  }
+
+  return grouped;
+}
+
+function mapListingSummary(listing: ListingRow, images: string[]): ListingSummary {
   return {
     id: listing.id,
     title: listing.title,
@@ -96,8 +77,8 @@ function mapListingSummary(
     condition: listing.condition,
     location: listing.location,
     credits: listing.credit_price,
-    looking_for: listing.looking_for,
-    image,
+    looking_for: null,
+    image: images[0] ?? fallbackImage,
     images: images.length > 0 ? images : [fallbackImage],
     description: listing.description,
     seller_id: listing.seller_id
@@ -110,8 +91,31 @@ export async function getListings() {
   }
 
   const supabase = await createClient();
-  const data = await fetchPublicListings(supabase);
-  return data.map((listing) => mapListingSummary(supabase, listing));
+  const { data, error } = await supabase
+    .from("listings")
+    .select(publicListingSelect)
+    .eq("status", "available")
+    .order("created_at", { ascending: false })
+    .limit(24);
+
+  if (error || !data) {
+    console.error("[Intercambio CR public listings query]", {
+      table: "listings",
+      filter: "status=available",
+      select: publicListingSelect,
+      message: error?.message,
+      details: error
+    });
+    return [];
+  }
+
+  const listings = data as ListingRow[];
+  const imagesByListing = await getPublicListingImages(
+    supabase,
+    listings.map((listing) => listing.id)
+  );
+
+  return listings.map((listing) => mapListingSummary(listing, imagesByListing.get(listing.id) ?? []));
 }
 
 export async function getListing(id: string): Promise<ListingSummary | null> {
@@ -120,28 +124,25 @@ export async function getListing(id: string): Promise<ListingSummary | null> {
   }
 
   const supabase = await createClient();
-  let { data, error } = await supabase
+  const { data, error } = await supabase
     .from("listings")
-    .select(`${publicListingSelect},seller_id`)
+    .select(publicListingSelect)
     .eq("id", id)
     .eq("status", "available")
     .single();
 
-  if (error && isMissingLookingForError(error)) {
-    const fallbackResult = await supabase
-      .from("listings")
-      .select(`${publicListingSelectWithoutLookingFor},seller_id`)
-      .eq("id", id)
-      .eq("status", "available")
-      .single();
-
-    data = fallbackResult.data ? ({ ...fallbackResult.data, looking_for: null } as typeof data) : null;
-    error = fallbackResult.error;
-  }
-
   if (error || !data) {
+    console.error("[Intercambio CR public listing detail query]", {
+      table: "listings",
+      id,
+      filter: "status=available",
+      select: publicListingSelect,
+      message: error?.message,
+      details: error
+    });
     return null;
   }
 
-  return mapListingSummary(supabase, data as ListingRow);
+  const imagesByListing = await getPublicListingImages(supabase, [id]);
+  return mapListingSummary(data as ListingRow, imagesByListing.get(id) ?? []);
 }
