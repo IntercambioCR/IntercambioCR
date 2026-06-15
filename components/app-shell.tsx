@@ -4,13 +4,13 @@ import {
   Bell,
   CircleUserRound,
   Home,
-  Menu,
   MessageCircle,
   Plus,
   Search,
   WalletCards
 } from "lucide-react";
 import { InstallPrompt } from "@/components/install-prompt";
+import { MobileMenu } from "@/components/mobile-menu";
 import { isCurrentUserAdmin } from "@/lib/data/session";
 
 const primaryNavItems = [
@@ -90,25 +90,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
           </nav>
 
           <div className="flex shrink-0 items-center gap-2">
-            <details className="relative xl:hidden">
-              <summary
-                className="focus-ring grid h-10 w-10 cursor-pointer list-none place-items-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
-                aria-label="Abrir menú"
-              >
-                <Menu className="h-5 w-5" />
-              </summary>
-              <div className="absolute right-0 top-12 z-50 max-h-[75vh] w-[min(19rem,calc(100vw-2rem))] overflow-y-auto rounded-lg border border-slate-200 bg-white p-2 shadow-soft">
-                {mobileMenuItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-ink"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </details>
+            <MobileMenu items={mobileMenuItems} />
             <Link
               href="/publicar"
               className="focus-ring hidden h-10 items-center gap-2 rounded-lg bg-leaf-600 px-3 text-sm font-semibold text-white hover:bg-leaf-500 sm:inline-flex"
