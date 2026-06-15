@@ -237,7 +237,8 @@ export async function publishListing(formData: FormData) {
     credit_price: creditPrice,
     location: formText(formData, "location", 120),
     description: formText(formData, "description", 2000),
-    looking_for: lookingFor || null
+    looking_for: lookingFor || null,
+    status: "pending"
   };
 
   try {
@@ -258,7 +259,13 @@ export async function publishListing(formData: FormData) {
     .single();
 
   if (error || !data) {
-    redirectWithError("/publicar", error?.message ?? "No se pudo crear la publicación.");
+    console.error("[Intercambio CR publishListing insert error]", {
+      table: "listings",
+      userId,
+      message: error?.message,
+      details: error
+    });
+    redirectWithError("/publicar", "No se pudo publicar el artículo. Inténtalo nuevamente.");
   }
 
   let files: File[] = [];
@@ -302,10 +309,7 @@ export async function publishListing(formData: FormData) {
       });
 
       await supabase.storage.from("listing-images").remove(paths);
-      redirectWithError(
-        "/publicar",
-        `No se pudo guardar el registro de imágenes en listing_images: ${imageError.message}`
-      );
+      redirectWithError("/publicar", "No se pudo publicar el artículo. Inténtalo nuevamente.");
     }
   }
 

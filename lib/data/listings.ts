@@ -31,34 +31,50 @@ type ListingRow = {
   listing_images?: Array<{ storage_path: string; sort_order: number }> | null;
 };
 
+const publicListingSelect =
+  "id,title,category,condition,location,credit_price,looking_for,description,listing_images(storage_path,sort_order)";
+const publicListingSelectWithoutLookingFor =
+  "id,title,category,condition,location,credit_price,description,listing_images(storage_path,sort_order)";
+
+function isMissingLookingForError(error: unknown) {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "message" in error &&
+    String((error as { message?: unknown }).message).toLowerCase().includes("looking_for")
+  );
+}
+
 async function fetchPublicListings(supabase: Awaited<ReturnType<typeof createClient>>, limit = 24) {
-  const select =
-    "id,title,category,condition,location,credit_price,looking_for,description,listing_images(storage_path,sort_order)";
   const { data: available, error: availableError } = await supabase
     .from("listings")
-    .select(select)
+    .select(publicListingSelect)
     .eq("status", "available")
     .order("created_at", { ascending: false })
     .limit(limit);
+
+  if (availableError && isMissingLookingForError(availableError)) {
+    const { data: fallback, error: fallbackError } = await supabase
+      .from("listings")
+      .select(publicListingSelectWithoutLookingFor)
+      .eq("status", "available")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (fallbackError) {
+      console.error("[Intercambio CR fetch available listings fallback]", fallbackError);
+      return [];
+    }
+
+    return ((fallback ?? []) as ListingRow[]).map((listing) => ({ ...listing, looking_for: null }));
+  }
 
   if (availableError) {
     console.error("[Intercambio CR fetch available listings]", availableError);
     return [];
   }
 
-  const { data: approved, error: approvedError } = await supabase
-    .from("listings")
-    .select(select)
-    .eq("status", "approved")
-    .order("created_at", { ascending: false })
-    .limit(limit);
-
-  if (approvedError) {
-    return (available ?? []) as ListingRow[];
-  }
-
-  const rows = [...((available ?? []) as ListingRow[]), ...((approved ?? []) as ListingRow[])];
-  return Array.from(new Map(rows.map((listing) => [listing.id, listing])).values()).slice(0, limit);
+  return (available ?? []) as ListingRow[];
 }
 
 function mapListingSummary(
@@ -104,25 +120,23 @@ export async function getListing(id: string): Promise<ListingSummary | null> {
   }
 
   const supabase = await createClient();
-  const select =
-    "id,title,category,condition,location,credit_price,looking_for,description,seller_id,listing_images(storage_path,sort_order)";
   let { data, error } = await supabase
     .from("listings")
-    .select(select)
+    .select(`${publicListingSelect},seller_id`)
     .eq("id", id)
     .eq("status", "available")
     .single();
 
-  if (error || !data) {
-    const approvedResult = await supabase
+  if (error && isMissingLookingForError(error)) {
+    const fallbackResult = await supabase
       .from("listings")
-      .select(select)
+      .select(`${publicListingSelectWithoutLookingFor},seller_id`)
       .eq("id", id)
-      .eq("status", "approved")
+      .eq("status", "available")
       .single();
 
-    data = approvedResult.data;
-    error = approvedResult.error;
+    data = fallbackResult.data ? ({ ...fallbackResult.data, looking_for: null } as typeof data) : null;
+    error = fallbackResult.error;
   }
 
   if (error || !data) {

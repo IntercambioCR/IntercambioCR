@@ -103,7 +103,7 @@ begin
     raise exception 'admin_required';
   end if;
 
-  if p_status not in ('available', 'cancelled', 'removed') then
+  if p_status not in ('available', 'pending', 'rejected', 'cancelled', 'removed') then
     raise exception 'invalid_listing_status';
   end if;
 

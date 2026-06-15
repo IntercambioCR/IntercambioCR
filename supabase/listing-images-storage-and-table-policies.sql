@@ -68,7 +68,7 @@ using (
     select 1
     from public.listings
     where listings.id = listing_images.listing_id
-      and listings.status <> 'removed'
+      and listings.status = 'available'
   )
 );
 

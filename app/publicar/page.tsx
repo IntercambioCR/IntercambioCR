@@ -49,7 +49,7 @@ export default async function PublishPage({
         </div>
         {ok ? (
           <div className="mb-5 rounded-lg border border-leaf-100 bg-leaf-50 p-4 text-sm font-semibold text-leaf-900">
-            Artículo publicado correctamente. Ya puede aparecer en la comunidad cuando esté disponible.
+            Tu publicación fue enviada para revisión. Cuando sea aprobada aparecerá en la comunidad.
           </div>
         ) : null}
         {error ? (

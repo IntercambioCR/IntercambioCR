@@ -34,7 +34,7 @@ function formatAuthError(error: unknown) {
       return "Tu correo aún no está confirmado.";
     }
 
-    return "No pudimos completar la acción. Revisa los datos e intenta de nuevo.";
+    return error.message;
   }
 
   return "No pudimos completar la acción. Intenta de nuevo.";
@@ -53,6 +53,7 @@ export function AuthForms({ configError, initialError, initialOk, nextPath }: Au
   const supabase = useMemo(() => createClient(), []);
   const [error, setError] = useState(initialError ?? "");
   const [ok, setOk] = useState(initialOk ?? "");
+  const [okTitle, setOkTitle] = useState("");
   const [loading, setLoading] = useState<string | null>(null);
   const siteUrl = typeof window === "undefined" ? "http://localhost:3000" : window.location.origin;
   const disabled = Boolean(configError || loading);
@@ -61,6 +62,17 @@ export function AuthForms({ configError, initialError, initialOk, nextPath }: Au
   function resetFeedback() {
     setError("");
     setOk("");
+    setOkTitle("");
+  }
+
+  function showAccountCreated() {
+    setOkTitle("¡Cuenta creada correctamente!");
+    setOk("Ya puedes comenzar a publicar, intercambiar y administrar tus créditos.");
+  }
+
+  function showEmailConfirmation() {
+    setOkTitle("Revisa tu correo");
+    setOk("Te enviamos un correo de confirmación. Revisa tu bandeja de entrada y spam.");
   }
 
   async function saveLegalAcceptance(userId?: string | null) {
@@ -120,7 +132,7 @@ export function AuthForms({ configError, initialError, initialOk, nextPath }: Au
 
       if (data.session) {
         await saveLegalAcceptance(data.user?.id);
-        router.push(redirectTo === "/perfil" ? "/perfil?ok=cuenta-creada" : redirectTo);
+        showAccountCreated();
         router.refresh();
         return;
       }
@@ -131,12 +143,16 @@ export function AuthForms({ configError, initialError, initialOk, nextPath }: Au
       });
 
       if (signInError) {
-        setOk("Cuenta creada correctamente. Ya puedes iniciar sesión.");
+        if (signInError.message.toLowerCase().includes("email not confirmed")) {
+          showEmailConfirmation();
+        } else {
+          throw signInError;
+        }
         return;
       }
 
       await saveLegalAcceptance(signInData.user?.id ?? data.user?.id);
-      router.push(redirectTo === "/perfil" ? "/perfil?ok=cuenta-creada" : redirectTo);
+      showAccountCreated();
       router.refresh();
     } catch (authError) {
       setError(formatAuthError(authError));
@@ -203,7 +219,7 @@ export function AuthForms({ configError, initialError, initialOk, nextPath }: Au
 
   return (
     <div className="grid gap-5 lg:grid-cols-2">
-      <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
+      <div id="crear-cuenta" className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
         <h1 className="text-2xl font-bold text-ink">Entrar a Intercambio CR</h1>
         <p className="mt-2 text-sm leading-6 text-slate-600">
           Usa tu cuenta para publicar, hacer ofertas, conversar y administrar tus créditos.
@@ -220,12 +236,33 @@ export function AuthForms({ configError, initialError, initialOk, nextPath }: Au
           </div>
         ) : null}
         {ok ? (
-          <div className="mt-4 rounded-lg border border-leaf-100 bg-leaf-50 p-3 text-sm font-semibold text-leaf-900">
-            {ok}
+          <div className="mt-4 rounded-lg border border-leaf-100 bg-leaf-50 p-4 text-leaf-950">
+            {okTitle ? <p className="text-lg font-bold">{okTitle}</p> : null}
+            <p className="mt-1 text-sm font-semibold leading-6">{ok}</p>
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+              <Link
+                href="/"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg bg-leaf-600 px-4 text-sm font-bold text-white hover:bg-leaf-500"
+              >
+                Ir al inicio
+              </Link>
+              <Link
+                href="/perfil"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg border border-leaf-200 bg-white px-4 text-sm font-bold text-leaf-900 hover:bg-leaf-50"
+              >
+                Completar mi perfil
+              </Link>
+            </div>
           </div>
         ) : null}
 
         <div className="mt-5 grid gap-3">
+          <p className="text-sm text-slate-600">
+            ¿No tienes cuenta?{" "}
+            <a href="#crear-cuenta" className="font-bold text-ocean-700 underline">
+              Regístrate aquí
+            </a>
+          </p>
           <form onSubmit={signIn} className="grid gap-3">
             <input
               name="email"

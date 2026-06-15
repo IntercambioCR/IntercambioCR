@@ -24,11 +24,26 @@ export async function getMyListings(): Promise<MyListing[]> {
     return [];
   }
 
-  const { data, error } = await supabase
+  let { data, error } = await supabase
     .from("listings")
     .select("id,title,category,status,credit_price,looking_for")
     .eq("seller_id", user.id)
     .order("created_at", { ascending: false });
+
+  if (
+    error &&
+    typeof error.message === "string" &&
+    error.message.toLowerCase().includes("looking_for")
+  ) {
+    const fallback = await supabase
+      .from("listings")
+      .select("id,title,category,status,credit_price")
+      .eq("seller_id", user.id)
+      .order("created_at", { ascending: false });
+
+    data = fallback.data ? fallback.data.map((listing) => ({ ...listing, looking_for: null })) : null;
+    error = fallback.error;
+  }
 
   if (error || !data) {
     return [];
