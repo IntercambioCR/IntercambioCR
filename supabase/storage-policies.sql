@@ -3,7 +3,7 @@ values
   ('listing-images', 'listing-images', true, 8388608, array['image/jpeg', 'image/png', 'image/webp']),
   ('intake-images', 'intake-images', false, 8388608, array['image/jpeg', 'image/png', 'image/webp']),
   ('chat-images', 'chat-images', false, 8388608, array['image/jpeg', 'image/png', 'image/webp']),
-  ('avatars', 'avatars', true, 5242880, array['image/jpeg', 'image/png', 'image/webp'])
+  ('avatars', 'avatars', true, 3145728, array['image/jpeg', 'image/png', 'image/webp'])
 on conflict (id) do nothing;
 
 create policy "Public listing images are readable"

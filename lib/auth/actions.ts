@@ -95,6 +95,26 @@ function serializeAuthError(value: unknown) {
   return value;
 }
 
+function getSupabaseErrorDetails(error: unknown) {
+  if (typeof error !== "object" || error === null) {
+    return {
+      message: String(error),
+      statusCode: null,
+      error: null,
+      details: error
+    };
+  }
+
+  const record = error as Record<string, unknown>;
+
+  return {
+    message: typeof record.message === "string" ? record.message : String(error),
+    statusCode: record.statusCode ?? record.status ?? null,
+    error: record.error ?? record.name ?? null,
+    details: serializeAuthError(error)
+  };
+}
+
 function signInAfterSignUpMessage(message: string) {
   const normalized = message.toLowerCase();
 
@@ -367,11 +387,13 @@ export async function updateAvatar(formData: FormData) {
   const { error: uploadError } = await runAuthRequest(() =>
     supabase.storage.from(bucket).upload(path, file, {
       cacheControl: "3600",
+      contentType: file.type,
       upsert: false
     })
   );
 
   if (uploadError) {
+    const details = getSupabaseErrorDetails(uploadError);
     console.error("[Intercambio CR updateAvatar upload error]", {
       table: "storage.objects",
       bucket,
@@ -380,7 +402,10 @@ export async function updateAvatar(formData: FormData) {
       userId: user.id,
       fileType: file.type,
       fileSize: file.size,
-      message: "message" in uploadError ? uploadError.message : String(uploadError)
+      message: details.message,
+      statusCode: details.statusCode,
+      error: details.error,
+      details: details.details
     });
     redirectProfileError(friendlyProfileError(uploadError));
   }
@@ -394,13 +419,17 @@ export async function updateAvatar(formData: FormData) {
   );
 
   if (profileError) {
+    const details = getSupabaseErrorDetails(profileError);
     console.error("[Intercambio CR updateAvatar profile error]", {
       table: "profiles",
       bucket,
       path,
       userId: user.id,
       publicUrl,
-      message: "message" in profileError ? profileError.message : String(profileError)
+      message: details.message,
+      statusCode: details.statusCode,
+      error: details.error,
+      details: details.details
     });
     await supabase.storage.from(bucket).remove([path]);
     redirectProfileError("No se pudo actualizar la foto en tu perfil. Inténtalo nuevamente.");
