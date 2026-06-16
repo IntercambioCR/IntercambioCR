@@ -20,11 +20,7 @@ alter table public.listings
 alter table public.listings
   add column if not exists credit_price integer null;
 
--- 2) Permitir publicaciones pendientes/rechazadas en el flujo de moderacion.
-alter type public.listing_status add value if not exists 'pending';
-alter type public.listing_status add value if not exists 'rejected';
-
--- 3) Creditos sugeridos opcionales.
+-- 2) Creditos sugeridos opcionales.
 alter table public.listings
   alter column credit_price drop not null;
 
@@ -78,14 +74,14 @@ begin
   end loop;
 end $$;
 
--- 4) Normalizar estados publicos antiguos.
+-- 3) Normalizar estados publicos antiguos.
 -- Nota: si tu enum actual no tenia approved/active/published, esas filas no existen.
 update public.listings
 set status = 'available'::public.listing_status,
     updated_at = now()
 where status::text in ('approved', 'active', 'published');
 
--- 5) Solo available debe ser publico en la app.
+-- 4) Solo available debe ser publico en la app.
 create index if not exists listings_public_available_idx
   on public.listings (created_at desc)
   where status = 'available';
@@ -109,7 +105,7 @@ using (
   )
 );
 
--- 6) Funcion admin: aprobar debe pasar a available.
+-- 5) Funcion admin: aprobar debe pasar a available.
 create or replace function public.admin_update_listing_status(
   p_listing_id uuid,
   p_status text
@@ -123,7 +119,7 @@ begin
     raise exception 'admin_required';
   end if;
 
-  if p_status not in ('available', 'pending', 'rejected', 'cancelled', 'removed') then
+  if p_status not in ('draft', 'available', 'reserved', 'in_process', 'completed', 'cancelled', 'removed') then
     raise exception 'invalid_listing_status';
   end if;
 
@@ -139,5 +135,5 @@ revoke execute on function public.admin_update_listing_status(uuid, text) from p
 revoke execute on function public.admin_update_listing_status(uuid, text) from anon;
 grant execute on function public.admin_update_listing_status(uuid, text) to authenticated;
 
--- 7) Recargar cache de PostgREST/Supabase para evitar errores de schema cache.
+-- 6) Recargar cache de PostgREST/Supabase para evitar errores de schema cache.
 notify pgrst, 'reload schema';

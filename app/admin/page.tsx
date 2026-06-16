@@ -297,7 +297,7 @@ export default async function AdminPage({
                   <div className="flex flex-wrap gap-2">
                     {[
                       ["available", "Aprobar"],
-                      ["rejected", "Rechazar"],
+                      ["removed", "Rechazar"],
                       ["removed", "Eliminar"]
                     ].map(([status, label]) => (
                       <form key={status} action={adminUpdateListingStatus}>

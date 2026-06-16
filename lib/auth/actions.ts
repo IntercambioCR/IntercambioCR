@@ -118,16 +118,17 @@ function getSupabaseErrorDetails(error: unknown) {
 }
 
 function getAdminAvatarErrorMessage(
-  label: string,
+  label: "uploadError" | "profileUpdateError",
   error: unknown,
   context: { bucket: string; path?: string; userId?: string }
 ) {
   const details = getSupabaseErrorDetails(error);
+  const rawRecord = typeof error === "object" && error !== null ? (error as Record<string, unknown>) : {};
 
   return [
-    `${label}: ${details.message}`,
-    `statusCode: ${details.statusCode ?? "sin statusCode"}`,
-    `error: ${details.error ?? "sin error"}`,
+    `${label}.message: ${details.message}`,
+    `${label}.statusCode: ${details.statusCode ?? "sin statusCode"}`,
+    `${label}.error: ${rawRecord.error ?? details.error ?? "sin error"}`,
     `bucket: ${context.bucket}`,
     context.path ? `path: ${context.path}` : null,
     context.userId ? `userId: ${context.userId}` : null
@@ -402,7 +403,8 @@ export async function updateAvatar(formData: FormData) {
     .select("role")
     .eq("id", user.id)
     .maybeSingle();
-  const showRawAvatarErrors = avatarActorProfile?.role === "admin";
+  const showRawAvatarErrors =
+    avatarActorProfile?.role === "admin" || user.email?.toLowerCase() === "step1115.sp@gmail.com";
 
   if (avatarActorProfileError) {
     logAvatarSupabaseError("Avatar profile role lookup error:", avatarActorProfileError, {
@@ -462,6 +464,7 @@ export async function updateAvatar(formData: FormData) {
   }
 
   if (uploadError) {
+    console.error("Avatar upload error:", uploadError);
     logAvatarSupabaseError("Avatar upload error:", uploadError, {
       table: "storage.objects",
       bucket,
@@ -472,7 +475,7 @@ export async function updateAvatar(formData: FormData) {
     });
     redirectProfileError(
       showRawAvatarErrors
-        ? getAdminAvatarErrorMessage("Error real al subir avatar", uploadError, { bucket, path, userId: user.id })
+        ? getAdminAvatarErrorMessage("uploadError", uploadError, { bucket, path, userId: user.id })
         : friendlyProfileError(uploadError)
     );
   }
@@ -500,6 +503,7 @@ export async function updateAvatar(formData: FormData) {
   }
 
   if (profileError) {
+    console.error("Profile update error:", profileError);
     logAvatarSupabaseError("Avatar profile update error:", profileError, {
       table: "profiles",
       bucket,
@@ -519,7 +523,7 @@ export async function updateAvatar(formData: FormData) {
     }
     redirectProfileError(
       showRawAvatarErrors
-        ? getAdminAvatarErrorMessage("Error real al guardar avatar_url", profileError, { bucket, path, userId: user.id })
+        ? getAdminAvatarErrorMessage("profileUpdateError", profileError, { bucket, path, userId: user.id })
         : "No se pudo actualizar la foto en tu perfil. Inténtalo nuevamente."
     );
   }

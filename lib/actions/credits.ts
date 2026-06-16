@@ -238,7 +238,7 @@ export async function publishListing(formData: FormData) {
     location: formText(formData, "location", 120),
     description: formText(formData, "description", 2000),
     looking_for: lookingFor || null,
-    status: "pending"
+    status: "available"
   };
 
   try {

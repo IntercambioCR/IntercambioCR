@@ -87,6 +87,9 @@ function mapListingSummary(listing: ListingRow, images: string[]): ListingSummar
 
 export async function getListings() {
   if (!isSupabaseConfigured()) {
+    console.warn("[Intercambio CR public listings query skipped]", {
+      reason: "Supabase no está configurado"
+    });
     return [];
   }
 
@@ -110,6 +113,13 @@ export async function getListings() {
   }
 
   const listings = data as ListingRow[];
+  console.info("[Intercambio CR public listings query success]", {
+    table: "listings",
+    filter: "status=available",
+    count: listings.length,
+    ids: listings.map((listing) => listing.id)
+  });
+
   const imagesByListing = await getPublicListingImages(
     supabase,
     listings.map((listing) => listing.id)
@@ -120,6 +130,10 @@ export async function getListings() {
 
 export async function getListing(id: string): Promise<ListingSummary | null> {
   if (!isSupabaseConfigured()) {
+    console.warn("[Intercambio CR public listing detail query skipped]", {
+      reason: "Supabase no está configurado",
+      id
+    });
     return null;
   }
 
@@ -144,5 +158,11 @@ export async function getListing(id: string): Promise<ListingSummary | null> {
   }
 
   const imagesByListing = await getPublicListingImages(supabase, [id]);
+  console.info("[Intercambio CR public listing detail query success]", {
+    table: "listings",
+    id,
+    filter: "status=available"
+  });
+
   return mapListingSummary(data as ListingRow, imagesByListing.get(id) ?? []);
 }
