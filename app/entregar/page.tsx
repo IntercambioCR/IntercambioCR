@@ -55,7 +55,7 @@ export default async function IntakePage({
 
         {ok ? (
           <div className="mb-5 rounded-lg border border-leaf-100 bg-leaf-50 p-4 text-sm font-semibold text-leaf-900">
-            Solicitud privada enviada. Intercambio CR la revisará desde el panel administrativo.
+            Tu entrega fue registrada correctamente y será revisada por Intercambio CR.
           </div>
         ) : null}
         {error ? (
@@ -103,6 +103,7 @@ export default async function IntakePage({
               <p className="mt-2 text-sm font-semibold text-ink">Fotos para revisión</p>
               <p className="mt-1 text-xs text-slate-600">
                 Sube frente, lados, etiqueta, defectos y prueba de funcionamiento si aplica.
+                Formatos permitidos: JPG, PNG o WebP. Máximo 8 MB por imagen y hasta 6 fotos.
               </p>
               <input
                 name="images"

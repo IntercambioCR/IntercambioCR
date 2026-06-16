@@ -23,7 +23,7 @@ create type credit_transaction_type as enum (
   'devolucion',
   'cancelacion'
 );
-create type listing_status as enum ('pending', 'available', 'reserved', 'in_process', 'completed', 'cancelled', 'rejected', 'removed');
+create type listing_status as enum ('draft', 'available', 'reserved', 'in_process', 'completed', 'cancelled', 'removed');
 create type purchase_status as enum ('requested', 'seller_accepted', 'buyer_confirmed', 'seller_confirmed', 'completed', 'cancelled', 'disputed');
 create type intake_status as enum ('submitted', 'offer_made', 'scheduled', 'received', 'approved', 'rejected', 'paid');
 create type report_status as enum ('open', 'reviewing', 'resolved', 'dismissed');
@@ -62,7 +62,7 @@ create table listings (
   credit_price integer check (credit_price is null or credit_price > 0),
   looking_for text,
   location text not null,
-  status listing_status not null default 'pending',
+  status listing_status not null default 'available',
   approved_at timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -834,7 +834,7 @@ begin
     raise exception 'admin_required';
   end if;
 
-  if p_status not in ('available', 'pending', 'rejected', 'cancelled', 'removed') then
+  if p_status not in ('draft', 'available', 'reserved', 'in_process', 'completed', 'cancelled', 'removed') then
     raise exception 'invalid_listing_status';
   end if;
 

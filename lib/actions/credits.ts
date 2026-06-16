@@ -85,6 +85,21 @@ function logSupabaseError(label: string, error: unknown, context: Record<string,
   });
 }
 
+function logPlatformIntakeError(error: unknown, context: Record<string, unknown>) {
+  const info = getSupabaseErrorInfo(error);
+  const stack = error instanceof Error ? error.stack : null;
+
+  console.error("Platform intake error:", {
+    message: info.message,
+    code: info.code,
+    details: info.details,
+    hint: info.hint,
+    stack,
+    error: info.error,
+    ...context
+  });
+}
+
 function isSearchListingText(value: string | null | undefined) {
   return Boolean(value && /\b(busco|busca|buscando|necesito|necesita)\b/i.test(value));
 }
@@ -314,23 +329,54 @@ export async function submitPlatformIntake(formData: FormData) {
     .single();
 
   if (error || !data) {
-    redirectWithError("/entregar", error?.message ?? "No se pudo crear la solicitud.");
+    logPlatformIntakeError(error, {
+      table: "platform_intakes",
+      userId,
+      payload: {
+        user_id: payload.user_id,
+        title: payload.title,
+        category: payload.category,
+        condition: payload.condition,
+        description: payload.description ? "[redacted]" : "",
+        requested_notes: payload.requested_notes ? "[redacted]" : null
+      }
+    });
+    redirectWithError("/entregar", "No se pudo enviar la solicitud. Inténtalo nuevamente.");
   }
 
   let files: File[] = [];
   try {
     files = getImageFiles(formData, "images", 6);
   } catch (error) {
+    logPlatformIntakeError(error, {
+      table: "client_formdata",
+      userId,
+      field: "images"
+    });
     redirectWithError("/entregar", error instanceof Error ? error.message : "Imágenes inválidas.");
   }
   if (files.length > 0) {
-    const paths = await uploadImages({
-      supabase,
-      bucket: "intake-images",
-      ownerId: userId,
-      entityId: data.id,
-      files
-    });
+    let paths: string[] = [];
+
+    try {
+      paths = await uploadImages({
+        supabase,
+        bucket: "intake-images",
+        ownerId: userId,
+        entityId: data.id,
+        files
+      });
+    } catch (uploadError) {
+      logPlatformIntakeError(uploadError, {
+        table: "storage.objects",
+        bucket: "intake-images",
+        userId,
+        intakeId: data.id,
+        expectedFirstFolder: userId,
+        fileCount: files.length
+      });
+      redirectWithError("/entregar", "No se pudo subir la imagen. Inténtalo nuevamente.");
+    }
 
     const { error: imageError } = await supabase.from("intake_images").insert(
       paths.map((path, index) => ({
@@ -341,7 +387,36 @@ export async function submitPlatformIntake(formData: FormData) {
     );
 
     if (imageError) {
-      redirectWithError("/entregar", imageError.message);
+      logPlatformIntakeError(imageError, {
+        table: "intake_images",
+        userId,
+        intakeId: data.id,
+        paths
+      });
+
+      try {
+        const { error: cleanupError } = await supabase.storage.from("intake-images").remove(paths);
+
+        if (cleanupError) {
+          logPlatformIntakeError(cleanupError, {
+            table: "storage.objects",
+            bucket: "intake-images",
+            userId,
+            intakeId: data.id,
+            paths
+          });
+        }
+      } catch (cleanupError) {
+        logPlatformIntakeError(cleanupError, {
+          table: "storage.objects",
+          bucket: "intake-images",
+          userId,
+          intakeId: data.id,
+          paths
+        });
+      }
+
+      redirectWithError("/entregar", "No se pudo guardar la imagen. Inténtalo nuevamente.");
     }
   }
 
