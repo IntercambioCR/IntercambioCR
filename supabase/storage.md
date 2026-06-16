@@ -5,7 +5,7 @@ Create these buckets:
 - `listing-images`: public read, authenticated uploads.
 - `intake-images`: private, only owner and admins can read.
 - `chat-images`: private, only purchase participants can read.
-- `avatars`: public read, authenticated uploads.
+- `Avatars`: public read, authenticated uploads.
 
 You can create them manually in the Supabase dashboard or run
 `supabase/storage-policies.sql` after `supabase/schema.sql`.

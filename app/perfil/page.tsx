@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Calendar, Camera, MapPin, MessageCircle, Settings, Star, Tag, UserRound, WalletCards } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { signOut, updateAccountPassword, updateAvatar, updateProfile } from "@/lib/auth/actions";
@@ -14,11 +13,17 @@ function safeAvatarUrl(value: string | null | undefined) {
     return null;
   }
 
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return null;
+  }
+
   try {
-    const url = new URL(value);
-    return url.protocol === "https:" || url.protocol === "http:" ? value : null;
+    const url = new URL(trimmed);
+    return url.protocol === "https:" || url.protocol === "http:" ? url.toString() : null;
   } catch {
-    return value.startsWith("/") ? value : null;
+    return trimmed.startsWith("/") ? trimmed : null;
   }
 }
 
@@ -58,12 +63,11 @@ export default async function ProfilePage({
             <div className="shrink-0">
               <div className="relative grid h-24 w-24 place-items-center overflow-hidden rounded-lg bg-ocean-100 text-3xl font-bold text-ocean-700">
                 {avatarUrl ? (
-                  <Image
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
                     src={avatarUrl}
                     alt={profile?.full_name ? `Foto de ${profile.full_name}` : "Foto de perfil"}
-                    fill
-                    sizes="96px"
-                    className="object-cover"
+                    className="h-full w-full object-cover"
                   />
                 ) : profile?.full_name ? (
                   profile.full_name.slice(0, 2).toUpperCase()

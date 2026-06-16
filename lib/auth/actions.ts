@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { getSupabaseConfigError } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 
+const AVATAR_BUCKET = "Avatars";
+
 function getString(formData: FormData, key: string) {
   const value = formData.get(key);
   return typeof value === "string" ? value.trim() : "";
@@ -113,6 +115,43 @@ function getSupabaseErrorDetails(error: unknown) {
     error: record.error ?? record.name ?? null,
     details: serializeAuthError(error)
   };
+}
+
+function getAdminAvatarErrorMessage(
+  label: string,
+  error: unknown,
+  context: { bucket: string; path?: string; userId?: string }
+) {
+  const details = getSupabaseErrorDetails(error);
+
+  return [
+    `${label}: ${details.message}`,
+    `statusCode: ${details.statusCode ?? "sin statusCode"}`,
+    `error: ${details.error ?? "sin error"}`,
+    `bucket: ${context.bucket}`,
+    context.path ? `path: ${context.path}` : null,
+    context.userId ? `userId: ${context.userId}` : null
+  ]
+    .filter(Boolean)
+    .join(" | ");
+}
+
+function logAvatarSupabaseError(
+  label: string,
+  error: unknown,
+  context: { table: string; bucket: string; path?: string; userId?: string; fileType?: string; fileSize?: number; publicUrl?: string }
+) {
+  const details = getSupabaseErrorDetails(error);
+  const rawRecord = typeof error === "object" && error !== null ? (error as Record<string, unknown>) : {};
+
+  console.error(label, {
+    "error.message": details.message,
+    "error.statusCode": details.statusCode,
+    "error.error": rawRecord.error ?? null,
+    error,
+    details: details.details,
+    ...context
+  });
 }
 
 function signInAfterSignUpMessage(message: string) {
@@ -358,6 +397,21 @@ export async function updateAvatar(formData: FormData) {
     redirect("/auth");
   }
 
+  const { data: avatarActorProfile, error: avatarActorProfileError } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle();
+  const showRawAvatarErrors = avatarActorProfile?.role === "admin";
+
+  if (avatarActorProfileError) {
+    logAvatarSupabaseError("Avatar profile role lookup error:", avatarActorProfileError, {
+      table: "profiles",
+      bucket: AVATAR_BUCKET,
+      userId: user.id
+    });
+  }
+
   const file = formData.get("avatar");
 
   if (!(file instanceof File) || file.size === 0) {
@@ -382,7 +436,7 @@ export async function updateAvatar(formData: FormData) {
   };
   const extension = extensionByType[file.type] ?? "jpg";
   const path = `${user.id}/avatar-${Date.now()}.${extension}`;
-  const bucket = "avatars";
+  const bucket = AVATAR_BUCKET;
 
   console.info("[Intercambio CR updateAvatar upload start]", {
     table: "storage.objects",
@@ -408,22 +462,19 @@ export async function updateAvatar(formData: FormData) {
   }
 
   if (uploadError) {
-    console.error("Avatar upload error:", uploadError);
-    const details = getSupabaseErrorDetails(uploadError);
-    console.error("[Intercambio CR updateAvatar upload error]", {
+    logAvatarSupabaseError("Avatar upload error:", uploadError, {
       table: "storage.objects",
       bucket,
       path,
-      firstFolder: path.split("/")[0],
       userId: user.id,
       fileType: file.type,
-      fileSize: file.size,
-      message: details.message,
-      statusCode: details.statusCode,
-      error: details.error,
-      details: details.details
+      fileSize: file.size
     });
-    redirectProfileError(friendlyProfileError(uploadError));
+    redirectProfileError(
+      showRawAvatarErrors
+        ? getAdminAvatarErrorMessage("Error real al subir avatar", uploadError, { bucket, path, userId: user.id })
+        : friendlyProfileError(uploadError)
+    );
   }
 
   console.info("[Intercambio CR updateAvatar upload success]", {
@@ -449,21 +500,28 @@ export async function updateAvatar(formData: FormData) {
   }
 
   if (profileError) {
-    console.error("Avatar profile update error:", profileError);
-    const details = getSupabaseErrorDetails(profileError);
-    console.error("[Intercambio CR updateAvatar profile error]", {
+    logAvatarSupabaseError("Avatar profile update error:", profileError, {
       table: "profiles",
       bucket,
       path,
       userId: user.id,
-      publicUrl,
-      message: details.message,
-      statusCode: details.statusCode,
-      error: details.error,
-      details: details.details
+      publicUrl
     });
-    await supabase.storage.from(bucket).remove([path]);
-    redirectProfileError("No se pudo actualizar la foto en tu perfil. Inténtalo nuevamente.");
+    try {
+      await supabase.storage.from(bucket).remove([path]);
+    } catch (cleanupError) {
+      logAvatarSupabaseError("Avatar cleanup error:", cleanupError, {
+        table: "storage.objects",
+        bucket,
+        path,
+        userId: user.id
+      });
+    }
+    redirectProfileError(
+      showRawAvatarErrors
+        ? getAdminAvatarErrorMessage("Error real al guardar avatar_url", profileError, { bucket, path, userId: user.id })
+        : "No se pudo actualizar la foto en tu perfil. Inténtalo nuevamente."
+    );
   }
 
   console.info("[Intercambio CR updateAvatar profile success]", {

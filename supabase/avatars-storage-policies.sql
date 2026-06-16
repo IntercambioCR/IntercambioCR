@@ -1,12 +1,12 @@
 -- Intercambio CR - politicas de Supabase Storage para foto de perfil
 -- Ejecutar en Supabase SQL Editor.
--- Bucket usado por la app: avatars
+-- Bucket usado por la app: Avatars
 -- Ruta usada por la app: {auth.uid()}/avatar-{timestamp}.jpg|png|webp
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (
-  'avatars',
-  'avatars',
+  'Avatars',
+  'Avatars',
   true,
   3145728,
   array['image/jpeg', 'image/png', 'image/webp']
@@ -29,7 +29,7 @@ on storage.objects
 for select
 to public
 using (
-  bucket_id = 'avatars'
+  bucket_id = 'Avatars'
 );
 
 -- Lectura explicita para usuarios autenticados.
@@ -38,7 +38,7 @@ on storage.objects
 for select
 to authenticated
 using (
-  bucket_id = 'avatars'
+  bucket_id = 'Avatars'
 );
 
 -- Usuarios autenticados solo pueden subir dentro de su propia carpeta.
@@ -47,7 +47,7 @@ on storage.objects
 for insert
 to authenticated
 with check (
-  bucket_id = 'avatars'
+  bucket_id = 'Avatars'
   and auth.uid()::text = (storage.foldername(name))[1]
 );
 
@@ -57,11 +57,11 @@ on storage.objects
 for update
 to authenticated
 using (
-  bucket_id = 'avatars'
+  bucket_id = 'Avatars'
   and auth.uid()::text = (storage.foldername(name))[1]
 )
 with check (
-  bucket_id = 'avatars'
+  bucket_id = 'Avatars'
   and auth.uid()::text = (storage.foldername(name))[1]
 );
 
@@ -72,7 +72,7 @@ on storage.objects
 for delete
 to authenticated
 using (
-  bucket_id = 'avatars'
+  bucket_id = 'Avatars'
   and auth.uid()::text = (storage.foldername(name))[1]
 );
 
