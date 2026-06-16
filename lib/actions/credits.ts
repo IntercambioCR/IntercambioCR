@@ -50,6 +50,41 @@ function getSignedInteger(formData: FormData, key: string) {
   return signedInteger(formData, key);
 }
 
+function getSupabaseErrorInfo(error: unknown) {
+  if (typeof error !== "object" || error === null) {
+    return {
+      message: String(error),
+      code: null,
+      details: null,
+      hint: null,
+      error
+    };
+  }
+
+  const record = error as Record<string, unknown>;
+
+  return {
+    message: typeof record.message === "string" ? record.message : String(error),
+    code: record.code ?? null,
+    details: record.details ?? null,
+    hint: record.hint ?? null,
+    error
+  };
+}
+
+function logSupabaseError(label: string, error: unknown, context: Record<string, unknown>) {
+  const info = getSupabaseErrorInfo(error);
+
+  console.error(label, {
+    message: info.message,
+    code: info.code,
+    details: info.details,
+    hint: info.hint,
+    error: info.error,
+    ...context
+  });
+}
+
 function validateImage(file: File) {
   const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
   const maxBytes = 8 * 1024 * 1024;
@@ -104,15 +139,14 @@ async function uploadImages({
     });
 
     if (error) {
-      console.error("[Intercambio CR uploadImages error]", {
+      logSupabaseError("[Intercambio CR uploadImages error]", error, {
         table: "storage.objects",
         authUserId: storageUser?.id ?? null,
         ownerId,
         bucket,
-        path,
-        error: error.message
+        path
       });
-      throw new Error(error.message);
+      throw error;
     }
 
     uploadedPaths.push(path);
@@ -259,11 +293,20 @@ export async function publishListing(formData: FormData) {
     .single();
 
   if (error || !data) {
-    console.error("[Intercambio CR publishListing insert error]", {
+    logSupabaseError("[Intercambio CR publishListing insert error]", error, {
       table: "listings",
       userId,
-      message: error?.message,
-      details: error
+      payload: {
+        seller_id: payload.seller_id,
+        title: payload.title,
+        category: payload.category,
+        condition: payload.condition,
+        credit_price: payload.credit_price,
+        location: payload.location,
+        description: payload.description ? "[redacted]" : "",
+        looking_for: payload.looking_for ? "[redacted]" : null,
+        status: payload.status
+      }
     });
     redirectWithError("/publicar", "No se pudo publicar el artículo. Inténtalo nuevamente.");
   }
@@ -275,13 +318,27 @@ export async function publishListing(formData: FormData) {
     redirectWithError("/publicar", error instanceof Error ? error.message : "Imágenes inválidas.");
   }
   if (files.length > 0) {
-    const paths = await uploadImages({
-      supabase,
-      bucket: "listing-images",
-      ownerId: userId,
-      entityId: data.id,
-      files
-    });
+    let paths: string[] = [];
+
+    try {
+      paths = await uploadImages({
+        supabase,
+        bucket: "listing-images",
+        ownerId: userId,
+        entityId: data.id,
+        files
+      });
+    } catch (uploadError) {
+      logSupabaseError("[Intercambio CR publishListing storage upload error]", uploadError, {
+        table: "storage.objects",
+        bucket: "listing-images",
+        authUserId: userId,
+        listingId: data.id,
+        expectedFirstFolder: userId,
+        fileCount: files.length
+      });
+      redirectWithError("/publicar", "No se pudo publicar el artículo. Inténtalo nuevamente.");
+    }
 
     console.info("[Intercambio CR publishListing images insert]", {
       table: "listing_images",
@@ -300,15 +357,34 @@ export async function publishListing(formData: FormData) {
     );
 
     if (imageError) {
-      console.error("[Intercambio CR publishListing images insert error]", {
+      logSupabaseError("[Intercambio CR publishListing images insert error]", imageError, {
         table: "listing_images",
         authUserId: userId,
         listingId: data.id,
-        paths,
-        error: imageError.message
+        paths
       });
 
-      await supabase.storage.from("listing-images").remove(paths);
+      try {
+        const { error: cleanupError } = await supabase.storage.from("listing-images").remove(paths);
+
+        if (cleanupError) {
+          logSupabaseError("[Intercambio CR publishListing image cleanup error]", cleanupError, {
+            table: "storage.objects",
+            authUserId: userId,
+            listingId: data.id,
+            bucket: "listing-images",
+            paths
+          });
+        }
+      } catch (cleanupError) {
+        logSupabaseError("[Intercambio CR publishListing image cleanup exception]", cleanupError, {
+          table: "storage.objects",
+          authUserId: userId,
+          listingId: data.id,
+          bucket: "listing-images",
+          paths
+        });
+      }
       redirectWithError("/publicar", "No se pudo publicar el artículo. Inténtalo nuevamente.");
     }
   }
