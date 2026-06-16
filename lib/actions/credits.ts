@@ -85,6 +85,120 @@ function logSupabaseError(label: string, error: unknown, context: Record<string,
   });
 }
 
+function isSearchListingText(value: string | null | undefined) {
+  return Boolean(value && /\b(busco|busca|buscando|necesito|necesita)\b/i.test(value));
+}
+
+function isSearchListing(payload: {
+  title: string;
+  category: string;
+  description: string;
+  looking_for: string | null;
+}) {
+  return (
+    isSearchListingText(payload.title) ||
+    isSearchListingText(payload.category) ||
+    isSearchListingText(payload.description) ||
+    isSearchListingText(payload.looking_for)
+  );
+}
+
+async function getPublishingPlan(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string
+) {
+  const { data, error } = await supabase.from("profiles").select("role,plan").eq("id", userId).maybeSingle();
+
+  if (!error) {
+    return {
+      role: data?.role === "admin" ? "admin" : "user",
+      plan: data?.plan === "premium" ? "premium" : "free"
+    };
+  }
+
+  logSupabaseError("[Intercambio CR publishListing profile plan lookup error]", error, {
+    table: "profiles",
+    userId
+  });
+
+  const fallback = await supabase.from("profiles").select("role").eq("id", userId).maybeSingle();
+
+  if (fallback.error) {
+    logSupabaseError("[Intercambio CR publishListing profile role lookup error]", fallback.error, {
+      table: "profiles",
+      userId
+    });
+  }
+
+  return {
+    role: fallback.data?.role === "admin" ? "admin" : "user",
+    plan: "free"
+  };
+}
+
+async function enforcePublicationLimits({
+  supabase,
+  userId,
+  payload
+}: {
+  supabase: Awaited<ReturnType<typeof createClient>>;
+  userId: string;
+  payload: {
+    title: string;
+    category: string;
+    description: string;
+    looking_for: string | null;
+  };
+}) {
+  const { role, plan } = await getPublishingPlan(supabase, userId);
+
+  if (role === "admin" || plan === "premium") {
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from("listings")
+    .select("id,title,category,description,looking_for,status")
+    .eq("seller_id", userId)
+    .not("status", "in", "(removed,cancelled,completed)");
+
+  if (error) {
+    logSupabaseError("[Intercambio CR publishListing limit query error]", error, {
+      table: "listings",
+      userId,
+      filter: "seller_id=userId and status not in removed,cancelled,completed"
+    });
+    redirectWithError("/publicar", "No se pudo validar tu límite de publicaciones. Inténtalo nuevamente.");
+  }
+
+  const activeListings = data ?? [];
+
+  if (activeListings.length >= 3) {
+    redirectWithError(
+      "/publicar",
+      "Alcanzaste el límite de publicaciones gratuitas. Puedes eliminar una publicación o actualizar tu plan."
+    );
+  }
+
+  if (isSearchListing(payload)) {
+    const activeSearchListings = activeListings.filter((listing) =>
+      isSearchListing({
+        title: listing.title ?? "",
+        category: listing.category ?? "",
+        description: listing.description ?? "",
+        looking_for: listing.looking_for ?? null
+      })
+    );
+
+    if (activeSearchListings.length >= 3) {
+      redirectWithError(
+        "/publicar",
+        "Alcanzaste el límite de publicaciones gratuitas. Puedes eliminar una publicación o actualizar tu plan."
+      );
+    }
+  }
+}
+
 function validateImage(file: File) {
   const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
   const maxBytes = 8 * 1024 * 1024;
@@ -285,6 +399,12 @@ export async function publishListing(formData: FormData) {
   if (!payload.title || !payload.location || !payload.description) {
     redirectWithError("/publicar", "Completa título, ubicación y descripción.");
   }
+
+  await enforcePublicationLimits({
+    supabase,
+    userId,
+    payload
+  });
 
   const { data, error } = await supabase
     .from("listings")
