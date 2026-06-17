@@ -100,6 +100,139 @@ function logPlatformIntakeError(error: unknown, context: Record<string, unknown>
   });
 }
 
+async function getCurrentUserIdSafe(supabase: Awaited<ReturnType<typeof createClient>>) {
+  try {
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    return user?.id ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function ensureIntakeConversation(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  intakeId: string
+) {
+  const { data: intake, error: intakeError } = await supabase
+    .from("platform_intakes")
+    .select("id,user_id,title,offered_credits")
+    .eq("id", intakeId)
+    .single();
+
+  if (intakeError || !intake) {
+    logPlatformIntakeError(intakeError ?? new Error("intake_not_found"), {
+      table: "platform_intakes",
+      action: "ensureIntakeConversation.loadIntake",
+      intakeId
+    });
+    return null;
+  }
+
+  const { data: existing, error: existingError } = await supabase
+    .from("intake_conversations")
+    .select("id")
+    .eq("intake_id", intakeId)
+    .maybeSingle();
+
+  if (existingError) {
+    logPlatformIntakeError(existingError, {
+      table: "intake_conversations",
+      action: "ensureIntakeConversation.findExisting",
+      intakeId,
+      userId: intake.user_id
+    });
+    return null;
+  }
+
+  if (existing?.id) {
+    return {
+      id: existing.id,
+      intake
+    };
+  }
+
+  const { data: created, error: createError } = await supabase
+    .from("intake_conversations")
+    .insert({
+      intake_id: intakeId,
+      user_id: intake.user_id
+    })
+    .select("id")
+    .single();
+
+  if (createError || !created) {
+    logPlatformIntakeError(createError ?? new Error("intake_conversation_insert_returned_no_data"), {
+      table: "intake_conversations",
+      action: "ensureIntakeConversation.insert",
+      intakeId,
+      userId: intake.user_id
+    });
+    return null;
+  }
+
+  return {
+    id: created.id,
+    intake
+  };
+}
+
+async function createIntakeMessage({
+  supabase,
+  intakeId,
+  body,
+  senderRole
+}: {
+  supabase: Awaited<ReturnType<typeof createClient>>;
+  intakeId: string;
+  body: string;
+  senderRole: "admin" | "user";
+}) {
+  const conversation = await ensureIntakeConversation(supabase, intakeId);
+
+  if (!conversation) {
+    return null;
+  }
+
+  const senderId = await getCurrentUserIdSafe(supabase);
+  const { error } = await supabase.from("intake_messages").insert({
+    conversation_id: conversation.id,
+    sender_id: senderId,
+    sender_role: senderRole,
+    body
+  });
+
+  if (error) {
+    logPlatformIntakeError(error, {
+      table: "intake_messages",
+      action: "createIntakeMessage.insert",
+      intakeId,
+      conversationId: conversation.id,
+      senderId,
+      senderRole
+    });
+    return null;
+  }
+
+  const { error: updateError } = await supabase
+    .from("intake_conversations")
+    .update({ updated_at: new Date().toISOString() })
+    .eq("id", conversation.id);
+
+  if (updateError) {
+    logPlatformIntakeError(updateError, {
+      table: "intake_conversations",
+      action: "createIntakeMessage.touch",
+      intakeId,
+      conversationId: conversation.id
+    });
+  }
+
+  return conversation.id;
+}
+
 function isSearchListingText(value: string | null | undefined) {
   return Boolean(value && /\b(busco|busca|buscando|necesito|necesita)\b/i.test(value));
 }
@@ -419,6 +552,13 @@ export async function submitPlatformIntake(formData: FormData) {
       redirectWithError("/entregar", "No se pudo guardar la imagen. Inténtalo nuevamente.");
     }
   }
+
+  await createIntakeMessage({
+    supabase,
+    intakeId: data.id,
+    senderRole: "user",
+    body: "Tu entrega fue registrada correctamente y será revisada por Intercambio CR."
+  });
 
   revalidatePath("/entregar");
   redirect("/entregar?ok=solicitud");
@@ -810,8 +950,19 @@ export async function adminMakeIntakeOffer(formData: FormData) {
     redirectWithError("/admin", message);
   }
 
+  await createIntakeMessage({
+    supabase,
+    intakeId,
+    senderRole: "admin",
+    body: notes
+      ? `Tu solicitud fue aprobada. Coordinemos la entrega. Nota: ${notes}`
+      : "Tu solicitud fue aprobada. Coordinemos la entrega."
+  });
+
   revalidatePath("/admin");
   revalidatePath(`/admin/entregas/${intakeId}`);
+  revalidatePath("/mensajes");
+  revalidatePath("/perfil");
   revalidatePath("/notificaciones");
   redirect("/admin?ok=oferta");
 }
@@ -840,9 +991,24 @@ export async function adminIssueIntakeCredits(formData: FormData) {
     redirectWithError("/admin", message);
   }
 
+  const { data: intake } = await supabase
+    .from("platform_intakes")
+    .select("offered_credits")
+    .eq("id", intakeId)
+    .maybeSingle();
+
+  await createIntakeMessage({
+    supabase,
+    intakeId,
+    senderRole: "admin",
+    body: `Se emitieron ${intake?.offered_credits ?? "los"} créditos por tu artículo.`
+  });
+
   revalidatePath("/admin");
   revalidatePath(`/admin/entregas/${intakeId}`);
   revalidatePath("/billetera");
+  revalidatePath("/mensajes");
+  revalidatePath("/perfil");
   revalidatePath("/notificaciones");
   redirect("/admin?ok=emision");
 }
@@ -969,8 +1135,19 @@ export async function adminRejectIntake(formData: FormData) {
     redirectWithError("/admin", error.message);
   }
 
+  await createIntakeMessage({
+    supabase,
+    intakeId,
+    senderRole: "admin",
+    body: notes
+      ? `Tu solicitud fue rechazada. Motivo: ${notes}`
+      : "Tu solicitud fue rechazada después de la revisión."
+  });
+
   revalidatePath("/admin");
   revalidatePath(`/admin/entregas/${intakeId}`);
+  revalidatePath("/mensajes");
+  revalidatePath("/perfil");
   revalidatePath("/notificaciones");
   redirect("/admin?ok=entrega-rechazada");
 }
@@ -1005,8 +1182,110 @@ export async function adminRequestIntakeInfo(formData: FormData) {
     redirectWithError("/admin", "No se pudo solicitar más información. Inténtalo nuevamente.");
   }
 
+  await createIntakeMessage({
+    supabase,
+    intakeId,
+    senderRole: "admin",
+    body: `Necesitamos más información: ${notes}`
+  });
+
   revalidatePath("/admin");
   revalidatePath(`/admin/entregas/${intakeId}`);
+  revalidatePath("/mensajes");
+  revalidatePath("/perfil");
   revalidatePath("/notificaciones");
   redirect("/admin?ok=mas-informacion");
+}
+
+export async function sendIntakeMessage(formData: FormData) {
+  const supabase = await createClient();
+  const conversationId = getString(formData, "conversation_id");
+  const body = formText(formData, "body", 1000);
+
+  try {
+    validateUuid(conversationId, "Conversación");
+  } catch (error) {
+    redirectWithError("/mensajes", error instanceof Error ? error.message : "Conversación inválida.");
+  }
+
+  if (!body) {
+    redirectWithError(`/mensajes/intake/${conversationId}`, "Escribe un mensaje antes de enviarlo.");
+  }
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/auth?redirect=/mensajes");
+  }
+
+  const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
+  const senderRole = profile?.role === "admin" ? "admin" : "user";
+
+  const { error } = await supabase.from("intake_messages").insert({
+    conversation_id: conversationId,
+    sender_id: user.id,
+    sender_role: senderRole,
+    body
+  });
+
+  if (error) {
+    logPlatformIntakeError(error, {
+      table: "intake_messages",
+      action: "sendIntakeMessage.insert",
+      conversationId,
+      senderId: user.id,
+      senderRole
+    });
+    redirectWithError(`/mensajes/intake/${conversationId}`, "No se pudo enviar el mensaje. Inténtalo nuevamente.");
+  }
+
+  const { error: updateError } = await supabase
+    .from("intake_conversations")
+    .update({ updated_at: new Date().toISOString() })
+    .eq("id", conversationId);
+
+  if (updateError) {
+    logPlatformIntakeError(updateError, {
+      table: "intake_conversations",
+      action: "sendIntakeMessage.touch",
+      conversationId,
+      senderId: user.id
+    });
+  }
+
+  revalidatePath("/mensajes");
+  revalidatePath(`/mensajes/intake/${conversationId}`);
+  revalidatePath("/perfil");
+  redirect(`/mensajes/intake/${conversationId}?ok=mensaje`);
+}
+
+export async function adminArchiveIntake(formData: FormData) {
+  const supabase = await createClient();
+  const intakeId = getString(formData, "intake_id");
+
+  try {
+    validateUuid(intakeId, "Solicitud");
+  } catch (error) {
+    redirectWithError("/admin", error instanceof Error ? error.message : "Solicitud inválida.");
+  }
+
+  const { error } = await supabase
+    .from("platform_intakes")
+    .update({ admin_archived_at: new Date().toISOString() })
+    .eq("id", intakeId);
+
+  if (error) {
+    logPlatformIntakeError(error, {
+      table: "platform_intakes",
+      action: "adminArchiveIntake",
+      intakeId
+    });
+    redirectWithError("/admin", "No se pudo archivar la solicitud. Inténtalo nuevamente.");
+  }
+
+  revalidatePath("/admin");
+  revalidatePath(`/admin/entregas/${intakeId}`);
+  redirect("/admin?ok=archivada");
 }

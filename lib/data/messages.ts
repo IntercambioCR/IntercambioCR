@@ -1,11 +1,14 @@
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { getIntakeConversationSummaries } from "@/lib/data/intake-chat";
 import { createClient } from "@/lib/supabase/server";
 
 export type ConversationSummary = {
   id: string;
+  href: string;
   listingTitle: string;
   otherPerson: string;
   updatedAt: string;
+  kind?: "direct" | "intake";
 };
 
 export type ConversationDetail = {
@@ -82,10 +85,11 @@ export async function getConversations(): Promise<ConversationSummary[]> {
     return [];
   }
 
-  return (data as unknown as ConversationRow[]).map((conversation) => {
+  const directConversations = (data as unknown as ConversationRow[]).map((conversation) => {
     const isBuyer = conversation.buyer_id === user.id;
     return {
       id: conversation.id,
+      href: `/mensajes/${conversation.id}`,
       listingTitle: conversation.listings?.title ?? "Publicación",
       otherPerson: isBuyer
         ? conversation.seller?.full_name ?? "Persona oferente"
@@ -93,9 +97,13 @@ export async function getConversations(): Promise<ConversationSummary[]> {
       updatedAt: new Intl.DateTimeFormat("es-CR", {
         day: "numeric",
         month: "short"
-      }).format(new Date(conversation.updated_at))
+      }).format(new Date(conversation.updated_at)),
+      kind: "direct" as const
     };
   });
+
+  const intakeConversations = await getIntakeConversationSummaries();
+  return [...intakeConversations, ...directConversations];
 }
 
 export async function getConversation(id: string): Promise<ConversationDetail | null> {

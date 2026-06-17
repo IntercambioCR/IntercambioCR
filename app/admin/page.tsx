@@ -11,6 +11,7 @@ import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import {
   adminAdjustCredits,
+  adminArchiveIntake,
   adminBlockUser,
   adminIssueIntakeCredits,
   adminMakeIntakeOffer,
@@ -21,6 +22,7 @@ import {
 } from "@/lib/actions/credits";
 import { getAdminData, type AdminData } from "@/lib/data/admin";
 import { isCurrentUserAdmin } from "@/lib/data/session";
+import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { SubmitButton } from "@/components/submit-button";
 
 const pendingStatuses = new Set(["submitted", "offer_made", "scheduled", "received", "needs_info"]);
@@ -113,6 +115,16 @@ function IntakeCard({ intake }: { intake: AdminData["intakes"][number] }) {
               Rechazar
             </SubmitButton>
           </form>
+
+          <form action={adminArchiveIntake} className="grid gap-2 rounded-lg bg-slate-50 p-3">
+            <input type="hidden" name="intake_id" value={intake.id} />
+            <ConfirmSubmitButton
+              className="min-h-11 rounded-lg border border-slate-200 bg-white px-2 py-2 text-xs font-bold text-slate-700 disabled:opacity-70"
+              message="¿Seguro que deseas ocultar esta solicitud del panel?"
+            >
+              Eliminar de la vista
+            </ConfirmSubmitButton>
+          </form>
         </div>
       </div>
     </div>
@@ -193,7 +205,11 @@ export default async function AdminPage({
 
         {ok ? (
           <div className="mb-5 rounded-lg border border-leaf-100 bg-leaf-50 p-4 text-sm font-semibold text-leaf-900">
-            {ok === "mas-informacion" ? "Solicitud de información enviada." : "Acción completada correctamente."}
+            {ok === "mas-informacion"
+              ? "Solicitud de información enviada."
+              : ok === "archivada"
+                ? "Solicitud archivada correctamente."
+                : "Acción completada correctamente."}
           </div>
         ) : null}
         {error ? (

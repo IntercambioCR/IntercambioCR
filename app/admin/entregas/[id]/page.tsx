@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowLeft, CalendarDays, FileCheck2, User } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import {
+  adminArchiveIntake,
   adminIssueIntakeCredits,
   adminMakeIntakeOffer,
   adminRejectIntake,
@@ -10,6 +11,7 @@ import {
 } from "@/lib/actions/credits";
 import { getAdminIntake } from "@/lib/data/admin";
 import { isCurrentUserAdmin } from "@/lib/data/session";
+import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { SubmitButton } from "@/components/submit-button";
 
 export default async function AdminIntakeReviewPage({
@@ -100,6 +102,15 @@ export default async function AdminIntakeReviewPage({
                 <h2 className="font-bold text-amber-900">Notas administrativas</h2>
                 <p className="mt-2 text-sm leading-6 text-amber-900">{intake.inspection_notes}</p>
               </div>
+            ) : null}
+
+            {intake.conversationId ? (
+              <Link
+                href={`/mensajes/intake/${intake.conversationId}`}
+                className="mt-4 inline-flex min-h-11 items-center rounded-lg border border-ocean-100 px-4 text-sm font-bold text-ocean-700 hover:bg-ocean-50"
+              >
+                Ver conversación con usuario
+              </Link>
             ) : null}
 
             <div className="mt-5">
@@ -199,6 +210,21 @@ export default async function AdminIntakeReviewPage({
               >
                 Rechazar solicitud
               </SubmitButton>
+            </form>
+
+            <form action={adminArchiveIntake} className="rounded-lg border border-slate-200 bg-white p-5">
+              <h2 className="font-bold text-ink">Archivar solicitud</h2>
+              <input type="hidden" name="intake_id" value={intake.id} />
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Oculta esta solicitud del panel sin borrarla de la base de datos.
+              </p>
+              <ConfirmSubmitButton
+                pendingLabel="Archivando..."
+                message="¿Seguro que deseas ocultar esta solicitud del panel?"
+                className="mt-4 min-h-12 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-slate-700 hover:bg-slate-50 disabled:cursor-wait disabled:opacity-70"
+              >
+                Eliminar de la vista
+              </ConfirmSubmitButton>
             </form>
           </aside>
         </div>

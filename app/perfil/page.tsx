@@ -233,6 +233,14 @@ export default async function ProfilePage({
                             {intake.inspectionNotes ? (
                               <p className="mt-2 text-xs leading-5 text-slate-600">{intake.inspectionNotes}</p>
                             ) : null}
+                            {intake.conversationId ? (
+                              <Link
+                                href={`/mensajes/intake/${intake.conversationId}`}
+                                className="mt-3 inline-flex min-h-9 items-center rounded-lg border border-ocean-100 px-3 text-xs font-bold text-ocean-700 hover:bg-ocean-50"
+                              >
+                                Chat con Intercambio CR
+                              </Link>
+                            ) : null}
                           </div>
                         </div>
                       </div>

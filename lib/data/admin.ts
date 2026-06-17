@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 
 type RelatedProfile = { full_name: string | null } | { full_name: string | null }[] | null;
 type RelatedImage = { storage_path: string; sort_order: number | null };
+type RelatedConversation = { id: string } | { id: string }[] | null | undefined;
 
 function relatedName(profile: RelatedProfile, fallback = "Usuario") {
   if (Array.isArray(profile)) {
@@ -10,6 +11,14 @@ function relatedName(profile: RelatedProfile, fallback = "Usuario") {
   }
 
   return profile?.full_name ?? fallback;
+}
+
+function relatedConversationId(conversation: RelatedConversation) {
+  if (Array.isArray(conversation)) {
+    return conversation[0]?.id ?? null;
+  }
+
+  return conversation?.id ?? null;
 }
 
 function orderedStoragePaths(paths: RelatedImage[] | null | undefined) {
@@ -20,13 +29,39 @@ function orderedStoragePaths(paths: RelatedImage[] | null | undefined) {
   return paths
     .slice()
     .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
-    .map((image) => image.storage_path);
+    .map((image) => normalizeIntakeStoragePath(image.storage_path))
+    .filter((path): path is string => Boolean(path));
 }
 
-function logIntakeImagesLoadError(error: unknown, context: Record<string, unknown>) {
+function normalizeIntakeStoragePath(value: string | null | undefined) {
+  if (!value) {
+    return null;
+  }
+
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return null;
+  }
+
+  try {
+    const url = new URL(trimmed);
+    const marker = "/object/";
+    const markerIndex = url.pathname.indexOf(marker);
+    const storagePath = markerIndex >= 0 ? url.pathname.slice(markerIndex + marker.length) : url.pathname;
+    const bucketPrefix = "intake-images/";
+    const bucketIndex = storagePath.indexOf(bucketPrefix);
+
+    return decodeURIComponent(bucketIndex >= 0 ? storagePath.slice(bucketIndex + bucketPrefix.length) : storagePath.replace(/^\/+/, ""));
+  } catch {
+    return trimmed.replace(/^intake-images\//, "").replace(/^\/+/, "");
+  }
+}
+
+function logIntakeImageLoadError(error: unknown, context: Record<string, unknown>) {
   const record = typeof error === "object" && error !== null ? (error as Record<string, unknown>) : null;
 
-  console.error("Intake images load error:", {
+  console.error("Intake image load error:", {
     message: typeof record?.message === "string" ? record.message : String(error),
     code: record?.code ?? null,
     details: record?.details ?? null,
@@ -46,20 +81,24 @@ async function signedIntakeImageUrls(
     return [];
   }
 
-  const { data, error } = await storage.createSignedUrls(paths, 60 * 60);
+  const urls = await Promise.all(
+    paths.map(async (path) => {
+      const { data, error } = await storage.createSignedUrl(path, 60 * 60);
 
-  if (error) {
-    logIntakeImagesLoadError(error, {
-      bucket: "intake-images",
-      paths,
-      ...context
-    });
-    return [];
-  }
+      if (error || !data?.signedUrl) {
+        logIntakeImageLoadError(error ?? new Error("missing_signed_url"), {
+          bucket: "intake-images",
+          path,
+          ...context
+        });
+        return null;
+      }
 
-  return (data ?? [])
-    .map((item) => item.signedUrl)
-    .filter((url): url is string => Boolean(url));
+      return data.signedUrl;
+    })
+  );
+
+  return urls.filter((url): url is string => Boolean(url));
 }
 
 export type AdminData = {
@@ -169,6 +208,7 @@ export async function getAdminData(query = ""): Promise<AdminData> {
     supabase
       .from("platform_intakes")
       .select("id,title,category,offered_credits,status,created_at,user:profiles!platform_intakes_user_id_fkey(full_name),intake_images(storage_path,sort_order)")
+      .is("admin_archived_at", null)
       .order("created_at", { ascending: false })
       .limit(50),
     supabase
@@ -206,7 +246,7 @@ export async function getAdminData(query = ""): Promise<AdminData> {
     );
 
   if (intakesResult.error) {
-    logIntakeImagesLoadError(intakesResult.error, {
+    logIntakeImageLoadError(intakesResult.error, {
       table: "platform_intakes",
       relation: "intake_images",
       source: "getAdminData"
@@ -282,7 +322,7 @@ export async function getAdminIntake(id: string) {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("platform_intakes")
-    .select("id,title,category,condition,description,offered_credits,status,inspection_notes,dropoff_location,created_at,user:profiles!platform_intakes_user_id_fkey(full_name),intake_images(storage_path,sort_order)")
+    .select("id,title,category,condition,description,offered_credits,status,inspection_notes,dropoff_location,created_at,user_id,user:profiles!platform_intakes_user_id_fkey(full_name),intake_images(storage_path,sort_order),intake_conversations(id)")
     .eq("id", id)
     .single();
 
@@ -299,7 +339,8 @@ export async function getAdminIntake(id: string) {
       dropoff_location: "Escazú Centro o Alajuela Centro",
       userName: "Usuario",
       created: "Sin fecha",
-      images: [] as string[]
+      images: [] as string[],
+      conversationId: null as string | null
     };
   }
 
@@ -322,6 +363,7 @@ export async function getAdminIntake(id: string) {
     dropoff_location: data.dropoff_location,
     userName: relatedName(data.user),
     created: formatDate(data.created_at),
-    images
+    images,
+    conversationId: relatedConversationId(data.intake_conversations as RelatedConversation)
   };
 }
