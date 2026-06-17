@@ -24,7 +24,7 @@ import { isCurrentUserAdmin } from "@/lib/data/session";
 import { SubmitButton } from "@/components/submit-button";
 
 const pendingStatuses = new Set(["submitted", "offer_made", "scheduled", "received", "needs_info"]);
-const approvedStatuses = new Set(["approved", "paid"]);
+const approvedStatuses = new Set(["approved", "paid", "credited"]);
 const rejectedStatuses = new Set(["rejected"]);
 
 function IntakeCard({ intake }: { intake: AdminData["intakes"][number] }) {
@@ -193,7 +193,7 @@ export default async function AdminPage({
 
         {ok ? (
           <div className="mb-5 rounded-lg border border-leaf-100 bg-leaf-50 p-4 text-sm font-semibold text-leaf-900">
-            Acción completada correctamente.
+            {ok === "mas-informacion" ? "Solicitud de información enviada." : "Acción completada correctamente."}
           </div>
         ) : null}
         {error ? (

@@ -155,6 +155,58 @@ function logAvatarSupabaseError(
   });
 }
 
+function logAvatarPersistError(error: unknown, context: Record<string, unknown>) {
+  const details = getSupabaseErrorDetails(error);
+  const rawRecord = typeof error === "object" && error !== null ? (error as Record<string, unknown>) : {};
+
+  console.error("Avatar persist error:", {
+    message: details.message,
+    code: rawRecord.code ?? null,
+    details: rawRecord.details ?? details.details,
+    hint: rawRecord.hint ?? null,
+    error,
+    ...context
+  });
+}
+
+async function ensureOwnProfile(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  user: { id: string; email?: string | null; user_metadata?: Record<string, unknown> }
+) {
+  const { data, error } = await supabase.from("profiles").select("id").eq("id", user.id).maybeSingle();
+
+  if (error) {
+    logAvatarPersistError(error, {
+      table: "profiles",
+      action: "ensureOwnProfile.lookup",
+      userId: user.id
+    });
+  }
+
+  if (data?.id) {
+    return true;
+  }
+
+  const metadataName =
+    typeof user.user_metadata?.full_name === "string" ? user.user_metadata.full_name.trim() : "";
+  const fallbackName = metadataName || user.email || "Usuario Intercambio";
+  const { error: insertError } = await supabase.from("profiles").insert({
+    id: user.id,
+    full_name: fallbackName
+  });
+
+  if (insertError) {
+    logAvatarPersistError(insertError, {
+      table: "profiles",
+      action: "ensureOwnProfile.insert",
+      userId: user.id
+    });
+    return false;
+  }
+
+  return true;
+}
+
 function signInAfterSignUpMessage(message: string) {
   const normalized = message.toLowerCase();
 
@@ -370,6 +422,8 @@ export async function updateProfile(formData: FormData) {
     redirect("/auth");
   }
 
+  await ensureOwnProfile(supabase, user);
+
   const payload = {
     full_name: getString(formData, "full_name") || null,
     location: getString(formData, "location") || null,
@@ -397,6 +451,8 @@ export async function updateAvatar(formData: FormData) {
   if (!user) {
     redirect("/auth");
   }
+
+  await ensureOwnProfile(supabase, user);
 
   const { data: avatarActorProfile, error: avatarActorProfileError } = await supabase
     .from("profiles")
@@ -496,7 +552,12 @@ export async function updateAvatar(formData: FormData) {
 
   let profileError: unknown = null;
   try {
-    const result = await supabase.from("profiles").update({ avatar_url: publicUrl }).eq("id", user.id);
+    const result = await supabase
+      .from("profiles")
+      .update({ avatar_url: publicUrl })
+      .eq("id", user.id)
+      .select("id,avatar_url")
+      .single();
     profileError = result.error;
   } catch (error) {
     profileError = error;
@@ -504,6 +565,14 @@ export async function updateAvatar(formData: FormData) {
 
   if (profileError) {
     console.error("Profile update error:", profileError);
+    logAvatarPersistError(profileError, {
+      table: "profiles",
+      action: "updateAvatar.update",
+      bucket,
+      path,
+      userId: user.id,
+      publicUrl
+    });
     logAvatarSupabaseError("Avatar profile update error:", profileError, {
       table: "profiles",
       bucket,

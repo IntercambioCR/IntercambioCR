@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Calendar, Camera, MapPin, MessageCircle, Settings, Star, Tag, UserRound, WalletCards } from "lucide-react";
+import { Calendar, Camera, FileCheck2, MapPin, MessageCircle, Settings, Star, Tag, UserRound, WalletCards } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { signOut, updateAccountPassword, updateAvatar, updateProfile } from "@/lib/auth/actions";
 import { getConversations } from "@/lib/data/messages";
+import { getMyPlatformIntakes } from "@/lib/data/intakes";
 import { getMyListings } from "@/lib/data/my-listings";
 import { getOffers } from "@/lib/data/offers";
 import { getCurrentProfile } from "@/lib/data/session";
@@ -44,14 +45,15 @@ export default async function ProfilePage({
   const { ok, error } = await searchParams;
   const profile = await getCurrentProfile();
   const avatarUrl = safeAvatarUrl(profile?.avatar_url);
-  const [listings, offers, conversations, wallet] = profile
+  const [listings, offers, conversations, wallet, intakes] = profile
     ? await Promise.all([
         safeLoad(() => getMyListings(), []),
         safeLoad(() => getOffers(), []),
         safeLoad(() => getConversations(), []),
-        safeLoad(() => getWalletData(), { balances: [], movements: [] })
+        safeLoad(() => getWalletData(), { balances: [], movements: [] }),
+        safeLoad(() => getMyPlatformIntakes(), [])
       ])
-    : [[], [], [], { balances: [], movements: [] }];
+    : [[], [], [], { balances: [], movements: [] }, []];
   const sentOffers = offers.filter((offer) => offer.direction === "sent");
   const receivedOffers = offers.filter((offer) => offer.direction === "received");
 
@@ -197,6 +199,49 @@ export default async function ProfilePage({
                   <p className="mt-1 text-2xl font-bold text-ocean-700">
                     {wallet.balances[0]?.[1] ?? "0 créditos"}
                   </p>
+                </div>
+              </section>
+
+              <section className="rounded-lg border border-slate-200 p-4">
+                <div className="flex items-center gap-2">
+                  <FileCheck2 className="h-5 w-5 text-ocean-600" />
+                  <h2 className="font-bold text-ink">Mis entregas a Intercambio</h2>
+                </div>
+                <div className="mt-4 grid gap-3">
+                  {intakes.length > 0 ? (
+                    intakes.slice(0, 4).map((intake) => (
+                      <div key={intake.id} className="rounded-lg border border-slate-200 p-3">
+                        <div className="flex gap-3">
+                          {intake.images[0] ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={intake.images[0]}
+                              alt={intake.title}
+                              className="h-16 w-16 shrink-0 rounded-lg border border-slate-200 object-cover"
+                            />
+                          ) : (
+                            <div className="grid h-16 w-16 shrink-0 place-items-center rounded-lg bg-slate-100 text-slate-400">
+                              <FileCheck2 className="h-6 w-6" />
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <p className="break-words font-bold text-ink">{intake.title}</p>
+                            <p className="mt-1 text-xs font-semibold text-ocean-700">{intake.statusLabel}</p>
+                            <p className="mt-1 text-xs text-slate-500">
+                              {intake.created} / {intake.offeredCredits}
+                            </p>
+                            {intake.inspectionNotes ? (
+                              <p className="mt-2 text-xs leading-5 text-slate-600">{intake.inspectionNotes}</p>
+                            ) : null}
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="rounded-lg border border-dashed border-slate-200 p-4 text-sm text-slate-500">
+                      Aún no has enviado entregas a Intercambio CR.
+                    </div>
+                  )}
                 </div>
               </section>
 

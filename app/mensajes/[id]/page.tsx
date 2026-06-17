@@ -10,10 +10,10 @@ export default async function ConversationPage({
   searchParams
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ ok?: string; error?: string }>;
 }) {
   const { id } = await params;
-  const { error } = await searchParams;
+  const { ok, error } = await searchParams;
   const conversation = await getConversation(id);
 
   return (
@@ -41,6 +41,11 @@ export default async function ConversationPage({
             {error ? (
               <div className="m-5 rounded-lg border border-red-100 bg-red-50 p-4 text-sm font-semibold text-red-700">
                 No se pudo enviar el mensaje: {error}
+              </div>
+            ) : null}
+            {ok === "mensaje" ? (
+              <div className="m-5 rounded-lg border border-leaf-100 bg-leaf-50 p-4 text-sm font-semibold text-leaf-900">
+                Mensaje enviado.
               </div>
             ) : null}
 

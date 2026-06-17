@@ -12,7 +12,7 @@ function relatedName(profile: RelatedProfile, fallback = "Usuario") {
   return profile?.full_name ?? fallback;
 }
 
-function publicStorageUrls(bucket: string, paths: RelatedImage[] | null | undefined) {
+function orderedStoragePaths(paths: RelatedImage[] | null | undefined) {
   if (!paths?.length) {
     return [];
   }
@@ -21,6 +21,45 @@ function publicStorageUrls(bucket: string, paths: RelatedImage[] | null | undefi
     .slice()
     .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
     .map((image) => image.storage_path);
+}
+
+function logIntakeImagesLoadError(error: unknown, context: Record<string, unknown>) {
+  const record = typeof error === "object" && error !== null ? (error as Record<string, unknown>) : null;
+
+  console.error("Intake images load error:", {
+    message: typeof record?.message === "string" ? record.message : String(error),
+    code: record?.code ?? null,
+    details: record?.details ?? null,
+    hint: record?.hint ?? null,
+    stack: error instanceof Error ? error.stack : null,
+    error,
+    ...context
+  });
+}
+
+async function signedIntakeImageUrls(
+  storage: ReturnType<Awaited<ReturnType<typeof createClient>>["storage"]["from"]>,
+  paths: string[],
+  context: Record<string, unknown>
+) {
+  if (!paths.length) {
+    return [];
+  }
+
+  const { data, error } = await storage.createSignedUrls(paths, 60 * 60);
+
+  if (error) {
+    logIntakeImagesLoadError(error, {
+      bucket: "intake-images",
+      paths,
+      ...context
+    });
+    return [];
+  }
+
+  return (data ?? [])
+    .map((item) => item.signedUrl)
+    .filter((url): url is string => Boolean(url));
 }
 
 export type AdminData = {
@@ -144,6 +183,35 @@ export async function getAdminData(query = ""): Promise<AdminData> {
   ]);
 
   const storage = supabase.storage.from("intake-images");
+  const intakes =
+    await Promise.all(
+      (intakesResult.data ?? []).map(async (intake) => {
+        const paths = orderedStoragePaths(intake.intake_images);
+        const images = await signedIntakeImageUrls(storage, paths, {
+          intakeId: intake.id,
+          source: "getAdminData"
+        });
+
+        return {
+          id: intake.id,
+          user: relatedName(intake.user),
+          title: intake.title,
+          category: intake.category,
+          offer: intake.offered_credits ? `${intake.offered_credits} credis` : "Sin oferta",
+          status: intake.status,
+          created: formatDate(intake.created_at),
+          images
+        };
+      })
+    );
+
+  if (intakesResult.error) {
+    logIntakeImagesLoadError(intakesResult.error, {
+      table: "platform_intakes",
+      relation: "intake_images",
+      source: "getAdminData"
+    });
+  }
 
   return {
     metrics: {
@@ -181,19 +249,7 @@ export async function getAdminData(query = ""): Promise<AdminData> {
         credits: `${trade.credits} credis`,
         created: formatDate(trade.created_at)
       })) ?? [],
-    intakes:
-      intakesResult.data?.map((intake) => ({
-        id: intake.id,
-        user: relatedName(intake.user),
-        title: intake.title,
-        category: intake.category,
-        offer: intake.offered_credits ? `${intake.offered_credits} credis` : "Sin oferta",
-        status: intake.status,
-        created: formatDate(intake.created_at),
-        images: publicStorageUrls("intake-images", intake.intake_images).map(
-          (path) => storage.getPublicUrl(path).data.publicUrl
-        )
-      })) ?? [],
+    intakes,
     creditMovements:
       movementsResult.data?.map((movement) => ({
         id: movement.id,
@@ -248,7 +304,11 @@ export async function getAdminIntake(id: string) {
   }
 
   const storage = supabase.storage.from("intake-images");
-  const paths = publicStorageUrls("intake-images", data.intake_images);
+  const paths = orderedStoragePaths(data.intake_images);
+  const images = await signedIntakeImageUrls(storage, paths, {
+    intakeId: data.id,
+    source: "getAdminIntake"
+  });
 
   return {
     id: data.id,
@@ -262,6 +322,6 @@ export async function getAdminIntake(id: string) {
     dropoff_location: data.dropoff_location,
     userName: relatedName(data.user),
     created: formatDate(data.created_at),
-    images: paths.map((path) => storage.getPublicUrl(path).data.publicUrl)
+    images
   };
 }

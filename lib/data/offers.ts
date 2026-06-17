@@ -29,6 +29,19 @@ type OfferRow = {
   receiver?: { full_name?: string } | null;
 };
 
+function logOfferLoadError(label: string, error: unknown, context: Record<string, unknown>) {
+  const record = typeof error === "object" && error !== null ? (error as Record<string, unknown>) : null;
+
+  console.error(label, {
+    message: typeof record?.message === "string" ? record.message : String(error),
+    code: record?.code ?? null,
+    details: record?.details ?? null,
+    hint: record?.hint ?? null,
+    error,
+    ...context
+  });
+}
+
 export async function getOffers(): Promise<OfferSummary[]> {
   if (!isSupabaseConfigured()) {
     return [];
@@ -50,6 +63,18 @@ export async function getOffers(): Promise<OfferSummary[]> {
     .order("created_at", { ascending: false });
 
   if (error || !data) {
+    if (error) {
+      logOfferLoadError("Load received offers error:", error, {
+        table: "listing_offers",
+        userId: user.id,
+        filter: "sender_id or receiver_id"
+      });
+      logOfferLoadError("Load sent offers error:", error, {
+        table: "listing_offers",
+        userId: user.id,
+        filter: "sender_id or receiver_id"
+      });
+    }
     return [];
   }
 

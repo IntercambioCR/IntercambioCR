@@ -25,6 +25,19 @@ function enforceRateLimit(path: string, key: string, limit: number, windowMs: nu
   }
 }
 
+function logSupabaseError(label: string, error: unknown, context: Record<string, unknown>) {
+  const record = typeof error === "object" && error !== null ? (error as Record<string, unknown>) : null;
+
+  console.error(label, {
+    message: typeof record?.message === "string" ? record.message : String(error),
+    code: record?.code ?? null,
+    details: record?.details ?? null,
+    hint: record?.hint ?? null,
+    error,
+    ...context
+  });
+}
+
 async function getCurrentUserId() {
   const supabase = await createClient();
   const {
@@ -46,6 +59,12 @@ async function getListingParticipantData(supabase: Awaited<ReturnType<typeof cre
     .single();
 
   if (error || !data) {
+    if (error) {
+      logSupabaseError("Load listing participant error:", error, {
+        table: "listings",
+        listingId
+      });
+    }
     throw new Error(error?.message ?? "No se encontró la publicación.");
   }
 
@@ -84,7 +103,14 @@ export async function startConversation(formData: FormData) {
     .maybeSingle();
 
   if (existingError) {
-    redirectWithError(`/articulos/${listingId}`, existingError.message);
+    logSupabaseError("Create conversation error:", existingError, {
+      table: "direct_conversations",
+      action: "findExisting",
+      listingId,
+      buyerId: userId,
+      sellerId: listing.seller_id
+    });
+    redirectWithError(`/articulos/${listingId}`, "No se pudo abrir la conversación. Inténtalo nuevamente.");
   }
 
   let conversationId = existing?.id;
@@ -101,9 +127,16 @@ export async function startConversation(formData: FormData) {
       .single();
 
     if (createError || !created) {
+      logSupabaseError("Create conversation error:", createError ?? new Error("conversation_insert_returned_no_data"), {
+        table: "direct_conversations",
+        action: "insert",
+        listingId,
+        buyerId: userId,
+        sellerId: listing.seller_id
+      });
       redirectWithError(
         `/articulos/${listingId}`,
-        createError?.message ?? "No se pudo abrir la conversación."
+        "No se pudo abrir la conversación. Inténtalo nuevamente."
       );
     }
 
@@ -118,11 +151,18 @@ export async function startConversation(formData: FormData) {
     });
 
     if (messageError) {
-      redirectWithError(`/articulos/${listingId}`, messageError.message);
+      logSupabaseError("Send message error:", messageError, {
+        table: "direct_messages",
+        conversationId,
+        senderId: userId,
+        listingId
+      });
+      redirectWithError(`/articulos/${listingId}`, "No se pudo enviar el mensaje. Inténtalo nuevamente.");
     }
   }
 
   revalidatePath("/mensajes");
+  revalidatePath("/perfil");
   redirect(`/mensajes/${conversationId}`);
 }
 
@@ -149,15 +189,31 @@ export async function sendDirectMessage(formData: FormData) {
   });
 
   if (error) {
-    redirectWithError(`/mensajes/${conversationId}`, error.message);
+    logSupabaseError("Send message error:", error, {
+      table: "direct_messages",
+      conversationId,
+      senderId: userId
+    });
+    redirectWithError(`/mensajes/${conversationId}`, "No se pudo enviar el mensaje. Inténtalo nuevamente.");
   }
 
-  await supabase
+  const { error: updateError } = await supabase
     .from("direct_conversations")
     .update({ updated_at: new Date().toISOString() })
     .eq("id", conversationId);
 
+  if (updateError) {
+    logSupabaseError("Create conversation error:", updateError, {
+      table: "direct_conversations",
+      action: "touchUpdatedAt",
+      conversationId,
+      senderId: userId
+    });
+  }
+
   revalidatePath(`/mensajes/${conversationId}`);
+  revalidatePath("/mensajes");
+  redirect(`/mensajes/${conversationId}?ok=mensaje`);
 }
 
 export async function createListingOffer(formData: FormData) {
@@ -212,10 +268,22 @@ export async function createListingOffer(formData: FormData) {
   });
 
   if (error) {
-    redirectWithError(`/articulos/${listingId}`, error.message);
+    logSupabaseError("Create offer error:", error, {
+      table: "listing_offers",
+      listingId,
+      senderId: userId,
+      receiverId: listing.seller_id,
+      offerType,
+      credits: offerType === "item" ? 0 : credits,
+      hasItemDescription: Boolean(offeredItemDescription),
+      hasMessage: Boolean(message)
+    });
+    redirectWithError(`/articulos/${listingId}`, "No se pudo enviar la oferta. Inténtalo nuevamente.");
   }
 
   revalidatePath(`/articulos/${listingId}`);
+  revalidatePath("/ofertas");
+  revalidatePath("/perfil");
   redirect(`/articulos/${listingId}?ok=oferta`);
 }
 

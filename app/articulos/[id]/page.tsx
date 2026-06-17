@@ -88,7 +88,7 @@ export default async function ListingDetailPage({
 
           {ok ? (
             <div className="mt-5 rounded-lg border border-leaf-100 bg-leaf-50 p-3 text-sm font-semibold text-leaf-900">
-              Oferta enviada. La persona dueña del artículo podrá revisarla.
+              Oferta enviada correctamente.
             </div>
           ) : null}
           {error ? (

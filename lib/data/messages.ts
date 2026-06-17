@@ -39,6 +39,19 @@ type MessageRow = {
   profiles?: { full_name?: string } | null;
 };
 
+function logMessageLoadError(label: string, error: unknown, context: Record<string, unknown>) {
+  const record = typeof error === "object" && error !== null ? (error as Record<string, unknown>) : null;
+
+  console.error(label, {
+    message: typeof record?.message === "string" ? record.message : String(error),
+    code: record?.code ?? null,
+    details: record?.details ?? null,
+    hint: record?.hint ?? null,
+    error,
+    ...context
+  });
+}
+
 export async function getConversations(): Promise<ConversationSummary[]> {
   if (!isSupabaseConfigured()) {
     return [];
@@ -60,6 +73,12 @@ export async function getConversations(): Promise<ConversationSummary[]> {
     .order("updated_at", { ascending: false });
 
   if (error || !data) {
+    if (error) {
+      logMessageLoadError("Load inbox error:", error, {
+        table: "direct_conversations",
+        userId: user.id
+      });
+    }
     return [];
   }
 
@@ -100,14 +119,29 @@ export async function getConversation(id: string): Promise<ConversationDetail | 
     .single();
 
   if (conversationError || !conversation) {
+    if (conversationError) {
+      logMessageLoadError("Load inbox error:", conversationError, {
+        table: "direct_conversations",
+        conversationId: id,
+        userId: user.id
+      });
+    }
     return null;
   }
 
-  const { data: messages } = await supabase
+  const { data: messages, error: messagesError } = await supabase
     .from("direct_messages")
     .select("id,body,sender_id,created_at,profiles!direct_messages_sender_id_fkey(full_name)")
     .eq("conversation_id", id)
     .order("created_at", { ascending: true });
+
+  if (messagesError) {
+    logMessageLoadError("Load inbox error:", messagesError, {
+      table: "direct_messages",
+      conversationId: id,
+      userId: user.id
+    });
+  }
 
   const isBuyer = conversation.buyer_id === user.id;
 

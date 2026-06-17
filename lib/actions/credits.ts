@@ -995,7 +995,14 @@ export async function adminRequestIntakeInfo(formData: FormData) {
   });
 
   if (error) {
-    redirectWithError("/admin", error.message);
+    logPlatformIntakeError(error, {
+      action: "adminRequestIntakeInfo",
+      rpc: "admin_request_intake_info",
+      table: "platform_intakes",
+      intakeId,
+      notes: notes ? "[redacted]" : ""
+    });
+    redirectWithError("/admin", "No se pudo solicitar más información. Inténtalo nuevamente.");
   }
 
   revalidatePath("/admin");
