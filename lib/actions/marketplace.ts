@@ -71,6 +71,62 @@ async function getListingParticipantData(supabase: Awaited<ReturnType<typeof cre
   return data;
 }
 
+async function createOfferNotification({
+  supabase,
+  offerId,
+  listingId,
+  receiverId,
+  senderId,
+  listingTitle
+}: {
+  supabase: Awaited<ReturnType<typeof createClient>>;
+  offerId: string;
+  listingId: string;
+  receiverId: string;
+  senderId: string;
+  listingTitle: string;
+}) {
+  const { data: senderProfile, error: senderError } = await supabase
+    .from("profiles")
+    .select("full_name")
+    .eq("id", senderId)
+    .maybeSingle();
+
+  if (senderError) {
+    logSupabaseError("Create offer notification error:", senderError, {
+      table: "profiles",
+      action: "loadSenderName",
+      senderId,
+      offerId
+    });
+  }
+
+  const senderName =
+    typeof senderProfile?.full_name === "string" && senderProfile.full_name.trim().length > 0
+      ? senderProfile.full_name.trim()
+      : "Alguien";
+
+  const { error } = await supabase.from("notifications").insert({
+    user_id: receiverId,
+    type: "offer_received",
+    title: "Nueva oferta recibida",
+    body: `${senderName} te hizo una oferta por ${listingTitle}.`,
+    related_listing_id: listingId,
+    related_offer_id: offerId
+  });
+
+  if (error) {
+    logSupabaseError("Create offer notification error:", error, {
+      table: "notifications",
+      action: "insert",
+      offerId,
+      listingId,
+      receiverId,
+      senderId
+    });
+  }
+}
+
 export async function startConversation(formData: FormData) {
   const listingId = getString(formData, "listing_id");
   const initialMessage = formText(formData, "message", 1000);
@@ -257,17 +313,21 @@ export async function createListingOffer(formData: FormData) {
     redirectWithError(`/articulos/${listingId}`, "Describe el artículo que quieres ofrecer.");
   }
 
-  const { error } = await supabase.from("listing_offers").insert({
-    listing_id: listingId,
-    sender_id: userId,
-    receiver_id: listing.seller_id,
-    offer_type: offerType,
-    credits: offerType === "item" ? 0 : credits,
-    offered_item_description: offeredItemDescription || null,
-    message: message || null
-  });
+  const { data: createdOffer, error } = await supabase
+    .from("listing_offers")
+    .insert({
+      listing_id: listingId,
+      sender_id: userId,
+      receiver_id: listing.seller_id,
+      offer_type: offerType,
+      credits: offerType === "item" ? 0 : credits,
+      offered_item_description: offeredItemDescription || null,
+      message: message || null
+    })
+    .select("id")
+    .single();
 
-  if (error) {
+  if (error || !createdOffer) {
     logSupabaseError("Create offer error:", error, {
       table: "listing_offers",
       listingId,
@@ -280,6 +340,15 @@ export async function createListingOffer(formData: FormData) {
     });
     redirectWithError(`/articulos/${listingId}`, "No se pudo enviar la oferta. Inténtalo nuevamente.");
   }
+
+  await createOfferNotification({
+    supabase,
+    offerId: createdOffer.id,
+    listingId,
+    receiverId: listing.seller_id,
+    senderId: userId,
+    listingTitle: listing.title
+  });
 
   revalidatePath(`/articulos/${listingId}`);
   revalidatePath("/ofertas");
@@ -344,12 +413,19 @@ export async function updateListingOfferStatus(formData: FormData) {
     redirectWithError("/ofertas", "Estado de oferta no válido.");
   }
 
-  const { error } = await supabase.rpc("respond_listing_offer", {
+  const { error } = await supabase.rpc("seller_respond_listing_offer", {
     p_offer_id: offerId,
     p_status: status
   });
 
   if (error) {
+    logSupabaseError("Credit offer flow error:", error, {
+      rpc: "seller_respond_listing_offer",
+      offerId,
+      status,
+      userId
+    });
+
     const message =
       error.message === "insufficient_credits"
         ? "La persona que hizo la oferta no tiene créditos suficientes disponibles."
@@ -363,4 +439,41 @@ export async function updateListingOfferStatus(formData: FormData) {
   revalidatePath("/ofertas");
   revalidatePath("/billetera");
   redirect(`/ofertas?ok=${status}`);
+}
+
+export async function confirmListingCreditTransfer(formData: FormData) {
+  const offerId = getString(formData, "offer_id");
+  const { supabase, userId } = await getCurrentUserId();
+  enforceRateLimit("/ofertas", `offer-confirm:${userId}`, 20, 60_000);
+
+  try {
+    validateUuid(offerId, "Oferta");
+  } catch (error) {
+    redirectWithError("/ofertas", error instanceof Error ? error.message : "Oferta invÃ¡lida.");
+  }
+
+  const { error } = await supabase.rpc("buyer_confirm_credit_offer", {
+    p_offer_id: offerId
+  });
+
+  if (error) {
+    logSupabaseError("Credit transfer error:", error, {
+      rpc: "buyer_confirm_credit_offer",
+      offerId,
+      userId
+    });
+
+    const message =
+      error.message === "insufficient_credits"
+        ? "No tienes suficientes créditos disponibles para completar esta oferta."
+        : error.message === "offer_not_ready"
+          ? "Esta oferta todavía no está lista para confirmar."
+          : "No se pudo confirmar la transferencia. Inténtalo nuevamente.";
+
+    redirectWithError("/ofertas", message);
+  }
+
+  revalidatePath("/ofertas");
+  revalidatePath("/billetera");
+  redirect("/ofertas?ok=completed");
 }

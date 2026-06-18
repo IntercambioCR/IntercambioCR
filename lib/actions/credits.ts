@@ -100,6 +100,21 @@ function logPlatformIntakeError(error: unknown, context: Record<string, unknown>
   });
 }
 
+function logApproveIntakeError(error: unknown, context: Record<string, unknown>) {
+  const info = getSupabaseErrorInfo(error);
+  const stack = error instanceof Error ? error.stack : null;
+
+  console.error("Approve intake / assign credits error:", {
+    message: info.message,
+    code: info.code,
+    details: info.details,
+    hint: info.hint,
+    stack,
+    error: info.error,
+    ...context
+  });
+}
+
 async function getCurrentUserIdSafe(supabase: Awaited<ReturnType<typeof createClient>>) {
   try {
     const {
@@ -924,6 +939,7 @@ export async function adminMakeIntakeOffer(formData: FormData) {
   const intakeId = getString(formData, "intake_id");
   const offeredCredits = getPositiveInteger(formData, "offered_credits");
   const notes = formText(formData, "notes", 1000);
+  const errorPath = intakeId ? `/admin/entregas/${intakeId}` : "/admin";
 
   try {
     validateUuid(intakeId, "Solicitud");
@@ -932,32 +948,61 @@ export async function adminMakeIntakeOffer(formData: FormData) {
   }
 
   if (offeredCredits < 1) {
-    redirectWithError("/admin", "Ingresa una oferta válida: número entero mayor o igual a 1 crédito.");
+    redirectWithError(errorPath, "Ingresa una oferta válida: número entero mayor o igual a 1 crédito.");
   }
 
-  const { error } = await supabase.rpc("admin_make_intake_offer", {
-    p_intake_id: intakeId,
-    p_offered_credits: offeredCredits,
-    p_notes: notes || null
-  });
+  let rpcError: unknown = null;
 
-  if (error) {
+  try {
+    const result = await supabase.rpc("admin_make_intake_offer", {
+      p_intake_id: intakeId,
+      p_offered_credits: offeredCredits,
+      p_notes: notes || null
+    });
+    rpcError = result.error;
+  } catch (error) {
+    rpcError = error;
+  }
+
+  if (rpcError) {
+    logApproveIntakeError(rpcError, {
+      step: "admin_make_intake_offer",
+      rpc: "admin_make_intake_offer",
+      table: "platform_intakes",
+      intakeId,
+      offeredCredits
+    });
+
+    const info = getSupabaseErrorInfo(rpcError);
     const message =
-      error.message === "credit_account_not_found_or_negative_balance"
+      info.message === "credit_account_not_found_or_negative_balance"
         ? "El ajuste dejaría el saldo negativo o la cuenta de créditos no existe."
-        : error.message;
+        : info.message === "admin_required"
+          ? "Tu sesión no tiene permisos de administradora para aprobar esta entrega."
+          : info.message === "intake_not_found_or_locked"
+            ? "La solicitud no existe o ya no permite cambios."
+            : "No se pudo aprobar y asignar créditos. Inténtalo nuevamente.";
 
-    redirectWithError("/admin", message);
+    redirectWithError(errorPath, message);
   }
 
-  await createIntakeMessage({
-    supabase,
-    intakeId,
-    senderRole: "admin",
-    body: notes
-      ? `Tu solicitud fue aprobada. Coordinemos la entrega. Nota: ${notes}`
-      : "Tu solicitud fue aprobada. Coordinemos la entrega."
-  });
+  try {
+    await createIntakeMessage({
+      supabase,
+      intakeId,
+      senderRole: "admin",
+      body: notes
+        ? `Tu solicitud fue aprobada. Coordinemos la entrega. Nota: ${notes}`
+        : "Tu solicitud fue aprobada. Coordinemos la entrega."
+    });
+  } catch (error) {
+    logApproveIntakeError(error, {
+      step: "create_intake_message",
+      table: "intake_messages",
+      intakeId,
+      offeredCredits
+    });
+  }
 
   revalidatePath("/admin");
   revalidatePath(`/admin/entregas/${intakeId}`);

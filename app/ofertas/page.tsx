@@ -1,12 +1,14 @@
 import { CheckCircle2, XCircle } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { SubmitButton } from "@/components/submit-button";
-import { updateListingOfferStatus } from "@/lib/actions/marketplace";
+import { confirmListingCreditTransfer, updateListingOfferStatus } from "@/lib/actions/marketplace";
 import { getOffers } from "@/lib/data/offers";
 
 const statusLabels: Record<string, string> = {
   submitted: "Pendiente",
   accepted: "Aceptada",
+  seller_accepted: "Aceptada por vendedor",
+  completed: "Completada",
   rejected: "Rechazada",
   cancelled: "Cancelada"
 };
@@ -32,7 +34,7 @@ export default async function OffersPage({
 
         {ok ? (
           <div className="mb-5 rounded-lg border border-leaf-100 bg-leaf-50 p-4 text-sm font-semibold text-leaf-900">
-            Oferta actualizada correctamente.
+            {ok === "completed" ? "Transferencia confirmada correctamente." : "Oferta actualizada correctamente."}
           </div>
         ) : null}
         {error ? (
@@ -81,6 +83,20 @@ export default async function OffersPage({
                             Rechazar
                           </SubmitButton>
                         </form>
+                      </div>
+                    ) : null}
+                    {offer.direction === "sent" && offer.status === "seller_accepted" && offer.credits > 0 ? (
+                      <div className="mt-3 grid gap-2">
+                        <form action={confirmListingCreditTransfer}>
+                          <input type="hidden" name="offer_id" value={offer.id} />
+                          <SubmitButton className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-ocean-600 text-sm font-bold text-white disabled:cursor-wait disabled:opacity-70">
+                            <CheckCircle2 className="h-4 w-4" />
+                            Confirmar transferencia
+                          </SubmitButton>
+                        </form>
+                        <p className="text-xs leading-5 text-slate-500">
+                          Los créditos se mueven solo cuando confirmas esta transferencia.
+                        </p>
                       </div>
                     ) : null}
                   </div>

@@ -28,7 +28,14 @@ export default async function MessagesPage() {
                 href={conversation.href}
                 className="block rounded-lg border border-slate-200 bg-white p-5 hover:border-ocean-200 hover:shadow-soft"
               >
-                <p className="font-bold text-ink">{conversation.listingTitle}</p>
+                <div className="flex items-start justify-between gap-3">
+                  <p className="font-bold text-ink">{conversation.listingTitle}</p>
+                  {conversation.unreadCount > 0 ? (
+                    <span className="shrink-0 rounded-full bg-leaf-600 px-2.5 py-1 text-xs font-bold text-white">
+                      Nuevo
+                    </span>
+                  ) : null}
+                </div>
                 <p className="mt-1 text-sm text-slate-600">{conversation.otherPerson}</p>
                 {conversation.kind === "intake" ? (
                   <p className="mt-1 text-xs font-bold text-ocean-700">Entrega a Intercambio CR</p>

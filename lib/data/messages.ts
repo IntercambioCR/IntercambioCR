@@ -8,6 +8,7 @@ export type ConversationSummary = {
   listingTitle: string;
   otherPerson: string;
   updatedAt: string;
+  unreadCount: number;
   kind?: "direct" | "intake";
 };
 
@@ -85,8 +86,24 @@ export async function getConversations(): Promise<ConversationSummary[]> {
     return [];
   }
 
-  const directConversations = (data as unknown as ConversationRow[]).map((conversation) => {
+  const directConversations = await Promise.all((data as unknown as ConversationRow[]).map(async (conversation) => {
     const isBuyer = conversation.buyer_id === user.id;
+    const { count, error: unreadError } = await supabase
+      .from("direct_messages")
+      .select("id", { count: "exact", head: true })
+      .eq("conversation_id", conversation.id)
+      .neq("sender_id", user.id)
+      .is("read_at", null);
+
+    if (unreadError) {
+      logMessageLoadError("Unread messages error:", unreadError, {
+        table: "direct_messages",
+        action: "countUnread",
+        conversationId: conversation.id,
+        userId: user.id
+      });
+    }
+
     return {
       id: conversation.id,
       href: `/mensajes/${conversation.id}`,
@@ -98,11 +115,15 @@ export async function getConversations(): Promise<ConversationSummary[]> {
         day: "numeric",
         month: "short"
       }).format(new Date(conversation.updated_at)),
+      unreadCount: count ?? 0,
       kind: "direct" as const
     };
-  });
+  }));
 
-  const intakeConversations = await getIntakeConversationSummaries();
+  const intakeConversations = (await getIntakeConversationSummaries()).map((conversation) => ({
+    ...conversation,
+    unreadCount: "unreadCount" in conversation ? Number(conversation.unreadCount) || 0 : 0
+  }));
   return [...intakeConversations, ...directConversations];
 }
 
@@ -135,6 +156,22 @@ export async function getConversation(id: string): Promise<ConversationDetail | 
       });
     }
     return null;
+  }
+
+  const { error: readError } = await supabase
+    .from("direct_messages")
+    .update({ read_at: new Date().toISOString() })
+    .eq("conversation_id", id)
+    .neq("sender_id", user.id)
+    .is("read_at", null);
+
+  if (readError) {
+    logMessageLoadError("Unread messages error:", readError, {
+      table: "direct_messages",
+      action: "markAsRead",
+      conversationId: id,
+      userId: user.id
+    });
   }
 
   const { data: messages, error: messagesError } = await supabase

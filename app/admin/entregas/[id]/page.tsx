@@ -15,12 +15,15 @@ import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { SubmitButton } from "@/components/submit-button";
 
 export default async function AdminIntakeReviewPage({
-  params
+  params,
+  searchParams
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ error?: string; ok?: string }>;
 }) {
   const canAccessAdmin = await isCurrentUserAdmin();
   const { id } = await params;
+  const { error, ok } = await searchParams;
 
   if (!canAccessAdmin) {
     return (
@@ -46,6 +49,17 @@ export default async function AdminIntakeReviewPage({
           <ArrowLeft className="h-4 w-4" />
           Volver al panel
         </Link>
+
+        {error ? (
+          <div className="mb-5 rounded-lg border border-red-100 bg-red-50 p-4 text-sm font-semibold text-red-700">
+            {error}
+          </div>
+        ) : null}
+        {ok ? (
+          <div className="mb-5 rounded-lg border border-leaf-100 bg-leaf-50 p-4 text-sm font-semibold text-leaf-900">
+            Acción completada correctamente.
+          </div>
+        ) : null}
 
         <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
           <div className="min-w-0 rounded-lg border border-slate-200 bg-white p-5">
