@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export type UserNotification = {
   id: string;
+  type?: string | null;
   title: string;
   body: string;
   created: string;
@@ -13,6 +14,7 @@ export type UserNotification = {
 
 type NotificationRow = {
   id: string;
+  type?: string | null;
   title: string;
   body: string;
   read_at: string | null;
@@ -61,7 +63,7 @@ function notificationHref(notification: NotificationRow) {
   }
 
   if (notification.related_intake_id) {
-    return `/mensajes/intake/${notification.related_intake_id}`;
+    return `/perfil?tab=entregas&intake=${notification.related_intake_id}`;
   }
 
   if (notification.related_listing_id) {
@@ -70,6 +72,18 @@ function notificationHref(notification: NotificationRow) {
 
   if (notification.related_message_id) {
     return "/mensajes";
+  }
+
+  if (notification.type?.includes("offer")) {
+    return "/ofertas";
+  }
+
+  if (notification.type?.includes("message")) {
+    return "/mensajes";
+  }
+
+  if (notification.type?.includes("intake")) {
+    return "/perfil?tab=entregas";
   }
 
   return "/notificaciones";
@@ -105,7 +119,7 @@ export async function getUserNotifications(): Promise<UserNotification[]> {
   const { data, error } = await supabase
     .from("notifications")
     .select(
-      "id,title,body,read_at,created_at,related_offer_id,related_message_id,related_conversation_id,related_listing_id,related_intake_id"
+      "id,type,title,body,read_at,created_at,related_offer_id,related_message_id,related_conversation_id,related_listing_id,related_intake_id"
     )
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
@@ -123,6 +137,7 @@ export async function getUserNotifications(): Promise<UserNotification[]> {
 
   return (data as NotificationRow[]).map((notification) => ({
     id: notification.id,
+    type: notification.type,
     title: notification.title,
     body: notification.body,
     created: formatCostaRicaRelativeDate(notification.created_at),

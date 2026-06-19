@@ -7,12 +7,17 @@ export const categories = [
   "Escolar",
   "Juguetes",
   "Bebés",
+  "Embarazo",
+  "Belleza",
   "Moda mujer",
   "Moda hombre",
   "Deportes",
   "Mascotas",
   "Herramientas",
   "Coleccionables",
+  "Servicios",
+  "Hospedaje",
+  "Fiesta",
   "Otros"
 ] as const;
 
