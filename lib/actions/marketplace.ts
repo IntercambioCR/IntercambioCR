@@ -127,6 +127,44 @@ async function createOfferNotification({
   }
 }
 
+async function createUserNotification({
+  supabase,
+  userId,
+  type,
+  title,
+  body,
+  listingId,
+  offerId
+}: {
+  supabase: Awaited<ReturnType<typeof createClient>>;
+  userId: string;
+  type: string;
+  title: string;
+  body: string;
+  listingId?: string | null;
+  offerId?: string | null;
+}) {
+  const { error } = await supabase.from("notifications").insert({
+    user_id: userId,
+    type,
+    title,
+    body,
+    related_listing_id: listingId ?? null,
+    related_offer_id: offerId ?? null
+  });
+
+  if (error) {
+    logSupabaseError("Create offer notification error:", error, {
+      table: "notifications",
+      action: "insert",
+      userId,
+      type,
+      listingId,
+      offerId
+    });
+  }
+}
+
 export async function startConversation(formData: FormData) {
   const listingId = getString(formData, "listing_id");
   const initialMessage = formText(formData, "message", 1000);
@@ -313,6 +351,33 @@ export async function createListingOffer(formData: FormData) {
     redirectWithError(`/articulos/${listingId}`, "Describe el artículo que quieres ofrecer.");
   }
 
+  if (offerType === "credits" || offerType === "mixed") {
+    const { data: account, error: accountError } = await supabase
+      .from("credit_accounts")
+      .select("available")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    if (accountError) {
+      logSupabaseError("Create offer error:", accountError, {
+        table: "credit_accounts",
+        action: "checkAvailableCredits",
+        listingId,
+        senderId: userId,
+        offerType,
+        credits
+      });
+      redirectWithError(`/articulos/${listingId}`, "No se pudo validar tu saldo de créditos. Inténtalo nuevamente.");
+    }
+
+    if (!account || account.available < credits) {
+      redirectWithError(
+        `/articulos/${listingId}`,
+        "No tienes suficientes créditos disponibles para realizar esta oferta."
+      );
+    }
+  }
+
   const { data: createdOffer, error } = await supabase
     .from("listing_offers")
     .insert({
@@ -413,13 +478,19 @@ export async function updateListingOfferStatus(formData: FormData) {
     redirectWithError("/ofertas", "Estado de oferta no válido.");
   }
 
+  const { data: offerBeforeAction } = await supabase
+    .from("listing_offers")
+    .select("id,listing_id,sender_id,receiver_id,credits,listings(title)")
+    .eq("id", offerId)
+    .maybeSingle();
+
   const { error } = await supabase.rpc("seller_respond_listing_offer", {
     p_offer_id: offerId,
     p_status: status
   });
 
   if (error) {
-    logSupabaseError("Credit offer flow error:", error, {
+    logSupabaseError("Seller accept credit offer error:", error, {
       rpc: "seller_respond_listing_offer",
       offerId,
       status,
@@ -434,6 +505,27 @@ export async function updateListingOfferStatus(formData: FormData) {
           : error.message;
 
     redirectWithError("/ofertas", message);
+  }
+
+  if (offerBeforeAction) {
+    const offerRow = offerBeforeAction as unknown as {
+      listing_id: string;
+      sender_id: string;
+      credits: number;
+      listings?: { title?: string } | null;
+    };
+    await createUserNotification({
+      supabase,
+      userId: offerRow.sender_id,
+      type: "offer_received",
+      title: status === "accepted" ? "Oferta aceptada" : "Oferta rechazada",
+      body:
+        status === "accepted"
+          ? `Tu oferta de ${offerRow.credits} créditos fue aceptada. Confirma para transferir los créditos.`
+          : `Tu oferta por ${offerRow.listings?.title ?? "la publicación"} fue rechazada.`,
+      listingId: offerRow.listing_id,
+      offerId
+    });
   }
 
   revalidatePath("/ofertas");
@@ -452,12 +544,18 @@ export async function confirmListingCreditTransfer(formData: FormData) {
     redirectWithError("/ofertas", error instanceof Error ? error.message : "Oferta invÃ¡lida.");
   }
 
+  const { data: offerBeforeConfirm } = await supabase
+    .from("listing_offers")
+    .select("id,listing_id,sender_id,receiver_id,credits")
+    .eq("id", offerId)
+    .maybeSingle();
+
   const { error } = await supabase.rpc("buyer_confirm_credit_offer", {
     p_offer_id: offerId
   });
 
   if (error) {
-    logSupabaseError("Credit transfer error:", error, {
+    logSupabaseError("Buyer confirm credit transfer error:", error, {
       rpc: "buyer_confirm_credit_offer",
       offerId,
       userId
@@ -473,7 +571,108 @@ export async function confirmListingCreditTransfer(formData: FormData) {
     redirectWithError("/ofertas", message);
   }
 
+  if (offerBeforeConfirm) {
+    const offerRow = offerBeforeConfirm as unknown as {
+      listing_id: string;
+      receiver_id: string;
+      credits: number;
+    };
+    await createUserNotification({
+      supabase,
+      userId: offerRow.receiver_id,
+      type: "offer_received",
+      title: "Transferencia completada",
+      body: `Se completó la transferencia de ${offerRow.credits} créditos por tu artículo.`,
+      listingId: offerRow.listing_id,
+      offerId
+    });
+  }
+
   revalidatePath("/ofertas");
   revalidatePath("/billetera");
   redirect("/ofertas?ok=completed");
+}
+
+export async function submitOfferRating(formData: FormData) {
+  const offerId = getString(formData, "offer_id");
+  const reviewedUserId = getString(formData, "reviewed_user_id");
+  const rating = getPositiveInteger(formData, "rating");
+  const comment = formText(formData, "comment", 600);
+  const { supabase, userId } = await getCurrentUserId();
+  enforceRateLimit("/ofertas", `offer-rating:${userId}`, 10, 60_000);
+
+  try {
+    validateUuid(offerId, "Oferta");
+    validateUuid(reviewedUserId, "Usuario");
+  } catch (error) {
+    redirectWithError("/ofertas", error instanceof Error ? error.message : "Calificación inválida.");
+  }
+
+  if (rating < 1 || rating > 5) {
+    redirectWithError("/ofertas", "La calificación debe ser de 1 a 5 estrellas.");
+  }
+
+  const { data: offer, error: offerError } = await supabase
+    .from("listing_offers")
+    .select("id,sender_id,receiver_id,status")
+    .eq("id", offerId)
+    .maybeSingle();
+
+  if (offerError || !offer) {
+    logSupabaseError("Submit rating error:", offerError ?? new Error("offer_not_found"), {
+      table: "listing_offers",
+      offerId,
+      reviewerId: userId
+    });
+    redirectWithError("/ofertas", "No se pudo cargar la oferta para calificar.");
+  }
+
+  const offerRow = offer as { sender_id: string; receiver_id: string; status: string };
+  const isParticipant = offerRow.sender_id === userId || offerRow.receiver_id === userId;
+  const expectedReviewedUserId = offerRow.sender_id === userId ? offerRow.receiver_id : offerRow.sender_id;
+
+  if (!isParticipant || reviewedUserId !== expectedReviewedUserId || reviewedUserId === userId) {
+    redirectWithError("/ofertas", "No puedes calificar este intercambio.");
+  }
+
+  if (offerRow.status !== "completed") {
+    redirectWithError("/ofertas", "Solo puedes calificar ofertas completadas.");
+  }
+
+  const { error } = await supabase.from("user_ratings").insert({
+    offer_id: offerId,
+    reviewer_id: userId,
+    reviewed_user_id: reviewedUserId,
+    rating,
+    comment: comment || null
+  });
+
+  if (error) {
+    logSupabaseError("Submit rating error:", error, {
+      table: "user_ratings",
+      offerId,
+      reviewerId: userId,
+      reviewedUserId,
+      rating
+    });
+    redirectWithError(
+      "/ofertas",
+      error.code === "23505" ? "Ya calificaste este intercambio." : "No se pudo enviar la calificación."
+    );
+  }
+
+  const { error: recalcError } = await supabase.rpc("recalculate_profile_rating", {
+    p_user_id: reviewedUserId
+  });
+
+  if (recalcError) {
+    logSupabaseError("Recalculate profile rating error:", recalcError, {
+      rpc: "recalculate_profile_rating",
+      reviewedUserId
+    });
+  }
+
+  revalidatePath("/ofertas");
+  revalidatePath("/perfil");
+  redirect("/ofertas?ok=rating");
 }

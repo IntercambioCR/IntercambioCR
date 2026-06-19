@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Intercambio CR">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Intercambio CR</title>
+  <desc id="desc">Símbolo minimalista de intercambio circular para Intercambio CR.</desc>
   <defs>
     <linearGradient id="bg" x1="72" y1="70" x2="440" y2="442" gradientUnits="userSpaceOnUse">
       <stop stop-color="#F4FAFF"/>

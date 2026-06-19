@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -47,7 +48,14 @@ export function MobileMenu({ items }: { items: MobileMenuItem[] }) {
           />
           <aside className="absolute left-0 top-0 flex h-dvh w-[85vw] max-w-[360px] flex-col overflow-hidden bg-white shadow-2xl">
             <div className="flex min-h-16 items-center justify-between gap-3 border-b border-slate-200 px-4">
-              <p className="text-sm font-bold text-ink">Intercambio CR</p>
+              <Image
+                src="/brand/intercambio-cr-logo.svg"
+                alt="Intercambio CR"
+                width={180}
+                height={44}
+                className="h-10 w-auto max-w-[11rem]"
+                priority={false}
+              />
               <button
                 type="button"
                 className="focus-ring grid h-10 w-10 place-items-center rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50"

@@ -7,7 +7,9 @@ export type ConversationSummary = {
   href: string;
   listingTitle: string;
   otherPerson: string;
+  otherPersonAvatar: string | null;
   updatedAt: string;
+  updatedAtRaw: string;
   unreadCount: number;
   kind?: "direct" | "intake";
 };
@@ -31,8 +33,8 @@ type ConversationRow = {
   buyer_id: string;
   seller_id: string;
   listings?: { title?: string } | null;
-  buyer?: { full_name?: string } | null;
-  seller?: { full_name?: string } | null;
+  buyer?: { full_name?: string; avatar_url?: string | null } | null;
+  seller?: { full_name?: string; avatar_url?: string | null } | null;
 };
 
 type MessageRow = {
@@ -56,6 +58,13 @@ function logMessageLoadError(label: string, error: unknown, context: Record<stri
   });
 }
 
+function formatShortDate(value: string) {
+  return new Intl.DateTimeFormat("es-CR", {
+    day: "numeric",
+    month: "short"
+  }).format(new Date(value));
+}
+
 export async function getConversations(): Promise<ConversationSummary[]> {
   if (!isSupabaseConfigured()) {
     return [];
@@ -72,7 +81,7 @@ export async function getConversations(): Promise<ConversationSummary[]> {
 
   const { data, error } = await supabase
     .from("direct_conversations")
-    .select("id,updated_at,buyer_id,seller_id,listings(title),buyer:profiles!direct_conversations_buyer_id_fkey(full_name),seller:profiles!direct_conversations_seller_id_fkey(full_name)")
+    .select("id,updated_at,buyer_id,seller_id,listings(title),buyer:profiles!direct_conversations_buyer_id_fkey(full_name,avatar_url),seller:profiles!direct_conversations_seller_id_fkey(full_name,avatar_url)")
     .or(`buyer_id.eq.${user.id},seller_id.eq.${user.id}`)
     .order("updated_at", { ascending: false });
 
@@ -86,45 +95,70 @@ export async function getConversations(): Promise<ConversationSummary[]> {
     return [];
   }
 
-  const directConversations = await Promise.all((data as unknown as ConversationRow[]).map(async (conversation) => {
-    const isBuyer = conversation.buyer_id === user.id;
-    const { count, error: unreadError } = await supabase
-      .from("direct_messages")
-      .select("id", { count: "exact", head: true })
-      .eq("conversation_id", conversation.id)
-      .neq("sender_id", user.id)
-      .is("read_at", null);
+  const directConversations = await Promise.all(
+    (data as unknown as ConversationRow[]).map(async (conversation) => {
+      const isBuyer = conversation.buyer_id === user.id;
+      const otherProfile = isBuyer ? conversation.seller : conversation.buyer;
 
-    if (unreadError) {
-      logMessageLoadError("Unread messages error:", unreadError, {
-        table: "direct_messages",
-        action: "countUnread",
-        conversationId: conversation.id,
-        userId: user.id
-      });
-    }
+      const { data: latestMessage, error: latestMessageError } = await supabase
+        .from("direct_messages")
+        .select("created_at")
+        .eq("conversation_id", conversation.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
 
-    return {
-      id: conversation.id,
-      href: `/mensajes/${conversation.id}`,
-      listingTitle: conversation.listings?.title ?? "Publicación",
-      otherPerson: isBuyer
-        ? conversation.seller?.full_name ?? "Persona oferente"
-        : conversation.buyer?.full_name ?? "Persona interesada",
-      updatedAt: new Intl.DateTimeFormat("es-CR", {
-        day: "numeric",
-        month: "short"
-      }).format(new Date(conversation.updated_at)),
-      unreadCount: count ?? 0,
-      kind: "direct" as const
-    };
-  }));
+      if (latestMessageError) {
+        logMessageLoadError("Load inbox error:", latestMessageError, {
+          table: "direct_messages",
+          action: "loadLatestMessage",
+          conversationId: conversation.id,
+          userId: user.id
+        });
+      }
+
+      const { count, error: unreadError } = await supabase
+        .from("direct_messages")
+        .select("id", { count: "exact", head: true })
+        .eq("conversation_id", conversation.id)
+        .neq("sender_id", user.id)
+        .is("read_at", null);
+
+      if (unreadError) {
+        logMessageLoadError("Load inbox error:", unreadError, {
+          table: "direct_messages",
+          action: "countUnread",
+          conversationId: conversation.id,
+          userId: user.id
+        });
+      }
+
+      const updatedAtRaw = latestMessage?.created_at ?? conversation.updated_at;
+
+      return {
+        id: conversation.id,
+        href: `/mensajes/${conversation.id}`,
+        listingTitle: conversation.listings?.title ?? "Publicación",
+        otherPerson: otherProfile?.full_name ?? (isBuyer ? "Persona oferente" : "Persona interesada"),
+        otherPersonAvatar: otherProfile?.avatar_url ?? null,
+        updatedAt: formatShortDate(updatedAtRaw),
+        updatedAtRaw,
+        unreadCount: count ?? 0,
+        kind: "direct" as const
+      };
+    })
+  );
 
   const intakeConversations = (await getIntakeConversationSummaries()).map((conversation) => ({
     ...conversation,
+    otherPersonAvatar: null,
+    updatedAtRaw: "updatedAtRaw" in conversation ? String(conversation.updatedAtRaw) : new Date(0).toISOString(),
     unreadCount: "unreadCount" in conversation ? Number(conversation.unreadCount) || 0 : 0
   }));
-  return [...intakeConversations, ...directConversations];
+
+  return [...intakeConversations, ...directConversations].sort(
+    (a, b) => new Date(b.updatedAtRaw).getTime() - new Date(a.updatedAtRaw).getTime()
+  );
 }
 
 export async function getConversation(id: string): Promise<ConversationDetail | null> {
@@ -149,7 +183,7 @@ export async function getConversation(id: string): Promise<ConversationDetail | 
 
   if (conversationError || !conversation) {
     if (conversationError) {
-      logMessageLoadError("Load inbox error:", conversationError, {
+      logMessageLoadError("Load conversation error:", conversationError, {
         table: "direct_conversations",
         conversationId: id,
         userId: user.id
@@ -166,7 +200,7 @@ export async function getConversation(id: string): Promise<ConversationDetail | 
     .is("read_at", null);
 
   if (readError) {
-    logMessageLoadError("Unread messages error:", readError, {
+    logMessageLoadError("Mark as read error:", readError, {
       table: "direct_messages",
       action: "markAsRead",
       conversationId: id,
@@ -181,21 +215,20 @@ export async function getConversation(id: string): Promise<ConversationDetail | 
     .order("created_at", { ascending: true });
 
   if (messagesError) {
-    logMessageLoadError("Load inbox error:", messagesError, {
+    logMessageLoadError("Load conversation error:", messagesError, {
       table: "direct_messages",
       conversationId: id,
       userId: user.id
     });
   }
 
-  const isBuyer = conversation.buyer_id === user.id;
+  const row = conversation as unknown as ConversationRow;
+  const isBuyer = row.buyer_id === user.id;
 
   return {
-      id: conversation.id,
-      listingTitle: (conversation as unknown as ConversationRow).listings?.title ?? "Publicación",
-      otherPerson: isBuyer
-      ? (conversation as unknown as ConversationRow).seller?.full_name ?? "Persona oferente"
-      : (conversation as unknown as ConversationRow).buyer?.full_name ?? "Persona interesada",
+    id: row.id,
+    listingTitle: row.listings?.title ?? "Publicación",
+    otherPerson: isBuyer ? row.seller?.full_name ?? "Persona oferente" : row.buyer?.full_name ?? "Persona interesada",
     messages:
       (messages as unknown as MessageRow[] | null)?.map((message) => ({
         id: message.id,

@@ -1,7 +1,12 @@
 import { CheckCircle2, XCircle } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { SubmitButton } from "@/components/submit-button";
-import { confirmListingCreditTransfer, updateListingOfferStatus } from "@/lib/actions/marketplace";
+import {
+  confirmListingCreditTransfer,
+  startConversation,
+  submitOfferRating,
+  updateListingOfferStatus
+} from "@/lib/actions/marketplace";
 import { getOffers } from "@/lib/data/offers";
 
 const statusLabels: Record<string, string> = {
@@ -27,14 +32,18 @@ export default async function OffersPage({
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-ink">Ofertas</h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
-            Revisa ofertas recibidas y enviadas. Aceptar una oferta confirma intención,
-            pero las partes aún deben coordinar y verificar el artículo antes de finalizar.
+            Revisa ofertas recibidas y enviadas. Las ofertas con créditos solo se transfieren cuando el vendedor acepta
+            y el comprador confirma.
           </p>
         </div>
 
         {ok ? (
           <div className="mb-5 rounded-lg border border-leaf-100 bg-leaf-50 p-4 text-sm font-semibold text-leaf-900">
-            {ok === "completed" ? "Transferencia confirmada correctamente." : "Oferta actualizada correctamente."}
+            {ok === "completed"
+              ? "Transferencia confirmada correctamente."
+              : ok === "rating"
+                ? "Calificación enviada correctamente."
+                : "Oferta actualizada correctamente."}
           </div>
         ) : null}
         {error ? (
@@ -53,7 +62,11 @@ export default async function OffersPage({
                       {offer.direction === "received" ? "Recibida" : "Enviada"} / {offer.type}
                     </p>
                     <h2 className="mt-1 break-words text-lg font-bold text-ink">{offer.listingTitle}</h2>
-                    <p className="mt-1 text-sm text-slate-600">{offer.otherPerson}</p>
+                    <p className="mt-1 text-sm text-slate-600">
+                      {offer.direction === "received"
+                        ? `${offer.otherPerson} te ofreció ${offer.credits} créditos por ${offer.listingTitle}.`
+                        : `Le ofreciste ${offer.credits} créditos a ${offer.otherPerson} por ${offer.listingTitle}.`}
+                    </p>
                     <div className="mt-3 space-y-1 text-sm text-slate-600">
                       {offer.credits > 0 ? <p>{offer.credits} créditos</p> : null}
                       {offer.itemDescription ? <p>Artículo ofrecido: {offer.itemDescription}</p> : null}
@@ -61,10 +74,12 @@ export default async function OffersPage({
                     </div>
                     <p className="mt-3 text-xs text-slate-500">{offer.createdAt}</p>
                   </div>
-                  <div className="w-full md:w-44 md:shrink-0">
+
+                  <div className="w-full md:w-56 md:shrink-0">
                     <p className="rounded-lg bg-slate-50 px-3 py-2 text-center text-sm font-bold text-slate-700">
                       {statusLabels[offer.status] ?? offer.status}
                     </p>
+
                     {offer.direction === "received" && offer.status === "submitted" ? (
                       <div className="mt-3 grid gap-2">
                         <form action={updateListingOfferStatus}>
@@ -72,7 +87,7 @@ export default async function OffersPage({
                           <input type="hidden" name="status" value="accepted" />
                           <SubmitButton className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-leaf-600 text-sm font-bold text-white disabled:cursor-wait disabled:opacity-70">
                             <CheckCircle2 className="h-4 w-4" />
-                            Aceptar
+                            Aceptar oferta
                           </SubmitButton>
                         </form>
                         <form action={updateListingOfferStatus}>
@@ -80,11 +95,23 @@ export default async function OffersPage({
                           <input type="hidden" name="status" value="rejected" />
                           <SubmitButton className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-red-100 bg-white text-sm font-bold text-red-600 disabled:cursor-wait disabled:opacity-70">
                             <XCircle className="h-4 w-4" />
-                            Rechazar
+                            Rechazar oferta
+                          </SubmitButton>
+                        </form>
+                        <form action={startConversation}>
+                          <input type="hidden" name="listing_id" value={offer.listingId} />
+                          <input
+                            type="hidden"
+                            name="message"
+                            value={`Hola, quiero conversar sobre tu oferta por ${offer.listingTitle}.`}
+                          />
+                          <SubmitButton className="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-slate-200 bg-white text-sm font-bold text-slate-700 disabled:cursor-wait disabled:opacity-70">
+                            Enviar mensaje
                           </SubmitButton>
                         </form>
                       </div>
                     ) : null}
+
                     {offer.direction === "sent" && offer.status === "seller_accepted" && offer.credits > 0 ? (
                       <div className="mt-3 grid gap-2">
                         <form action={confirmListingCreditTransfer}>
@@ -97,6 +124,42 @@ export default async function OffersPage({
                         <p className="text-xs leading-5 text-slate-500">
                           Los créditos se mueven solo cuando confirmas esta transferencia.
                         </p>
+                      </div>
+                    ) : null}
+
+                    {offer.status === "completed" ? (
+                      <div className="mt-3 rounded-lg border border-slate-200 bg-white p-3">
+                        {offer.hasRated ? (
+                          <p className="text-sm font-semibold text-slate-600">Ya calificaste este intercambio.</p>
+                        ) : (
+                          <form action={submitOfferRating} className="grid gap-2">
+                            <input type="hidden" name="offer_id" value={offer.id} />
+                            <input type="hidden" name="reviewed_user_id" value={offer.otherUserId} />
+                            <label className="text-xs font-bold text-slate-600">
+                              Calificación pendiente
+                              <select
+                                name="rating"
+                                required
+                                defaultValue="5"
+                                className="mt-1 h-10 w-full rounded-lg border border-slate-200 px-2 text-sm"
+                              >
+                                <option value="5">5 estrellas</option>
+                                <option value="4">4 estrellas</option>
+                                <option value="3">3 estrellas</option>
+                                <option value="2">2 estrellas</option>
+                                <option value="1">1 estrella</option>
+                              </select>
+                            </label>
+                            <textarea
+                              name="comment"
+                              className="min-h-16 rounded-lg border border-slate-200 p-2 text-sm"
+                              placeholder="Comentario opcional"
+                            />
+                            <SubmitButton className="min-h-10 rounded-lg bg-ink px-3 text-sm font-bold text-white disabled:cursor-wait disabled:opacity-70">
+                              Enviar calificación
+                            </SubmitButton>
+                          </form>
+                        )}
                       </div>
                     ) : null}
                   </div>

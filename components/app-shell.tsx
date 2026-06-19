@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { InstallPrompt } from "@/components/install-prompt";
 import { MobileMenu } from "@/components/mobile-menu";
+import { getUnreadActivityCount } from "@/lib/data/notifications";
 import { isCurrentUserAdmin } from "@/lib/data/session";
 
 const primaryNavItems = [
@@ -40,7 +41,10 @@ const bottomNavItems = [
 ];
 
 export async function AppShell({ children }: { children: React.ReactNode }) {
-  const canSeeAdmin = await isCurrentUserAdmin();
+  const [canSeeAdmin, unreadActivityCount] = await Promise.all([
+    isCurrentUserAdmin(),
+    getUnreadActivityCount()
+  ]);
   const primaryItems = canSeeAdmin
     ? [...primaryNavItems, { href: "/admin", label: "Panel admin" }]
     : primaryNavItems;
@@ -107,10 +111,13 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
             </Link>
             <Link
               href="/notificaciones"
-              className="focus-ring grid h-10 w-10 place-items-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+              className="focus-ring relative grid h-10 w-10 place-items-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
               aria-label="Notificaciones"
             >
               <Bell className="h-5 w-5" />
+              {unreadActivityCount > 0 ? (
+                <span className="absolute right-1.5 top-1.5 h-2.5 w-2.5 rounded-full bg-red-600 ring-2 ring-white" />
+              ) : null}
             </Link>
             <Link
               href="/perfil"

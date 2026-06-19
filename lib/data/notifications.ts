@@ -73,3 +73,74 @@ export async function getUserNotifications(): Promise<UserNotification[]> {
     read: Boolean(notification.read_at)
   }));
 }
+
+export async function getUnreadActivityCount() {
+  if (!isSupabaseConfigured()) {
+    return 0;
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return 0;
+  }
+
+  const { count: offerCount, error: offerError } = await supabase
+    .from("listing_offers")
+    .select("id", { count: "exact", head: true })
+    .eq("receiver_id", user.id)
+    .eq("status", "submitted");
+
+  if (offerError) {
+    console.error("Load received offers error:", {
+      message: offerError.message,
+      code: offerError.code,
+      details: offerError.details,
+      hint: offerError.hint,
+      error: offerError
+    });
+  }
+
+  const { data: conversations, error: conversationError } = await supabase
+    .from("direct_conversations")
+    .select("id")
+    .or(`buyer_id.eq.${user.id},seller_id.eq.${user.id}`);
+
+  if (conversationError) {
+    console.error("Load inbox error:", {
+      message: conversationError.message,
+      code: conversationError.code,
+      details: conversationError.details,
+      hint: conversationError.hint,
+      error: conversationError
+    });
+    return offerCount ?? 0;
+  }
+
+  const conversationIds = conversations?.map((conversation) => conversation.id) ?? [];
+  if (conversationIds.length === 0) {
+    return offerCount ?? 0;
+  }
+
+  const { count: messageCount, error: messageError } = await supabase
+    .from("direct_messages")
+    .select("id", { count: "exact", head: true })
+    .in("conversation_id", conversationIds)
+    .neq("sender_id", user.id)
+    .is("read_at", null);
+
+  if (messageError) {
+    console.error("Load inbox error:", {
+      message: messageError.message,
+      code: messageError.code,
+      details: messageError.details,
+      hint: messageError.hint,
+      error: messageError
+    });
+  }
+
+  return (offerCount ?? 0) + (messageCount ?? 0);
+}

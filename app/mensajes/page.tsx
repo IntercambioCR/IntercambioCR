@@ -3,6 +3,15 @@ import { MessageCircle } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { getConversations } from "@/lib/data/messages";
 
+function initials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("");
+}
+
 export default async function MessagesPage() {
   const conversations = await getConversations();
 
@@ -28,19 +37,35 @@ export default async function MessagesPage() {
                 href={conversation.href}
                 className="block rounded-lg border border-slate-200 bg-white p-5 hover:border-ocean-200 hover:shadow-soft"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <p className="font-bold text-ink">{conversation.listingTitle}</p>
-                  {conversation.unreadCount > 0 ? (
-                    <span className="shrink-0 rounded-full bg-leaf-600 px-2.5 py-1 text-xs font-bold text-white">
-                      Nuevo
-                    </span>
-                  ) : null}
+                <div className="flex min-w-0 items-start gap-3">
+                  <div className="relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full bg-ocean-50 text-sm font-bold text-ocean-700">
+                    {conversation.otherPersonAvatar ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={conversation.otherPersonAvatar}
+                        alt={conversation.otherPerson}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      initials(conversation.otherPerson) || "IC"
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="truncate font-bold text-ink">{conversation.otherPerson}</p>
+                      {conversation.unreadCount > 0 ? (
+                        <span className="shrink-0 rounded-full bg-red-600 px-2.5 py-1 text-xs font-bold text-white">
+                          Nuevo
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-1 truncate text-sm font-semibold text-slate-700">{conversation.listingTitle}</p>
+                    {conversation.kind === "intake" ? (
+                      <p className="mt-1 text-xs font-bold text-ocean-700">Entrega a Intercambio CR</p>
+                    ) : null}
+                    <p className="mt-2 text-xs text-slate-500">{conversation.updatedAt}</p>
+                  </div>
                 </div>
-                <p className="mt-1 text-sm text-slate-600">{conversation.otherPerson}</p>
-                {conversation.kind === "intake" ? (
-                  <p className="mt-1 text-xs font-bold text-ocean-700">Entrega a Intercambio CR</p>
-                ) : null}
-                <p className="mt-2 text-xs text-slate-500">{conversation.updatedAt}</p>
               </Link>
             ))
           ) : (
