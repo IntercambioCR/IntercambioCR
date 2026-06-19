@@ -1,4 +1,5 @@
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { formatCostaRicaDate } from "@/lib/dates";
 import { createClient } from "@/lib/supabase/server";
 
 type RelatedProfile = { full_name: string | null } | { full_name: string | null }[] | null;
@@ -163,14 +164,7 @@ const emptyAdminData: AdminData = {
 };
 
 function formatDate(value: string | null | undefined) {
-  if (!value) {
-    return "Sin fecha";
-  }
-
-  return new Intl.DateTimeFormat("es-CR", {
-    dateStyle: "medium",
-    timeStyle: "short"
-  }).format(new Date(value));
+  return value ? formatCostaRicaDate(value) : "Sin fecha";
 }
 
 export async function getAdminData(query = ""): Promise<AdminData> {

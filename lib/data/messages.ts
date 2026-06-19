@@ -1,4 +1,5 @@
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { formatCostaRicaDate, formatCostaRicaRelativeDate } from "@/lib/dates";
 import { getIntakeConversationSummaries } from "@/lib/data/intake-chat";
 import { createClient } from "@/lib/supabase/server";
 
@@ -56,13 +57,6 @@ function logMessageLoadError(label: string, error: unknown, context: Record<stri
     error,
     ...context
   });
-}
-
-function formatShortDate(value: string) {
-  return new Intl.DateTimeFormat("es-CR", {
-    day: "numeric",
-    month: "short"
-  }).format(new Date(value));
 }
 
 export async function getConversations(): Promise<ConversationSummary[]> {
@@ -141,7 +135,7 @@ export async function getConversations(): Promise<ConversationSummary[]> {
         listingTitle: conversation.listings?.title ?? "Publicación",
         otherPerson: otherProfile?.full_name ?? (isBuyer ? "Persona oferente" : "Persona interesada"),
         otherPersonAvatar: otherProfile?.avatar_url ?? null,
-        updatedAt: formatShortDate(updatedAtRaw),
+        updatedAt: formatCostaRicaRelativeDate(updatedAtRaw),
         updatedAtRaw,
         unreadCount: count ?? 0,
         kind: "direct" as const
@@ -235,12 +229,7 @@ export async function getConversation(id: string): Promise<ConversationDetail | 
         body: message.body,
         senderName: message.sender_id === user.id ? "Tú" : message.profiles?.full_name ?? "Usuario",
         isOwn: message.sender_id === user.id,
-        createdAt: new Intl.DateTimeFormat("es-CR", {
-          day: "numeric",
-          month: "short",
-          hour: "2-digit",
-          minute: "2-digit"
-        }).format(new Date(message.created_at))
+        createdAt: formatCostaRicaDate(message.created_at)
       })) ?? []
   };
 }

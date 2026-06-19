@@ -1,4 +1,5 @@
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { formatCostaRicaDate, formatCostaRicaRelativeDate } from "@/lib/dates";
 import { createClient } from "@/lib/supabase/server";
 
 type IntakeConversationRow = {
@@ -25,6 +26,7 @@ export type IntakeConversationSummary = {
   listingTitle: string;
   otherPerson: string;
   updatedAt: string;
+  updatedAtRaw: string;
   kind: "intake";
 };
 
@@ -44,16 +46,7 @@ export type IntakeConversationDetail = {
 };
 
 function formatDate(value: string | null | undefined) {
-  if (!value) {
-    return "Sin fecha";
-  }
-
-  return new Intl.DateTimeFormat("es-CR", {
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit"
-  }).format(new Date(value));
+  return value ? formatCostaRicaDate(value) : "Sin fecha";
 }
 
 function logIntakeChatError(label: string, error: unknown, context: Record<string, unknown>) {
@@ -103,7 +96,8 @@ export async function getIntakeConversationSummaries(): Promise<IntakeConversati
     href: `/mensajes/intake/${conversation.id}`,
     listingTitle: conversation.platform_intakes?.title ?? "Entrega a Intercambio CR",
     otherPerson: conversation.user_id === user.id ? "Intercambio CR" : conversation.user?.full_name ?? "Usuario",
-    updatedAt: formatDate(conversation.updated_at),
+    updatedAt: formatCostaRicaRelativeDate(conversation.updated_at),
+    updatedAtRaw: conversation.updated_at,
     kind: "intake"
   }));
 }

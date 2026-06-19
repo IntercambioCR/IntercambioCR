@@ -134,7 +134,9 @@ async function createUserNotification({
   title,
   body,
   listingId,
-  offerId
+  offerId,
+  conversationId,
+  messageId
 }: {
   supabase: Awaited<ReturnType<typeof createClient>>;
   userId: string;
@@ -143,6 +145,8 @@ async function createUserNotification({
   body: string;
   listingId?: string | null;
   offerId?: string | null;
+  conversationId?: string | null;
+  messageId?: string | null;
 }) {
   const { error } = await supabase.from("notifications").insert({
     user_id: userId,
@@ -150,7 +154,9 @@ async function createUserNotification({
     title,
     body,
     related_listing_id: listingId ?? null,
-    related_offer_id: offerId ?? null
+    related_offer_id: offerId ?? null,
+    related_conversation_id: conversationId ?? null,
+    related_message_id: messageId ?? null
   });
 
   if (error) {
@@ -160,9 +166,61 @@ async function createUserNotification({
       userId,
       type,
       listingId,
-      offerId
+      offerId,
+      conversationId,
+      messageId
     });
   }
+}
+
+async function createDirectMessageNotification({
+  supabase,
+  recipientId,
+  senderId,
+  conversationId,
+  messageId,
+  listingId,
+  listingTitle
+}: {
+  supabase: Awaited<ReturnType<typeof createClient>>;
+  recipientId: string;
+  senderId: string;
+  conversationId: string;
+  messageId: string;
+  listingId: string | null;
+  listingTitle: string;
+}) {
+  const { data: senderProfile, error: senderError } = await supabase
+    .from("profiles")
+    .select("full_name")
+    .eq("id", senderId)
+    .maybeSingle();
+
+  if (senderError) {
+    logSupabaseError("Create message notification error:", senderError, {
+      table: "profiles",
+      action: "loadSenderName",
+      senderId,
+      conversationId,
+      messageId
+    });
+  }
+
+  const senderName =
+    typeof senderProfile?.full_name === "string" && senderProfile.full_name.trim().length > 0
+      ? senderProfile.full_name.trim()
+      : "Alguien";
+
+  await createUserNotification({
+    supabase,
+    userId: recipientId,
+    type: "message_received",
+    title: "Nuevo mensaje",
+    body: `${senderName} te envió un mensaje sobre ${listingTitle}.`,
+    listingId,
+    conversationId,
+    messageId
+  });
 }
 
 export async function startConversation(formData: FormData) {
@@ -238,13 +296,17 @@ export async function startConversation(formData: FormData) {
   }
 
   if (initialMessage) {
-    const { error: messageError } = await supabase.from("direct_messages").insert({
-      conversation_id: conversationId,
-      sender_id: userId,
-      body: initialMessage
-    });
+    const { data: createdMessage, error: messageError } = await supabase
+      .from("direct_messages")
+      .insert({
+        conversation_id: conversationId,
+        sender_id: userId,
+        body: initialMessage
+      })
+      .select("id")
+      .single();
 
-    if (messageError) {
+    if (messageError || !createdMessage) {
       logSupabaseError("Send message error:", messageError, {
         table: "direct_messages",
         conversationId,
@@ -253,6 +315,16 @@ export async function startConversation(formData: FormData) {
       });
       redirectWithError(`/articulos/${listingId}`, "No se pudo enviar el mensaje. Inténtalo nuevamente.");
     }
+
+    await createDirectMessageNotification({
+      supabase,
+      recipientId: listing.seller_id,
+      senderId: userId,
+      conversationId,
+      messageId: createdMessage.id,
+      listingId,
+      listingTitle: listing.title
+    });
   }
 
   revalidatePath("/mensajes");
@@ -276,13 +348,32 @@ export async function sendDirectMessage(formData: FormData) {
     redirectWithError(`/mensajes/${conversationId}`, "Escribe un mensaje antes de enviarlo.");
   }
 
-  const { error } = await supabase.from("direct_messages").insert({
-    conversation_id: conversationId,
-    sender_id: userId,
-    body
-  });
+  const { data: conversation, error: conversationError } = await supabase
+    .from("direct_conversations")
+    .select("id,listing_id,buyer_id,seller_id,listings(title)")
+    .eq("id", conversationId)
+    .maybeSingle();
 
-  if (error) {
+  if (conversationError || !conversation) {
+    logSupabaseError("Load conversation error:", conversationError ?? new Error("conversation_not_found"), {
+      table: "direct_conversations",
+      conversationId,
+      senderId: userId
+    });
+    redirectWithError(`/mensajes/${conversationId}`, "No se pudo cargar la conversación. Inténtalo nuevamente.");
+  }
+
+  const { data: createdMessage, error } = await supabase
+    .from("direct_messages")
+    .insert({
+      conversation_id: conversationId,
+      sender_id: userId,
+      body
+    })
+    .select("id")
+    .single();
+
+  if (error || !createdMessage) {
     logSupabaseError("Send message error:", error, {
       table: "direct_messages",
       conversationId,
@@ -290,6 +381,24 @@ export async function sendDirectMessage(formData: FormData) {
     });
     redirectWithError(`/mensajes/${conversationId}`, "No se pudo enviar el mensaje. Inténtalo nuevamente.");
   }
+
+  const conversationRow = conversation as unknown as {
+    listing_id: string | null;
+    buyer_id: string;
+    seller_id: string;
+    listings?: { title?: string } | null;
+  };
+  const recipientId = conversationRow.buyer_id === userId ? conversationRow.seller_id : conversationRow.buyer_id;
+
+  await createDirectMessageNotification({
+    supabase,
+    recipientId,
+    senderId: userId,
+    conversationId,
+    messageId: createdMessage.id,
+    listingId: conversationRow.listing_id,
+    listingTitle: conversationRow.listings?.title ?? "la publicación"
+  });
 
   const { error: updateError } = await supabase
     .from("direct_conversations")

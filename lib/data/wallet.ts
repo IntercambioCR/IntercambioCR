@@ -1,4 +1,5 @@
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { formatCostaRicaShortDate } from "@/lib/dates";
 import { createClient } from "@/lib/supabase/server";
 
 export type WalletData = {
@@ -75,10 +76,7 @@ export async function getWalletData(): Promise<WalletData> {
   const transactionMovements =
     transactionResult.data?.map((transaction) => ({
       label: transaction.description ?? transaction.type,
-      date: new Intl.DateTimeFormat("es-CR", {
-        day: "numeric",
-        month: "short"
-      }).format(new Date(transaction.created_at)),
+      date: formatCostaRicaShortDate(transaction.created_at),
       amount: `${transaction.amount > 0 ? "+" : ""}${transaction.amount} créditos`,
       tone: transaction.amount > 0 ? "text-leaf-600" : "text-slate-700",
       balance: `${transaction.previous_balance} → ${transaction.new_balance}`
@@ -87,10 +85,7 @@ export async function getWalletData(): Promise<WalletData> {
   const legacyMovements =
     movementResult.data?.map((movement) => ({
       label: movement.note ?? movement.movement_type,
-      date: new Intl.DateTimeFormat("es-CR", {
-        day: "numeric",
-        month: "short"
-      }).format(new Date(movement.created_at)),
+      date: formatCostaRicaShortDate(movement.created_at),
       amount: `${movement.amount > 0 ? "+" : ""}${movement.amount} créditos`,
       tone: movement.amount > 0 ? "text-leaf-600" : "text-slate-700"
     })) ?? [];

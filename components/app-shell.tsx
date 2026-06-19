@@ -116,7 +116,9 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
             >
               <Bell className="h-5 w-5" />
               {unreadActivityCount > 0 ? (
-                <span className="absolute right-1.5 top-1.5 h-2.5 w-2.5 rounded-full bg-red-600 ring-2 ring-white" />
+                <span className="absolute -right-1 -top-1 grid min-h-5 min-w-5 place-items-center rounded-full bg-red-600 px-1 text-[10px] font-bold leading-none text-white ring-2 ring-white">
+                  {unreadActivityCount > 9 ? "9+" : unreadActivityCount}
+                </span>
               ) : null}
             </Link>
             <Link

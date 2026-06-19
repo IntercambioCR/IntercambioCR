@@ -1,4 +1,5 @@
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { formatCostaRicaShortDate } from "@/lib/dates";
 import { createClient } from "@/lib/supabase/server";
 
 export type OfferSummary = {
@@ -164,10 +165,7 @@ function mapOffer(
     itemDescription: offer.offered_item_description,
     message: offer.message,
     status: offer.status,
-    createdAt: new Intl.DateTimeFormat("es-CR", {
-      day: "numeric",
-      month: "short"
-    }).format(new Date(offer.created_at)),
+    createdAt: formatCostaRicaShortDate(offer.created_at),
     createdAtRaw: offer.created_at,
     hasRated: ratedOfferIds.has(offer.id)
   };

@@ -21,9 +21,9 @@ const statusLabels: Record<string, string> = {
 export default async function OffersPage({
   searchParams
 }: {
-  searchParams: Promise<{ ok?: string; error?: string }>;
+  searchParams: Promise<{ ok?: string; error?: string; offer?: string }>;
 }) {
-  const { ok, error } = await searchParams;
+  const { ok, error, offer: selectedOfferId } = await searchParams;
   const offers = await getOffers();
 
   return (
@@ -55,7 +55,12 @@ export default async function OffersPage({
         <div className="space-y-4">
           {offers.length > 0 ? (
             offers.map((offer) => (
-              <div key={offer.id} className="min-w-0 rounded-lg border border-slate-200 bg-white p-5">
+              <div
+                key={offer.id}
+                className={`min-w-0 rounded-lg border bg-white p-5 ${
+                  selectedOfferId === offer.id ? "border-ocean-300 ring-2 ring-ocean-100" : "border-slate-200"
+                }`}
+              >
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div className="min-w-0">
                     <p className="text-xs font-bold uppercase text-ocean-700">

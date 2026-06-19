@@ -1,3 +1,4 @@
+import { formatCostaRicaRelativeDate } from "@/lib/dates";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 
@@ -7,6 +8,20 @@ export type UserNotification = {
   body: string;
   created: string;
   read: boolean;
+  href: string;
+};
+
+type NotificationRow = {
+  id: string;
+  title: string;
+  body: string;
+  read_at: string | null;
+  created_at: string;
+  related_offer_id?: string | null;
+  related_message_id?: string | null;
+  related_conversation_id?: string | null;
+  related_listing_id?: string | null;
+  related_intake_id?: string | null;
 };
 
 const fallbackNotifications: UserNotification[] = [
@@ -15,29 +30,62 @@ const fallbackNotifications: UserNotification[] = [
     title: "Entregas privadas",
     body: "Tu entrega a Intercambio CR quedará pendiente hasta que se revise el artículo.",
     created: "Próximamente",
-    read: false
+    read: false,
+    href: "/perfil"
   },
   {
     id: "offers-help",
     title: "Ofertas",
     body: "Cuando alguien haga una oferta por un artículo tuyo, la verás en esta pantalla.",
     created: "Próximamente",
-    read: false
+    read: false,
+    href: "/ofertas"
   },
   {
     id: "credits-help",
     title: "Credis",
     body: "Los movimientos importantes también aparecerán en tu billetera.",
     created: "Próximamente",
-    read: false
+    read: false,
+    href: "/billetera"
   }
 ];
 
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat("es-CR", {
-    dateStyle: "medium",
-    timeStyle: "short"
-  }).format(new Date(value));
+function notificationHref(notification: NotificationRow) {
+  if (notification.related_conversation_id) {
+    return `/mensajes/${notification.related_conversation_id}`;
+  }
+
+  if (notification.related_offer_id) {
+    return `/ofertas?offer=${notification.related_offer_id}`;
+  }
+
+  if (notification.related_intake_id) {
+    return `/mensajes/intake/${notification.related_intake_id}`;
+  }
+
+  if (notification.related_listing_id) {
+    return `/articulos/${notification.related_listing_id}`;
+  }
+
+  if (notification.related_message_id) {
+    return "/mensajes";
+  }
+
+  return "/notificaciones";
+}
+
+function logNotificationError(label: string, error: unknown, context: Record<string, unknown>) {
+  const record = typeof error === "object" && error !== null ? (error as Record<string, unknown>) : null;
+
+  console.error(label, {
+    message: typeof record?.message === "string" ? record.message : String(error),
+    code: record?.code ?? null,
+    details: record?.details ?? null,
+    hint: record?.hint ?? null,
+    error,
+    ...context
+  });
 }
 
 export async function getUserNotifications(): Promise<UserNotification[]> {
@@ -56,21 +104,30 @@ export async function getUserNotifications(): Promise<UserNotification[]> {
 
   const { data, error } = await supabase
     .from("notifications")
-    .select("id,title,body,read_at,created_at")
+    .select(
+      "id,title,body,read_at,created_at,related_offer_id,related_message_id,related_conversation_id,related_listing_id,related_intake_id"
+    )
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
     .limit(50);
 
   if (error || !data) {
+    if (error) {
+      logNotificationError("Load notifications error:", error, {
+        table: "notifications",
+        userId: user.id
+      });
+    }
     return fallbackNotifications;
   }
 
-  return data.map((notification) => ({
+  return (data as NotificationRow[]).map((notification) => ({
     id: notification.id,
     title: notification.title,
     body: notification.body,
-    created: formatDate(notification.created_at),
-    read: Boolean(notification.read_at)
+    created: formatCostaRicaRelativeDate(notification.created_at),
+    read: Boolean(notification.read_at),
+    href: notificationHref(notification)
   }));
 }
 
@@ -86,6 +143,20 @@ export async function getUnreadActivityCount() {
 
   if (!user) {
     return 0;
+  }
+
+  const { count: notificationCount, error: notificationError } = await supabase
+    .from("notifications")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .is("read_at", null);
+
+  if (notificationError) {
+    logNotificationError("Load notifications error:", notificationError, {
+      table: "notifications",
+      userId: user.id,
+      action: "countUnread"
+    });
   }
 
   const { count: offerCount, error: offerError } = await supabase
@@ -117,12 +188,12 @@ export async function getUnreadActivityCount() {
       hint: conversationError.hint,
       error: conversationError
     });
-    return offerCount ?? 0;
+    return (notificationCount ?? 0) + (offerCount ?? 0);
   }
 
   const conversationIds = conversations?.map((conversation) => conversation.id) ?? [];
   if (conversationIds.length === 0) {
-    return offerCount ?? 0;
+    return (notificationCount ?? 0) + (offerCount ?? 0);
   }
 
   const { count: messageCount, error: messageError } = await supabase
@@ -142,5 +213,5 @@ export async function getUnreadActivityCount() {
     });
   }
 
-  return (offerCount ?? 0) + (messageCount ?? 0);
+  return (notificationCount ?? 0) + (offerCount ?? 0) + (messageCount ?? 0);
 }

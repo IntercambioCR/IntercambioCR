@@ -1,4 +1,5 @@
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { formatCostaRicaDate } from "@/lib/dates";
 import { createClient } from "@/lib/supabase/server";
 
 type RelatedImage = { storage_path: string; sort_order: number | null };
@@ -17,14 +18,7 @@ export type MyIntake = {
 };
 
 function formatDate(value: string | null | undefined) {
-  if (!value) {
-    return "Sin fecha";
-  }
-
-  return new Intl.DateTimeFormat("es-CR", {
-    dateStyle: "medium",
-    timeStyle: "short"
-  }).format(new Date(value));
+  return value ? formatCostaRicaDate(value) : "Sin fecha";
 }
 
 function statusLabel(status: string) {
