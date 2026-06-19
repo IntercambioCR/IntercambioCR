@@ -136,7 +136,8 @@ async function createUserNotification({
   listingId,
   offerId,
   conversationId,
-  messageId
+  messageId,
+  dedupe = false
 }: {
   supabase: Awaited<ReturnType<typeof createClient>>;
   userId: string;
@@ -147,7 +148,43 @@ async function createUserNotification({
   offerId?: string | null;
   conversationId?: string | null;
   messageId?: string | null;
+  dedupe?: boolean;
 }) {
+  if (dedupe) {
+    let existingQuery = supabase
+      .from("notifications")
+      .select("id")
+      .eq("user_id", userId)
+      .eq("type", type)
+      .eq("title", title)
+      .limit(1);
+
+    if (offerId) {
+      existingQuery = existingQuery.eq("related_offer_id", offerId);
+    }
+
+    if (listingId) {
+      existingQuery = existingQuery.eq("related_listing_id", listingId);
+    }
+
+    const { data: existing, error: existingError } = await existingQuery.maybeSingle();
+
+    if (existingError) {
+      logSupabaseError("Create offer notification error:", existingError, {
+        table: "notifications",
+        action: "checkDuplicate",
+        userId,
+        type,
+        listingId,
+        offerId
+      });
+    }
+
+    if (existing?.id) {
+      return;
+    }
+  }
+
   const { error } = await supabase.from("notifications").insert({
     user_id: userId,
     type,
@@ -623,6 +660,7 @@ export async function updateListingOfferStatus(formData: FormData) {
       credits: number;
       listings?: { title?: string } | null;
     };
+    const listingTitle = offerRow.listings?.title ?? "la publicación";
     await createUserNotification({
       supabase,
       userId: offerRow.sender_id,
@@ -630,10 +668,11 @@ export async function updateListingOfferStatus(formData: FormData) {
       title: status === "accepted" ? "Oferta aceptada" : "Oferta rechazada",
       body:
         status === "accepted"
-          ? `Tu oferta de ${offerRow.credits} créditos fue aceptada. Confirma para transferir los créditos.`
-          : `Tu oferta por ${offerRow.listings?.title ?? "la publicación"} fue rechazada.`,
+          ? `Tu oferta por ${listingTitle} fue aceptada. Confirma la transferencia o coordina con la otra persona.`
+          : `Tu oferta por ${listingTitle} fue rechazada.`,
       listingId: offerRow.listing_id,
-      offerId
+      offerId,
+      dedupe: status === "accepted"
     });
   }
 
@@ -650,24 +689,70 @@ export async function confirmListingCreditTransfer(formData: FormData) {
   try {
     validateUuid(offerId, "Oferta");
   } catch (error) {
-    redirectWithError("/ofertas", error instanceof Error ? error.message : "Oferta invÃ¡lida.");
+    redirectWithError("/ofertas", error instanceof Error ? error.message : "Oferta inválida.");
   }
 
-  const { data: offerBeforeConfirm } = await supabase
+  const { data: offerBeforeConfirm, error: offerLoadError } = await supabase
     .from("listing_offers")
-    .select("id,listing_id,sender_id,receiver_id,credits")
+    .select("id,listing_id,sender_id,receiver_id,credits,status")
     .eq("id", offerId)
     .maybeSingle();
 
-  const { error } = await supabase.rpc("buyer_confirm_credit_offer", {
-    p_offer_id: offerId
-  });
-
-  if (error) {
-    logSupabaseError("Buyer confirm credit transfer error:", error, {
-      rpc: "buyer_confirm_credit_offer",
+  if (offerLoadError) {
+    logSupabaseError("Buyer confirm credit offer error:", offerLoadError, {
+      step: "load_offer_before_rpc",
+      table: "listing_offers",
       offerId,
       userId
+    });
+    redirectWithError("/ofertas", "No se pudo cargar la oferta. Inténtalo nuevamente.");
+  }
+
+  const offerBeforeRow = offerBeforeConfirm as
+    | { id: string; listing_id: string; sender_id: string; receiver_id: string; credits: number; status: string }
+    | null;
+
+  const { data: beforeAccounts, error: beforeAccountsError } = offerBeforeRow
+    ? await supabase
+        .from("credit_accounts")
+        .select("user_id,available,held,pending,frozen")
+        .in("user_id", [offerBeforeRow.sender_id, offerBeforeRow.receiver_id])
+    : { data: null, error: null };
+
+  if (beforeAccountsError) {
+    logSupabaseError("Buyer confirm credit offer error:", beforeAccountsError, {
+      step: "load_balances_before_rpc",
+      table: "credit_accounts",
+      offerId,
+      userId
+    });
+  }
+
+  console.log("Buyer confirm credit offer before RPC:", {
+    offerId,
+    userId,
+    offer: offerBeforeRow,
+    balances: beforeAccounts
+  });
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort("buyer_confirm_credit_offer_timeout"), 25_000);
+  const startedAt = Date.now();
+  const { error } = await supabase
+    .rpc("buyer_confirm_credit_offer", {
+      p_offer_id: offerId
+    })
+    .abortSignal(controller.signal);
+  clearTimeout(timeout);
+
+  if (error) {
+    logSupabaseError("Buyer confirm credit offer error:", error, {
+      rpc: "buyer_confirm_credit_offer",
+      step: "rpc_failed",
+      offerId,
+      userId,
+      durationMs: Date.now() - startedAt,
+      stack: error instanceof Error ? error.stack : null
     });
 
     const message =
@@ -675,10 +760,49 @@ export async function confirmListingCreditTransfer(formData: FormData) {
         ? "No tienes suficientes créditos disponibles para completar esta oferta."
         : error.message === "offer_not_ready"
           ? "Esta oferta todavía no está lista para confirmar."
-          : "No se pudo confirmar la transferencia. Inténtalo nuevamente.";
+          : error.name === "AbortError"
+            ? "La confirmación tardó demasiado. Inténtalo nuevamente."
+            : "No se pudo confirmar la transferencia. Inténtalo nuevamente.";
 
     redirectWithError("/ofertas", message);
   }
+
+  const [{ data: offerAfterConfirm, error: offerAfterError }, { data: afterAccounts, error: afterAccountsError }] =
+    await Promise.all([
+      supabase.from("listing_offers").select("id,status").eq("id", offerId).maybeSingle(),
+      offerBeforeRow
+        ? supabase
+            .from("credit_accounts")
+            .select("user_id,available,held,pending,frozen")
+            .in("user_id", [offerBeforeRow.sender_id, offerBeforeRow.receiver_id])
+        : Promise.resolve({ data: null, error: null })
+    ]);
+
+  if (offerAfterError) {
+    logSupabaseError("Buyer confirm credit offer error:", offerAfterError, {
+      step: "load_offer_after_rpc",
+      table: "listing_offers",
+      offerId,
+      userId
+    });
+  }
+
+  if (afterAccountsError) {
+    logSupabaseError("Buyer confirm credit offer error:", afterAccountsError, {
+      step: "load_balances_after_rpc",
+      table: "credit_accounts",
+      offerId,
+      userId
+    });
+  }
+
+  console.log("Buyer confirm credit offer after RPC:", {
+    offerId,
+    userId,
+    durationMs: Date.now() - startedAt,
+    offer: offerAfterConfirm,
+    balances: afterAccounts
+  });
 
   if (offerBeforeConfirm) {
     const offerRow = offerBeforeConfirm as unknown as {

@@ -133,6 +133,17 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
       </header>
       <InstallPrompt />
       <main className="min-w-0">{children}</main>
+      <footer className="border-t border-slate-200 bg-white px-4 py-6 pb-24 text-sm text-slate-600 sm:px-6 md:pb-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <p className="font-semibold text-ink">Intercambio CR</p>
+          <p>
+            ¿Tienes dudas, sugerencias o quieres anunciarte en Intercambio CR? Escríbenos a{" "}
+            <a className="font-bold text-ocean-700 underline underline-offset-4" href="mailto:info.intercambiocr@gmail.com">
+              info.intercambiocr@gmail.com
+            </a>
+          </p>
+        </div>
+      </footer>
       <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200 bg-white md:hidden">
         <div className="grid grid-cols-5 text-[11px] font-medium text-slate-600">
           {bottomNavItems.map(({ href, label, Icon }) => (

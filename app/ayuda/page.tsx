@@ -61,6 +61,15 @@ export default function HelpPage() {
             detecte fraude, abuso, error operativo o incumplimiento de reglas.
           </p>
         </div>
+        <div className="mt-6 rounded-lg border border-ocean-100 bg-ocean-50 p-5">
+          <h2 className="font-bold text-ink">Contacto</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-700">
+            ¿Tienes dudas, sugerencias o quieres anunciarte en Intercambio CR? Escríbenos a{" "}
+            <a className="font-bold text-ocean-700 underline underline-offset-4" href="mailto:info.intercambiocr@gmail.com">
+              info.intercambiocr@gmail.com
+            </a>
+          </p>
+        </div>
       </section>
     </AppShell>
   );
