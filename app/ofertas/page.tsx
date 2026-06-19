@@ -3,7 +3,7 @@ import { AppShell } from "@/components/app-shell";
 import { SubmitButton } from "@/components/submit-button";
 import {
   confirmListingCreditTransfer,
-  startConversation,
+  openOfferConversation,
   submitOfferRating,
   updateListingOfferStatus
 } from "@/lib/actions/marketplace";
@@ -40,7 +40,7 @@ export default async function OffersPage({
         {ok ? (
           <div className="mb-5 rounded-lg border border-leaf-100 bg-leaf-50 p-4 text-sm font-semibold text-leaf-900">
             {ok === "completed"
-              ? "Transferencia confirmada correctamente."
+              ? "Créditos enviados correctamente."
               : ok === "rating"
                 ? "Calificación enviada correctamente."
                 : "Oferta actualizada correctamente."}
@@ -85,6 +85,15 @@ export default async function OffersPage({
                       {statusLabels[offer.status] ?? offer.status}
                     </p>
 
+                    {["submitted", "accepted", "seller_accepted"].includes(offer.status) ? (
+                      <form action={openOfferConversation} className="mt-3">
+                        <input type="hidden" name="offer_id" value={offer.id} />
+                        <SubmitButton className="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-slate-200 bg-white text-sm font-bold text-slate-700 disabled:cursor-wait disabled:opacity-70">
+                          Coordinar entrega
+                        </SubmitButton>
+                      </form>
+                    ) : null}
+
                     {offer.direction === "received" && offer.status === "submitted" ? (
                       <div className="mt-3 grid gap-2">
                         <form action={updateListingOfferStatus}>
@@ -101,17 +110,6 @@ export default async function OffersPage({
                           <SubmitButton className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-red-100 bg-white text-sm font-bold text-red-600 disabled:cursor-wait disabled:opacity-70">
                             <XCircle className="h-4 w-4" />
                             Rechazar oferta
-                          </SubmitButton>
-                        </form>
-                        <form action={startConversation}>
-                          <input type="hidden" name="listing_id" value={offer.listingId} />
-                          <input
-                            type="hidden"
-                            name="message"
-                            value={`Hola, quiero conversar sobre tu oferta por ${offer.listingTitle}.`}
-                          />
-                          <SubmitButton className="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-slate-200 bg-white text-sm font-bold text-slate-700 disabled:cursor-wait disabled:opacity-70">
-                            Enviar mensaje
                           </SubmitButton>
                         </form>
                       </div>
