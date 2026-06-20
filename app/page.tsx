@@ -37,8 +37,7 @@ const steps = [
 function AdvertisingBanner() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <div className="overflow-hidden rounded-lg border border-ocean-100 bg-white shadow-soft">
-        <div className="relative bg-gradient-to-br from-ocean-700 via-ocean-600 to-leaf-600 p-5 text-white sm:p-6 lg:p-8">
+      <div className="relative overflow-hidden rounded-lg border border-slate-200 bg-[linear-gradient(135deg,#075985_0%,#0f766e_52%,#16a34a_100%)] p-5 text-white shadow-soft sm:p-6 lg:p-8">
           <div className="absolute right-6 top-6 hidden h-24 w-24 rounded-full border border-white/20 sm:block" />
           <div className="absolute -bottom-10 -right-8 h-32 w-32 rounded-full bg-white/10" />
           <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
@@ -65,12 +64,11 @@ function AdvertisingBanner() {
             </div>
             <a
               href="mailto:info.intercambiocr@gmail.com?subject=Informaci%C3%B3n%20para%20anunciarme%20en%20Intercambio%20CR"
-              className="inline-flex h-11 items-center justify-center rounded-lg bg-white px-4 text-sm font-bold text-ocean-700 hover:bg-ocean-50"
+              className="inline-flex h-11 items-center justify-center rounded-lg bg-white px-4 text-sm font-bold text-sky-800 hover:bg-slate-50"
             >
               Solicitar información
             </a>
           </div>
-        </div>
       </div>
     </section>
   );

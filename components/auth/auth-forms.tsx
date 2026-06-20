@@ -189,37 +189,12 @@ export function AuthForms({ configError, initialError, initialOk, nextPath }: Au
     }
   }
 
-  async function recoverPassword(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    resetFeedback();
-    setLoading("recovery");
-
-    try {
-      if (configError) {
-        throw new Error(configError);
-      }
-
-      const formData = new FormData(event.currentTarget);
-      const email = String(formData.get("email") ?? "").trim();
-      const { error: recoveryError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${siteUrl}/auth/callback?next=/auth/nueva-contrasena`
-      });
-
-      if (recoveryError) {
-        throw recoveryError;
-      }
-
-      router.push("/auth/revisar-correo?tipo=recuperacion");
-    } catch (authError) {
-      setError(formatAuthError(authError));
-    } finally {
-      setLoading(null);
-    }
-  }
-
   return (
-    <div className="grid gap-5 lg:grid-cols-2">
-      <div id="crear-cuenta" className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
+    <div className="grid w-full max-w-5xl gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+      <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="mb-4 inline-flex rounded-lg bg-ocean-50 px-3 py-1 text-xs font-bold text-ocean-700">
+          Acceso seguro
+        </div>
         <h1 className="text-2xl font-bold text-ink">Entrar a Intercambio CR</h1>
         <p className="mt-2 text-sm leading-6 text-slate-600">
           Usa tu cuenta para publicar, hacer ofertas, conversar y administrar tus créditos.
@@ -288,27 +263,16 @@ export function AuthForms({ configError, initialError, initialOk, nextPath }: Au
             </button>
           </form>
 
-          <form onSubmit={recoverPassword} className="grid gap-3 rounded-lg bg-slate-50 p-3">
-            <p className="text-sm font-semibold text-ink">Recuperar contraseña</p>
-            <input
-              name="email"
-              required
-              type="email"
-              className="h-11 rounded-lg border border-slate-200 bg-white px-3 text-sm"
-              placeholder="correo@ejemplo.com"
-            />
-            <button
-              type="submit"
-              disabled={disabled}
-              className="focus-ring h-11 rounded-lg border border-slate-200 bg-white text-sm font-bold text-ink hover:bg-slate-50 disabled:cursor-wait disabled:opacity-70"
-            >
-              {loading === "recovery" ? "Enviando..." : "Enviar enlace de recuperación"}
-            </button>
-          </form>
+          <p className="text-center text-sm text-slate-600">
+            ¿Olvidaste tu contraseña?{" "}
+            <Link href="/auth/recuperar" className="font-bold text-ocean-700 underline underline-offset-4">
+              Restáurala aquí
+            </Link>
+          </p>
         </div>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
+      <div id="crear-cuenta" className="rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
         <h2 className="text-2xl font-bold text-ink">Crear cuenta</h2>
         <p className="mt-2 text-sm leading-6 text-slate-600">
           Crea tu perfil para publicar artículos, recibir ofertas y participar en la comunidad.

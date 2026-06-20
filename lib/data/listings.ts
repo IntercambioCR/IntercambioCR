@@ -32,7 +32,7 @@ type ListingImageRow = {
   sort_order: number | null;
 };
 
-const fallbackImage = "/demo/hero-intercambio-real.png";
+const fallbackImage = "/brand/intercambio-cr-mark.svg";
 
 const publicListingSelect =
   "id,title,category,condition,location,credit_price,description,seller_id";
